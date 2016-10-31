@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.unishop.LoginActivity"
+    android:background="@android:color/background_light">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/emailEditText"
+        android:background="#ABFFC0C1"
+        android:hint="email"
+        android:textAlignment="center"
+        android:textColorHint="@android:color/darker_gray"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/passwordEditText"
+        android:background="#ABFFC0C1"
+        android:hint="password"
+        android:textAlignment="center"
+        android:layout_below="@+id/emailEditText"
+        android:layout_alignStart="@+id/emailEditText"
+        android:layout_marginTop="5dp"
+        android:textColorHint="@android:color/darker_gray"
+        android:textColor="@android:color/black" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:id="@+id/button2"
+        android:onClick="handleLogin"/>
+
+    <Button
+        android:text="Need an account?\nClick here to register."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:background="#00FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="11dp"
+        android:textAllCaps="false"
+        android:textColor="#FFFF4081"
+        android:onClick="handleRegisterButton"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo"
+        android:id="@+id/imageView"
+        android:layout_above="@+id/emailEditText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="36dp"
+        android:layout_marginLeft="70dp"/>
+</RelativeLayout>

@@ -7,5 +7,6 @@
         android:id="@+id/splashimageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash"/>
+        android:src="@drawable/logo"
+        android:layout_marginLeft="70dp"/>
 </LinearLayout>
