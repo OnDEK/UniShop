@@ -1,7 +1,0 @@
-#Sat Nov 05 20:05:23 EDT 2016
-base.0=C\:\\Users\\Daniel\\Documents\\GitHub\\UniShopAndroid\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_cf71be4bffad89a9bbc6eb5aa519a6e406692044
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=C\:\\Users\\Daniel\\Documents\\GitHub\\UniShopAndroid\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_1b75d0b93f1df7d869b044c358937d599171164c\\classes.dex
-base.1=C\:\\Users\\Daniel\\Documents\\GitHub\\UniShopAndroid\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_1b75d0b93f1df7d869b044c358937d599171164c
-file.0=C\:\\Users\\Daniel\\Documents\\GitHub\\UniShopAndroid\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_cf71be4bffad89a9bbc6eb5aa519a6e406692044\\classes.dex
