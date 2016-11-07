@@ -116,4 +116,31 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:textColor="#bebebe" />
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/registerEmailEditText"
+        android:layout_alignTop="@id/registerEmailEditText"
+        android:layout_alignBottom="@id/registerEmailEditText"
+        android:src="@drawable/exclamation_red"
+        android:layout_marginLeft="2dp"
+        android:id="@+id/registerEmailImage"/>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/registerPasswordEditText"
+        android:layout_alignTop="@id/registerPasswordEditText"
+        android:layout_alignBottom="@id/registerPasswordEditText"
+        android:src="@drawable/exclamation_red"
+        android:layout_marginLeft="2dp"
+        android:id="@+id/registerPasswordImage"/>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/registerPasswordConfirmEditText"
+        android:layout_alignTop="@id/registerPasswordConfirmEditText"
+        android:layout_alignBottom="@id/registerPasswordConfirmEditText"
+        android:src="@drawable/exclamation_red"
+        android:layout_marginLeft="2dp"
+        android:id="@+id/registerConfirmPasswordImage"/>
 </RelativeLayout>
