@@ -125,7 +125,7 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(currentString.contains("") {
+                if(currentString.contains("")) {
                     registerPasswordImage.setImageResource(R.drawable.checkmark);
                 }else {
                     registerPasswordImage.setImageResource(R.drawable.exclamation_red);

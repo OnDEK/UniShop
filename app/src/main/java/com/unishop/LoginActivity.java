@@ -40,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         userEmail.setOnFocusChangeListener(hideKeyboardListener);
         userPassword.setOnFocusChangeListener(hideKeyboardListener);
 
-
+        userEmail.setText("@knights.ucf.edu");
+        userPassword.setText("test");
     }
 
     public void handleLogin(View v) {
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                         String fname = jsonResponse.getString("firstname");
                         String lname = jsonResponse.getString("lastname");
 
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, DrawerActivity.class);
                         intent.putExtra("firstname", fname);
                         intent.putExtra("lastname", lname);
 
