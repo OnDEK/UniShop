@@ -125,15 +125,12 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-<<<<<<< HEAD
-                if(currentString.contains("")) {
-=======
+
                 boolean hasUppercase = !currentString.equals(currentString.toLowerCase());
                 boolean hasLowercase = !currentString.equals(currentString.toUpperCase());
                 boolean isAtLeast8   = currentString.length() >= 7;
                 boolean hasNumber   = currentString.matches(".*\\d+.*");
                 if(hasUppercase && hasLowercase && isAtLeast8 && hasNumber) {
->>>>>>> origin/master
                     registerPasswordImage.setImageResource(R.drawable.checkmark);
                 }else {
                     registerPasswordImage.setImageResource(R.drawable.exclamation_red);

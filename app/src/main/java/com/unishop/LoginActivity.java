@@ -40,18 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         userEmail.setOnFocusChangeListener(hideKeyboardListener);
         userPassword.setOnFocusChangeListener(hideKeyboardListener);
 
-<<<<<<< HEAD
-        userEmail.setText("@knights.ucf.edu");
-        userPassword.setText("test");
-=======
         boolean TEST_MODE = true;
         if(TEST_MODE) {
             userEmail.setText("@knights.ucf.edu");
             userPassword.setText("test");
         }
 
-
->>>>>>> origin/master
     }
 
     public void handleLogin(View v) {
