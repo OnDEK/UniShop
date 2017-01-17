@@ -2,7 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFD6D6D6"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
 
 
@@ -63,7 +67,9 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="58dp"
-        android:id="@+id/button" />
+        android:id="@+id/button"
+        android:background="#ff555555"
+        android:textColor="#ffffffff"/>
 
     <Button
         android:text="Take Photo"
@@ -74,7 +80,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="49dp"
         android:id="@+id/button2"
-        android:onClick="onTakePhotoClick"/>
+        android:onClick="onTakePhotoClick"
+        android:background="#ff555555"
+        android:textColor="#ffffffff"/>
 
     <TextView
         android:text="&lt;"
@@ -115,7 +123,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/button2"
         android:id="@+id/button3"
-        android:onClick="uploadPhotos" />
+        android:onClick="uploadPhotos"
+        android:background="#ff555555"
+        android:textColor="#ffffffff"/>
 
     <Button
         android:text="Cancel"
@@ -124,5 +134,7 @@
         android:layout_alignTop="@+id/button3"
         android:layout_alignEnd="@+id/button"
         android:id="@+id/button4"
-        android:onClick="cancelCreateListing" />
+        android:onClick="cancelCreateListing"
+        android:background="#ff555555"
+        android:textColor="#ffffffff"/>
 </RelativeLayout>

@@ -1,54 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:hint="Post Title" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/editText2" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Description"
-        android:ems="10"
-        android:id="@+id/editText3" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner" />
-
-    <Button
-        android:text="Back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button5"
-        android:onClick="onBackClick"/>
-
-    <Button
-        android:text="Cancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button6"
-        android:onClick="onCancelClick"/>
+    android:layout_height="match_parent"
+    android:background="#FFD6D6D6"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
     <Button
         android:text="Publish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:id="@+id/button7"
-        android:onClick="onSubmitClick"/>
-</LinearLayout>
+        android:onClick="onSubmitClick"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="20dp"
+        android:background="#ff555555"
+        android:textColor="#ffffffff"
+        android:layout_marginBottom="5dp"/>
+
+    <Button
+        android:text="Back"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:id="@+id/button5"
+        android:onClick="onBackClick"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:background="#ff555555"
+        android:textColor="#ffffffff"
+        android:layout_marginBottom="5dp"/>
+
+    <Button
+        android:text="Cancel"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:id="@+id/button6"
+        android:onClick="onCancelClick"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#ff555555"
+        android:textColor="#ffffffff"
+        android:layout_marginBottom="5dp"/>
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:background="#6cff9900"
+        android:hint="Starting bid"
+        android:textAlignment="center"
+        android:textColorHint="#ff555555"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="88dp"
+        android:layout_above="@+id/editText3"
+        android:layout_alignEnd="@+id/button7" />
+
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:id="@+id/spinner"
+        android:entries="@array/categories"
+        android:prompt="@string/categorySpinner"
+        android:background="#6cff9900"
+        android:layout_alignTop="@+id/editText2"
+        android:layout_alignStart="@+id/button5" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:hint="Post Title"
+        android:background="#6cff9900"
+        android:textAlignment="center"
+        android:textColorHint="#ff555555"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="150sp"
+        android:inputType="textAutoCorrect"
+        android:hint="Description"
+        android:ems="10"
+        android:gravity="center"
+        android:id="@+id/editText3"
+        android:background="#6cff9900"
+        android:textColorHint="#ff555555"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/button7"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"/>
+</RelativeLayout>

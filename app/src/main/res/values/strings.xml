@@ -6,8 +6,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="categorySpinner">"Select Category</string>
 
     <string-array name="categories">
-
+        <item>household</item>
+        <item>books</item>
     </string-array>
 </resources>
