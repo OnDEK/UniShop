@@ -110,19 +110,19 @@
 
     <Button
         android:text="Next"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/button2"
         android:id="@+id/button3"
-        android:onClick="uploadPhotos"/>
+        android:onClick="uploadPhotos" />
 
     <Button
         android:text="Cancel"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/button3"
         android:layout_alignEnd="@+id/button"
         android:id="@+id/button4"
-        android:onClick="cancelCreateListing"/>
+        android:onClick="cancelCreateListing" />
 </RelativeLayout>
