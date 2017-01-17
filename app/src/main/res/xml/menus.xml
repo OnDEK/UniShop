@@ -1,0 +1,23 @@
+<tabs>
+
+    <tab id="@+id/bottombaritemone"
+        title="Bids"
+        icon="@drawable/ic_menu_bids">
+    </tab>
+    <tab id="@+id/bottombaritemtwo"
+        title="Listings"
+        icon="@drawable/ic_menu_listings">
+    </tab>
+    <tab id="@+id/bottombaritemthree"
+        title="Home"
+        icon="@drawable/ic_menu_home">
+    </tab>
+    <tab id="@+id/bottombaritemfour"
+        title="Finished"
+        icon="@drawable/ic_menu_finished">
+    </tab>
+    <tab id="@+id/bottombaritemfive"
+        title="More"
+        icon="@drawable/ic_menu_manage">
+    </tab>
+</tabs>

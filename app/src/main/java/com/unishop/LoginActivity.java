@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                         String fname = jsonResponse.getString("firstname");
                         String lname = jsonResponse.getString("lastname");
 
-                        Intent intent = new Intent(LoginActivity.this, DrawerActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.putExtra("firstname", fname);
                         intent.putExtra("lastname", lname);
 
