@@ -3,10 +3,17 @@ package com.unishop;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
@@ -16,7 +23,7 @@ import com.roughike.bottombar.OnTabSelectListener;
  * Created by Daniel on 10/30/16.
  */
 
-public class HomeActivity extends Activity{
+public class HomeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +34,9 @@ public class HomeActivity extends Activity{
         String firstname = intent.getStringExtra("firstname");
         String lastname = intent.getStringExtra("lastname");
 
-       // TextView homeTextView = (TextView) findViewById(R.id.homeScreenTextView);
-       // homeTextView.setText("Welcome back "+ firstname + "!");
-       // homeTextView.setTextColor(0xFF000000);
+        // TextView homeTextView = (TextView) findViewById(R.id.homeScreenTextView);
+        // homeTextView.setText("Welcome back "+ firstname + "!");
+        // homeTextView.setTextColor(0xFF000000);
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -38,7 +45,7 @@ public class HomeActivity extends Activity{
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                switch(tabId) {
+                switch (tabId) {
                     case R.id.bottombaritemone:
                         BidsFragment bidFragment = new BidsFragment();
                         fragmentTransaction.replace(R.id.contentContainer, bidFragment);
@@ -48,6 +55,7 @@ public class HomeActivity extends Activity{
                         ListingsFragment listingsFragment = new ListingsFragment();
                         fragmentTransaction.replace(R.id.contentContainer, listingsFragment);
                         fragmentTransaction.commit();
+
                         break;
                     case R.id.bottombaritemthree:
                         HomeFragment homeFragment = new HomeFragment();
@@ -69,9 +77,17 @@ public class HomeActivity extends Activity{
                 }
             }
         });
+
     }
+
     public void onCreateListingClick(View v) {
         Intent intent = new Intent(this, CreateListingPhotoActivity.class);
         startActivity(intent);
     }
+
+    public String[] populateString() {
+
+        return new String[0];
+    }
+
 }
