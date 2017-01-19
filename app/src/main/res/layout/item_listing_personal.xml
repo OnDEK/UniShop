@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/bb_bottom_bar_top_shadow"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/listing_personal_item_thumbnail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:inputType="text"
+        android:text="Post title"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:id="@+id/editText4"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/listing_personal_item_thumbnail" />
+
+    <TextView
+        android:text="Biddding \nInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:id="@+id/textView5"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_below="@+id/editText4"
+        android:layout_toEndOf="@+id/listing_personal_item_thumbnail" />
+
+    <ImageView
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        app:srcCompat="@drawable/ic_star_empty"
+        android:layout_below="@+id/editText4"
+        android:layout_toEndOf="@+id/textView5"
+        android:id="@+id/imageView8" />
+
+    <EditText
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_below="@+id/editText4"
+        android:layout_toEndOf="@+id/imageView8"
+        android:id="@+id/editText5"
+        android:layout_alignBottom="@+id/imageView8" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_five_pointed_star"
+        android:layout_below="@+id/imageView8"
+        android:layout_toEndOf="@+id/textView5"
+        android:id="@+id/imageView10" />
+
+    <EditText
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:layout_toEndOf="@+id/imageView8"
+        android:id="@+id/editText8"
+        android:layout_alignBottom="@+id/imageView10"
+        android:layout_below="@+id/imageView8" />
+</RelativeLayout>
