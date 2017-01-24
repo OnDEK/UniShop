@@ -33,9 +33,9 @@ public class CreateListingInformationActivity extends Activity {
             }
         };
 
-        titleEditText = (EditText)findViewById(R.id.editText);
-        descriptionEditText = (EditText)findViewById(R.id.editText3);
-        priceEditText = (EditText)findViewById(R.id.editText2);
+        titleEditText = (EditText)findViewById(R.id.createlisting_post_title);
+        descriptionEditText = (EditText)findViewById(R.id.createlisting_description);
+        priceEditText = (EditText)findViewById(R.id.createlisting_startingbid);
 
         titleEditText.setOnFocusChangeListener(hideKeyboardListener);
         descriptionEditText.setOnFocusChangeListener(hideKeyboardListener);

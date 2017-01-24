@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -37,10 +35,10 @@ public class CreateListingPhotoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_listing_photo_activity);
 
-        imageArray[0] = (ImageView)findViewById(R.id.imageView3);
-        imageArray[1] = (ImageView)findViewById(R.id.imageView4);
-        imageArray[2] = (ImageView)findViewById(R.id.imageView5);
-        imageArray[3] = (ImageView)findViewById(R.id.imageView6);
+        imageArray[0] = (ImageView)findViewById(R.id.createlisting_image_one);
+        imageArray[1] = (ImageView)findViewById(R.id.createlisting_image_two);
+        imageArray[2] = (ImageView)findViewById(R.id.createlisting_image_three);
+        imageArray[3] = (ImageView)findViewById(R.id.createlisting_image_four);
     }
 
 

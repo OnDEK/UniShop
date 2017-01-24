@@ -11,7 +11,7 @@
 
 
         <HorizontalScrollView
-            android:id="@+id/scrollView"
+            android:id="@+id/createlisting_scrollview"
             android:layout_width="match_parent"
             android:layout_height="198dp"
             android:layout_marginTop="45dp"
@@ -27,7 +27,7 @@
                 <ImageView
                     android:layout_width="352dp"
                     android:layout_height="198dp"
-                    android:id="@+id/imageView3"
+                    android:id="@+id/createlisting_image_one"
                     android:layout_weight="1"
                     android:src="@drawable/no_image"
                     android:layout_marginLeft="10dp"
@@ -35,21 +35,21 @@
                 <ImageView
                     android:layout_width="352dp"
                     android:layout_height="198dp"
-                    android:id="@+id/imageView4"
+                    android:id="@+id/createlisting_image_two"
                     android:layout_weight="1"
                     android:src="@drawable/no_image"
                     android:layout_marginLeft="10dp"/>
                 <ImageView
                     android:layout_width="352dp"
                     android:layout_height="198dp"
-                    android:id="@+id/imageView5"
+                    android:id="@+id/createlisting_image_three"
                     android:layout_weight="1"
                     android:src="@drawable/no_image"
                     android:layout_marginLeft="10dp"/>
                 <ImageView
                     android:layout_width="352dp"
                     android:layout_height="198dp"
-                    android:id="@+id/imageView6"
+                    android:id="@+id/createlisting_image_four"
                     android:layout_weight="1"
                     android:src="@drawable/no_image"
                     android:layout_marginLeft="10dp"
@@ -67,7 +67,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="58dp"
-        android:id="@+id/button"
+        android:id="@+id/button_upload_photo"
         android:background="#ff555555"
         android:textColor="#ffffffff"/>
 
@@ -76,10 +76,10 @@
         android:textSize="10sp"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button"
+        android:layout_alignBottom="@+id/button_upload_photo"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="49dp"
-        android:id="@+id/button2"
+        android:id="@+id/button_take_photo"
         android:onClick="onTakePhotoClick"
         android:background="#ff555555"
         android:textColor="#ffffffff"/>
@@ -90,10 +90,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/textView2"
+        android:id="@+id/createlisting_leftarrow"
         android:gravity="center"
         android:textSize="50dp"
-        android:layout_alignBottom="@+id/button" />
+        android:layout_alignBottom="@+id/button_upload_photo" />
 
     <TextView
         android:text="&gt;"
@@ -101,8 +101,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/textView3"
-        android:layout_alignBottom="@+id/button2"
+        android:id="@+id/createlisting_rightarrow"
+        android:layout_alignBottom="@+id/button_take_photo"
         android:textSize="50sp"
         android:gravity="center"/>
 
@@ -114,15 +114,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView4" />
+        android:id="@+id/createlisting_heading_edittext" />
 
     <Button
         android:text="Next"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/button2"
-        android:id="@+id/button3"
+        android:layout_alignEnd="@+id/button_take_photo"
+        android:id="@+id/createlisting_next_button"
         android:onClick="uploadPhotos"
         android:background="#ff555555"
         android:textColor="#ffffffff"/>
@@ -131,9 +131,9 @@
         android:text="Cancel"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button3"
-        android:layout_alignEnd="@+id/button"
-        android:id="@+id/button4"
+        android:layout_alignTop="@+id/createlisting_next_button"
+        android:layout_alignEnd="@+id/button_upload_photo"
+        android:id="@+id/createlisting_cancel_button"
         android:onClick="cancelCreateListing"
         android:background="#ff555555"
         android:textColor="#ffffffff"/>
