@@ -15,6 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:textColor="#ff000000"
         android:inputType="text"
         android:text="Post title"
         android:ems="10"
@@ -31,6 +32,7 @@
         android:id="@+id/textView5"
         android:textAlignment="center"
         android:gravity="center"
+        android:textColor="#ff000000"
         android:layout_below="@+id/editText4"
         android:layout_toEndOf="@+id/listing_personal_item_thumbnail" />
 
@@ -50,6 +52,7 @@
         android:layout_below="@+id/editText4"
         android:layout_toEndOf="@+id/imageView8"
         android:id="@+id/editText5"
+        android:textColor="#ff000000"
         android:layout_alignBottom="@+id/imageView8"
         android:gravity="center_vertical"/>
 
@@ -66,6 +69,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
+        android:textColor="#ff000000"
         android:layout_toEndOf="@+id/imageView8"
         android:id="@+id/editText8"
         android:layout_alignBottom="@+id/imageView10"
@@ -85,6 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView6"
+        android:textColor="#ff000000"
         android:layout_below="@+id/editText8"
         android:layout_alignBottom="@+id/imageView12"
         android:layout_alignEnd="@+id/editText8"
@@ -123,6 +128,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText4"
         android:id="@+id/textView7"
+        android:textColor="#ff000000"
         android:layout_above="@+id/imageView14"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/imageView13"
@@ -130,6 +136,7 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:textColor="#ff000000"
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView15"
         android:id="@+id/textView8"
@@ -144,6 +151,7 @@
         android:gravity="center_vertical"
         android:layout_alignBottom="@+id/imageView15"
         android:id="@+id/textView9"
+        android:textColor="#ff000000"
         android:layout_below="@+id/textView8"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/imageView15" />
