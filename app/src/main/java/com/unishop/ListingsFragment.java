@@ -2,7 +2,6 @@ package com.unishop;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,8 +51,12 @@ public class ListingsFragment extends Fragment {
             "Selling my gf's used underwear", "http://cdn.trendhunterstatic.com/thumbs/elephant-underwear.jpeg");
     Listing listing5 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
+    Listing listing6 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
+            "Selling my gf's used underwear", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
+    Listing listing7 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
+            "Selling my gf's used underwear", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
 
-    Listing[] data_array = {listing1, listing2, listing3, listing4, listing5} ;
+    Listing[] data_array = {listing1, listing2, listing3, listing4, listing5, listing6, listing7} ;
     public class CustomAdapter extends BaseAdapter {
         LayoutInflater mInflater;
 
@@ -91,25 +93,25 @@ public class ListingsFragment extends Fragment {
 
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.item_listing_personal, parent, false);
-                vh.title= (TextView)convertView.findViewById(R.id.editText4);
-                vh.noStarBid = (TextView)convertView.findViewById(R.id.editText5);
-                vh.oneStarBid = (TextView)convertView.findViewById(R.id.editText8);
-                vh.twoStarBid = (TextView)convertView.findViewById(R.id.textView6);
-                vh.threeStarBid = (TextView)convertView.findViewById(R.id.textView7);
-                vh.fourStarBid = (TextView)convertView.findViewById(R.id.textView8);
-                vh.fiveStarBid = (TextView)convertView.findViewById(R.id.textView9);
+                vh.title= (TextView)convertView.findViewById(R.id.listing_personal_item_title);
+                vh.noStarBid = (TextView)convertView.findViewById(R.id.zero_start_edittext);
+                vh.oneStarBid = (TextView)convertView.findViewById(R.id.one_star_edittext);
+                vh.twoStarBid = (TextView)convertView.findViewById(R.id.two_star_edittext);
+                vh.threeStarBid = (TextView)convertView.findViewById(R.id.three_star_edittext);
+                vh.fourStarBid = (TextView)convertView.findViewById(R.id.four_star_edittext);
+                vh.fiveStarBid = (TextView)convertView.findViewById(R.id.five_star_edittext);
 
                 //inflate custom layour
 
             } else {
                 convertView.setTag(vh);
-                vh.title= (TextView)convertView.findViewById(R.id.editText4);
-                vh.noStarBid = (TextView)convertView.findViewById(R.id.editText5);
-                vh.oneStarBid = (TextView)convertView.findViewById(R.id.editText8);
-                vh.twoStarBid = (TextView)convertView.findViewById(R.id.textView6);
-                vh.threeStarBid = (TextView)convertView.findViewById(R.id.textView7);
-                vh.fourStarBid = (TextView)convertView.findViewById(R.id.textView8);
-                vh.fiveStarBid = (TextView)convertView.findViewById(R.id.textView9);
+                vh.title= (TextView)convertView.findViewById(R.id.listing_personal_item_title);
+                vh.noStarBid = (TextView)convertView.findViewById(R.id.zero_start_edittext);
+                vh.oneStarBid = (TextView)convertView.findViewById(R.id.one_star_edittext);
+                vh.twoStarBid = (TextView)convertView.findViewById(R.id.two_star_edittext);
+                vh.threeStarBid = (TextView)convertView.findViewById(R.id.three_star_edittext);
+                vh.fourStarBid = (TextView)convertView.findViewById(R.id.four_star_edittext);
+                vh.fiveStarBid = (TextView)convertView.findViewById(R.id.five_star_edittext);
 
             }
             vh.title.setText(data_array[position].title);
