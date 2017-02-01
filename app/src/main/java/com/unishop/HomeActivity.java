@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.IdRes;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,7 +87,9 @@ public class HomeActivity extends Activity {
     }
 
     public void handleListingClick(View v){
+        Listing listing = (Listing)v.getTag();
         Intent intent = new Intent(this, ListingActivity.class);
+        intent.putExtra("listing", listing);
         startActivity(intent);
 
     }

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +41,8 @@ public class ListingsFragment extends Fragment {
 
 
     }
+
+
 
     Listing listing1 = new Listing("Used Underwear", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://mojosavings.com/wp-content/uploads/2014/07/underwear.jpg");

@@ -1,10 +1,13 @@
 package com.unishop;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.lang.Double;
 /**
  * Created by kaosp on 1/23/17.
  */
 
-public class Listing {
+public class Listing implements Parcelable{
 
     String title;
     double[] bids = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
@@ -12,9 +15,57 @@ public class Listing {
     String description;
     String imageURL;
 
-    Listing() {
 
+    @Override
+    public int describeContents() {
+        return 0;
     }
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(title);
+        out.writeDouble(bids[0]);
+        out.writeDouble(bids[1]);
+        out.writeDouble(bids[2]);
+        out.writeDouble(bids[3]);
+        out.writeDouble(bids[4]);
+        out.writeDouble(bids[5]);
+        out.writeString(bidderID[0]);
+        out.writeString(bidderID[1]);
+        out.writeString(bidderID[2]);
+        out.writeString(bidderID[3]);
+        out.writeString(bidderID[4]);
+        out.writeString(bidderID[5]);
+        out.writeString(description);
+        out.writeString(imageURL);
+    }
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Listing> CREATOR = new Parcelable.Creator<Listing>() {
+        public Listing createFromParcel(Parcel in) {
+            return new Listing(in);
+        }
+
+        public Listing[] newArray(int size) {
+            return new Listing[size];
+        }
+    };
+    public Listing(Parcel in) {
+        title = in.readString();
+        bids[0] = in.readDouble();
+        bids[1] = in.readDouble();
+        bids[2] = in.readDouble();
+        bids[3] = in.readDouble();
+        bids[4] = in.readDouble();
+        bids[5] = in.readDouble();
+        bidderID[0] = in.readString();
+        bidderID[1] = in.readString();
+        bidderID[2] = in.readString();
+        bidderID[3] = in.readString();
+        bidderID[4] = in.readString();
+        bidderID[5] = in.readString();
+        description = in.readString();
+        imageURL = in.readString();
+    }
+
     Listing(String title, double zeroBid, double oneBid, double twoBid, double threeBid,
             double fourBid, double fiveBid, String description, String imageURL) {
 

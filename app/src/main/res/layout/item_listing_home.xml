@@ -34,8 +34,9 @@
         app:srcCompat="@drawable/bb_bottom_bar_top_shadow"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_above="@id/listing_home_title"
         android:id="@+id/listing_home_thumbnails"
-        />
+        android:layout_alignStart="@+id/listing_home_titles" />
 
     <TextView
         android:id="@+id/listing_home_titles"
@@ -54,9 +55,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/button8"
-        android:layout_alignParentEnd="true"
+        android:id="@+id/button_home_left"
         android:layout_alignParentBottom="true"
         android:background="#00000000"
+        android:onClick="handleListingClick"
+        android:layout_alignEnd="@+id/listing_home_thumbnail" />
+
+    <Button
+
+        android:background="#00000000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/button_home_right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/listing_home_titles"
+        android:layout_alignParentEnd="true"
         android:onClick="handleListingClick"/>
 </RelativeLayout>

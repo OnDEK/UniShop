@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,12 @@ public class HomeFragment extends android.app.Fragment {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArray("listings", data_array);
+    }
+
     Listing listing1 = new Listing("Used Underwear", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://mojosavings.com/wp-content/uploads/2014/07/underwear.jpg");
     Listing listing2 = new Listing("Toaster", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
@@ -68,7 +75,10 @@ public class HomeFragment extends android.app.Fragment {
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            return data_array.length;//listview item count.
+            if(data_array.length%2 == 0)
+                return data_array.length/2;
+            else
+                return data_array.length/2+1;//listview item count.
         }
 
         @Override
@@ -95,7 +105,8 @@ public class HomeFragment extends android.app.Fragment {
                 convertView = mInflater.inflate(R.layout.item_listing_home, parent, false);
                 vh.title1= (TextView)convertView.findViewById(R.id.listing_home_title);
                 vh.title2 = (TextView)convertView.findViewById(R.id.listing_home_titles);
-
+                vh.button1 = (Button)convertView.findViewById(R.id.button_home_left);
+                vh.button2 = (Button)convertView.findViewById(R.id.button_home_right);
 
                 //inflate custom layour
 
@@ -103,18 +114,23 @@ public class HomeFragment extends android.app.Fragment {
                 convertView.setTag(vh);
                 vh.title1= (TextView)convertView.findViewById(R.id.listing_home_title);
                 vh.title2 = (TextView)convertView.findViewById(R.id.listing_home_titles);
-
-
+                vh.button1 = (Button)convertView.findViewById(R.id.button_home_left);
+                vh.button2 = (Button)convertView.findViewById(R.id.button_home_right);
             }
 
-            if(position % 2 == 0) {
-                vh.title1.setText(data_array[position].title);
-                new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnail))
-                        .execute(data_array[position].imageURL);
-            } else {
-                vh.title2.setText(data_array[position].title);
+
+            vh.title1.setText(data_array[position*2].title);
+            new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnail))
+                    .execute(data_array[position*2].imageURL);
+
+
+            vh.button1.setTag(data_array[position*2]);
+
+            if(position*2+1 < data_array.length) {
+                vh.title2.setText(data_array[position*2+1].title);
                 new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnails))
-                        .execute(data_array[position].imageURL);
+                        .execute(data_array[position*2+1].imageURL);
+                vh.button1.setTag(data_array[position*2+1]);
             }
 
             return convertView;
@@ -122,6 +138,7 @@ public class HomeFragment extends android.app.Fragment {
 
         class ViewHolder {
             TextView title1, title2;
+            Button button1, button2;
             ImageView thumbnail;
         }
     }
