@@ -121,7 +121,7 @@ public class ListingsFragment extends Fragment {
             vh.threeStarBid.setText(String.valueOf(data_array[position].getThreeStarBid()));
             vh.fourStarBid.setText(String.valueOf(data_array[position].getFourStarBid()));
             vh.fiveStarBid.setText(String.valueOf(data_array[position].getFiveStarBid()));
-            new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_personal_item_thumbnail))
+            new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnail))
                     .execute(data_array[position].imageURL);
 
             return convertView;

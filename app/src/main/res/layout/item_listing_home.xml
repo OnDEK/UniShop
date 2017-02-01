@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bb_bottom_bar_top_shadow"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/listing_home_thumbnail"
+        android:layout_above="@+id/listing_home_title"
+        android:layout_toStartOf="@+id/listing_home_title"
+        android:layout_alignEnd="@+id/listing_home_title" />
+
+    <TextView
+        android:id="@+id/listing_home_title"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:textColor="#ff000000"
+        android:inputType="text"
+        android:text="Post title"
+        android:ems="10"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/bb_bottom_bar_top_shadow"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/listing_home_thumbnails"
+        />
+
+    <TextView
+        android:id="@+id/listing_home_titles"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:textColor="#ff000000"
+        android:inputType="text"
+        android:text="Post title"
+        android:ems="10"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/button8"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="#00000000"
+        android:onClick="handleListingClick"/>
+</RelativeLayout>

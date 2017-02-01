@@ -8,6 +8,7 @@ public class Listing {
 
     String title;
     double[] bids = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    String[] bidderID = {"", "", "", "", "", ""};
     String description;
     String imageURL;
 
@@ -26,8 +27,45 @@ public class Listing {
         this.bids[4] = fourBid;
         this.bids[5] = fiveBid;
 
+
         this.description = description;
         this.imageURL = imageURL;
+    }
+    public void setZeroStarID(String id) {
+        this.bidderID[0] = id;
+    }
+    public String getZeroStarID() {
+        return this.bidderID[0];
+    }
+    public void setOneStarID(String id) {
+        this.bidderID[0] = id;
+    }
+    public String getOneStarID() {
+        return this.bidderID[0];
+    }
+    public void setTwoStarID(String id) {
+        this.bidderID[0] = id;
+    }
+    public String getTwoStarID() {
+        return this.bidderID[0];
+    }
+    public void setThreeStarID(String id) {
+        this.bidderID[0] = id;
+    }
+    public String getThreeStarID() {
+        return this.bidderID[0];
+    }
+    public void setFourStarID(String id) {
+        this.bidderID[0] = id;
+    }
+    public String getFourStarID() {
+        return this.bidderID[0];
+    }
+    public void setFiveStarID(String id) {
+        this.bidderID[0] = id;
+    }
+    public String getFiveStarID() {
+        return this.bidderID[0];
     }
     public void setZeroStarBid(double d) {
         bids[0] = d;

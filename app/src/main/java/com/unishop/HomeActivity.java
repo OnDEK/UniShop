@@ -85,6 +85,11 @@ public class HomeActivity extends Activity {
         startActivity(intent);
     }
 
+    public void handleListingClick(View v){
+        Intent intent = new Intent(this, ListingActivity.class);
+        startActivity(intent);
+
+    }
     public String[] populateString() {
 
         return new String[0];
