@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,14 +43,18 @@ public class ListingsFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArray("listings", data_array);
+    }
 
     Listing listing1 = new Listing("Used Underwear", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://mojosavings.com/wp-content/uploads/2014/07/underwear.jpg");
     Listing listing2 = new Listing("Toaster", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://c.shld.net/rpx/i/s/i/spin/-122/prod_1485509212?hei=245&wid=245&op_sharpen=1&qlt=85");
     Listing listing3 = new Listing("Lamborghini Aventador", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://o.aolcdn.com/dims-global/dims3/GLOB/legacy_thumbnail/750x422/quality/95/http://www.blogcdn.com/slideshows/images/slides/347/957/8/S3479578/slug/l/13-2015-lamborghini-aventador-roadster-review-1.jpg");
+            "Here you can see I am selling my car, it's a little slow so I want to upgrade to a faster bike. I have installed a full Yoshimura exhaust (VERY LOUD). Very good starter vehicle, my wife was able to use ti just fine. Never been dropped, the scratches are from my wife getting on and off and her jeans buttons scratched the plastics. Willing to trade for 2016+ Busa (Only if it has japanese letters decals)", "http://o.aolcdn.com/dims-global/dims3/GLOB/legacy_thumbnail/750x422/quality/95/http://www.blogcdn.com/slideshows/images/slides/347/957/8/S3479578/slug/l/13-2015-lamborghini-aventador-roadster-review-1.jpg");
     Listing listing4 = new Listing("NEW Underwear (Elephant)", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://cdn.trendhunterstatic.com/thumbs/elephant-underwear.jpeg");
     Listing listing5 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
@@ -103,6 +108,7 @@ public class ListingsFragment extends Fragment {
                 vh.threeStarBid = (TextView)convertView.findViewById(R.id.three_star_edittext);
                 vh.fourStarBid = (TextView)convertView.findViewById(R.id.four_star_edittext);
                 vh.fiveStarBid = (TextView)convertView.findViewById(R.id.five_star_edittext);
+                vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
 
                 //inflate custom layour
 
@@ -115,6 +121,7 @@ public class ListingsFragment extends Fragment {
                 vh.threeStarBid = (TextView)convertView.findViewById(R.id.three_star_edittext);
                 vh.fourStarBid = (TextView)convertView.findViewById(R.id.four_star_edittext);
                 vh.fiveStarBid = (TextView)convertView.findViewById(R.id.five_star_edittext);
+                vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
 
             }
             vh.title.setText(data_array[position].title);
@@ -124,6 +131,7 @@ public class ListingsFragment extends Fragment {
             vh.threeStarBid.setText(String.valueOf(data_array[position].getThreeStarBid()));
             vh.fourStarBid.setText(String.valueOf(data_array[position].getFourStarBid()));
             vh.fiveStarBid.setText(String.valueOf(data_array[position].getFiveStarBid()));
+            vh.button.setTag(data_array[position]);
             new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnail))
                     .execute(data_array[position].imageURL);
 
@@ -132,6 +140,7 @@ public class ListingsFragment extends Fragment {
 
         class ViewHolder {
             TextView title, noStarBid, oneStarBid, twoStarBid, threeStarBid, fourStarBid, fiveStarBid, description;
+            Button button;
             ImageView thumbnail;
         }
     }

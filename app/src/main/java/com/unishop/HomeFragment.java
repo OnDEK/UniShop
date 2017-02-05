@@ -53,7 +53,7 @@ public class HomeFragment extends android.app.Fragment {
     Listing listing2 = new Listing("Toaster", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://c.shld.net/rpx/i/s/i/spin/-122/prod_1485509212?hei=245&wid=245&op_sharpen=1&qlt=85");
     Listing listing3 = new Listing("Lamborghini Aventador", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://o.aolcdn.com/dims-global/dims3/GLOB/legacy_thumbnail/750x422/quality/95/http://www.blogcdn.com/slideshows/images/slides/347/957/8/S3479578/slug/l/13-2015-lamborghini-aventador-roadster-review-1.jpg");
+            "Here you can see I am selling my car, it's a little slow so I want to upgrade to a faster bike. I have installed a full Yoshimura exhaust (VERY LOUD). Very good starter vehicle, my wife was able to use ti just fine. Never been dropped, the scratches are from my wife getting on and off and her jeans buttons scratched the plastics. Willing to trade for 2016+ Busa (Only if it has japanese letters decals)", "http://o.aolcdn.com/dims-global/dims3/GLOB/legacy_thumbnail/750x422/quality/95/http://www.blogcdn.com/slideshows/images/slides/347/957/8/S3479578/slug/l/13-2015-lamborghini-aventador-roadster-review-1.jpg");
     Listing listing4 = new Listing("NEW Underwear (Elephant)", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
             "Selling my gf's used underwear", "http://cdn.trendhunterstatic.com/thumbs/elephant-underwear.jpeg");
     Listing listing5 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
@@ -130,7 +130,7 @@ public class HomeFragment extends android.app.Fragment {
                 vh.title2.setText(data_array[position*2+1].title);
                 new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnails))
                         .execute(data_array[position*2+1].imageURL);
-                vh.button1.setTag(data_array[position*2+1]);
+                vh.button2.setTag(data_array[position*2+1]);
             }
 
             return convertView;

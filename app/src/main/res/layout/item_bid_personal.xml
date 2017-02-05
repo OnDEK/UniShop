@@ -65,4 +65,10 @@ android:gravity="center"
         android:textColor="#FF000000"
         android:gravity="center"
         android:layout_below="@+id/bidding_personal_title" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:onClick="handleListingClick"
+        android:id="@+id/bidding_personal_button"/>
 </RelativeLayout>

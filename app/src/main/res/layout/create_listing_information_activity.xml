@@ -87,7 +87,7 @@
     <EditText
         android:layout_width="350dp"
         android:layout_height="150sp"
-        android:inputType="textAutoCorrect"
+        android:inputType="textAutoCorrect|textMultiLine"
         android:hint="Description"
         android:ems="10"
         android:gravity="center"

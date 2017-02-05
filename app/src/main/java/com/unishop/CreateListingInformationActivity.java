@@ -63,6 +63,14 @@ public class CreateListingInformationActivity extends Activity {
 
             }
         });
+
+        Intent intent = getIntent();
+        Listing listing = (Listing)intent.getParcelableExtra("listing");
+        if(listing != null) {
+            titleEditText.setText(listing.getTitle().toString());
+            descriptionEditText.setText(listing.getDescription().toString());
+            priceEditText.setText(String.valueOf(listing.getOneStarBid()));
+        }
     }
 
     public void onBackClick(View v){

@@ -48,7 +48,7 @@ public class Listing implements Parcelable{
             return new Listing[size];
         }
     };
-    public Listing(Parcel in) {
+    private Listing(Parcel in) {
         title = in.readString();
         bids[0] = in.readDouble();
         bids[1] = in.readDouble();

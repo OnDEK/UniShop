@@ -86,6 +86,12 @@ public class HomeActivity extends Activity {
         startActivity(intent);
     }
 
+    public void onEditListingClick(View v) {
+        Listing listing = (Listing)v.getTag();
+        Intent intent = new Intent(this, CreateListingInformationActivity.class);
+        intent.putExtra("listing", listing);
+        startActivity(intent);
+    }
     public void handleListingClick(View v){
         Listing listing = (Listing)v.getTag();
         Intent intent = new Intent(this, ListingActivity.class);

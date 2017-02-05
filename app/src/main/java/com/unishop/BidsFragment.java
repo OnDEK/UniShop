@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +38,12 @@ public class BidsFragment extends android.app.Fragment {
         ListView ll = (ListView) getActivity().findViewById(R.id.biddinglist);
         BidsFragment.CustomAdapter cus = new CustomAdapter();
         ll.setAdapter(cus);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArray("listings", data_array);
     }
 
     Listing listing1 = new Listing("Used Underwear", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
@@ -95,6 +102,7 @@ public class BidsFragment extends android.app.Fragment {
                 vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.topBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
+                vh.button = (Button)convertView.findViewById(R.id.bidding_personal_button);
 
 
                 //inflate custom layour
@@ -104,7 +112,10 @@ public class BidsFragment extends android.app.Fragment {
                 vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.topBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
+                vh.button = (Button)convertView.findViewById(R.id.bidding_personal_button);
+
             }
+            vh.button.setTag(data_array[position]);
             vh.title.setText(data_array[position].title);
             vh.yourBid.setText(String.valueOf(data_array[position].bids[4]));
             vh.topBid.setText(String.valueOf(data_array[position].bids[4]));
@@ -116,6 +127,7 @@ public class BidsFragment extends android.app.Fragment {
 
         class ViewHolder {
             TextView title, yourBid, topBid;
+            Button button;
             ImageView thumbnail;
         }
     }
