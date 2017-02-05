@@ -67,6 +67,12 @@ public class RegisterActivity extends Activity {
         firstnameEditText.setOnFocusChangeListener(hideKeyboardListener);
         lastnameEditText.setOnFocusChangeListener(hideKeyboardListener);
 
+        registerEmailEditText.setText("CDRTest@knights.ucf.");
+        registerPasswordEditText.setText("HardPa$$word");
+        confirmPasswordEditText.setText("HardPa$$word");
+        firstnameEditText.setText("John");
+        lastnameEditText.setText("Smith");
+
         registerEmailEditText.addTextChangedListener(new TextWatcher() {
             String currentString;
             @Override
@@ -165,7 +171,7 @@ public class RegisterActivity extends Activity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
+                    boolean success = (response.toString().contains("success"));
 
                     if(success) {
                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -179,7 +185,8 @@ public class RegisterActivity extends Activity {
                 }
             }
         };
-        RegisterRequest registerRequest = new RegisterRequest(email, password, fname, lname, responseListener);
+        fname.concat("" + lname);
+        RegisterRequest registerRequest = new RegisterRequest(email, fname, password, responseListener);
         RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
         queue.add(registerRequest);
     }

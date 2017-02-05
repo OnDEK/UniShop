@@ -42,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean TEST_MODE = true;
         if(TEST_MODE) {
-            userEmail.setText("@knights.ucf.edu");
-            userPassword.setText("test");
+            userEmail.setText("CDRTest@knights.ucf.edu");
+            userPassword.setText("HardPa$$word1");
         }
 
     }
@@ -61,18 +61,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
+                    String success = jsonResponse.getString("session_token");
 
-                    if(success) {
+                    if(success.length()>0) {
                         /**
                          * if login succeeds you can request initial account information here
-                         */
+
                         String fname = jsonResponse.getString("firstname");
                         String lname = jsonResponse.getString("lastname");
-
+                         intent.putExtra("firstname", fname);
+                         intent.putExtra("lastname", lname);
+                         */
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        intent.putExtra("firstname", fname);
-                        intent.putExtra("lastname", lname);
+
 
                         LoginActivity.this.startActivity(intent);
 
@@ -92,6 +93,10 @@ public class LoginActivity extends AppCompatActivity {
         LoginRequest loginRequest = new LoginRequest(email,password, responseListener);
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
         queue.add(loginRequest);
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+
+        LoginActivity.this.startActivity(intent);
 
     }
 

@@ -1,8 +1,12 @@
 package com.unishop;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,20 +17,28 @@ import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
 
-    private static final String REGISTER_REQUEST_URL = "http://ondektech.com/register.php";
-    private Map<String, String> params;
+    private static final String REGISTER_REQUEST_URL = "http://168.61.54.234/api/v1/register";
 
-    public RegisterRequest(String email, String password, String fname, String lname, Response.Listener<String> listener) {
+    JSONObject body = new JSONObject();
+
+    public RegisterRequest(String email, String password, String fname, Response.Listener<String> listener) {
         super(Method.POST, REGISTER_REQUEST_URL, listener, null);
-        params = new HashMap<>();
-        params.put("email", email);
-        params.put("password", password);
-        params.put("firstname", fname);
-        params.put("lastname", lname);
+        try {
+            body.put("email", email);
+            body.put("name", fname);
+            body.put("password", password);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public byte[] getBody() throws AuthFailureError {
+        return body.toString().getBytes();
     }
 
     @Override
-    public Map<String, String> getParams() {
-        return params;
+    public String getBodyContentType() {
+        return "application/json";
     }
 }
