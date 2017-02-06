@@ -46,20 +46,20 @@ public class BidsFragment extends android.app.Fragment {
         outState.putParcelableArray("listings", data_array);
     }
 
-    Listing listing1 = new Listing("Used Underwear", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://mojosavings.com/wp-content/uploads/2014/07/underwear.jpg");
+    Listing listing1 = new Listing("The Earth", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
+            "selling my stuff", "http://katelynjeffrey.net/grid_demo/Simple_Grid-WEB/images/1.jpg");
     Listing listing2 = new Listing("Toaster", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://c.shld.net/rpx/i/s/i/spin/-122/prod_1485509212?hei=245&wid=245&op_sharpen=1&qlt=85");
+            "selling my stuff", "http://c.shld.net/rpx/i/s/i/spin/-122/prod_1485509212?hei=245&wid=245&op_sharpen=1&qlt=85");
     Listing listing3 = new Listing("Lamborghini Aventador", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://o.aolcdn.com/dims-global/dims3/GLOB/legacy_thumbnail/750x422/quality/95/http://www.blogcdn.com/slideshows/images/slides/347/957/8/S3479578/slug/l/13-2015-lamborghini-aventador-roadster-review-1.jpg");
-    Listing listing4 = new Listing("NEW Underwear (Elephant)", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://cdn.trendhunterstatic.com/thumbs/elephant-underwear.jpeg");
+            "selling my stuff", "http://o.aolcdn.com/dims-global/dims3/GLOB/legacy_thumbnail/750x422/quality/95/http://www.blogcdn.com/slideshows/images/slides/347/957/8/S3479578/slug/l/13-2015-lamborghini-aventador-roadster-review-1.jpg");
+    Listing listing4 = new Listing("Elephant Trunks", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
+            "selling my stuff", "http://elelur.com/data_images/mammals/elephant/elephant-03.jpg");
     Listing listing5 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
+            "selling my stuff", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
     Listing listing6 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
+            "selling my stuff", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
     Listing listing7 = new Listing("Empty Cup", 0.0, 2.0, 2.0, 5.0, 15.0, 55.0,
-            "Selling my gf's used underwear", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
+            "selling my stuff", "http://www.randyhoexter.com/wp-content/uploads/2013/10/10645727_s.jpg");
 
     Listing[] data_array = {listing1, listing2, listing3, listing4, listing5, listing6, listing7} ;
 

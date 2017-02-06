@@ -21,7 +21,7 @@ public class RegisterRequest extends StringRequest {
 
     JSONObject body = new JSONObject();
 
-    public RegisterRequest(String email, String password, String fname, Response.Listener<String> listener) {
+    public RegisterRequest(String email, String fname, String password, Response.Listener<String> listener) {
         super(Method.POST, REGISTER_REQUEST_URL, listener, null);
         try {
             body.put("email", email);
