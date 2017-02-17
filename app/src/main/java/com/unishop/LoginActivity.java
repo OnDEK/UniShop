@@ -14,12 +14,23 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.Login;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class LoginActivity extends AppCompatActivity {
     EditText userEmail, userPassword;
+    public static final String BASE_URL = "http://168.61.54.234/api/v1/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = userEmail.getText().toString();
         String password = userPassword.getText().toString();
 
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
+        /*Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -71,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         String lname = jsonResponse.getString("lastname");
                          intent.putExtra("firstname", fname);
                          intent.putExtra("lastname", lname);
-                         */
+
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
 
 
@@ -89,11 +100,35 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
             }
-        };
+        };*
         LoginRequest loginRequest = new LoginRequest(email,password, responseListener);
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
         queue.add(loginRequest);
+        */
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        ApiEndpointInterface apiService =
+                retrofit.create(ApiEndpointInterface.class);
+        Login login = new Login();
+        Call<Login> call = apiService.login(login);
+        call.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, retrofit2.Response<Login> response) {
+                int statusCode = response.code();
+                Login login = response.body();
+                String message = login.getMessage().toString();
+            }
 
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+
+            }
+        });
     }
 
     public void handleRegisterButton(View v) {
