@@ -15,9 +15,20 @@ import android.widget.ImageView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.Login;
+import com.unishop.models.Register;
+import com.unishop.models.RegisterResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import utils.CodeUtils;
 /**
  * Created by Daniel on 10/30/16.
@@ -25,6 +36,7 @@ import utils.CodeUtils;
 
 public class RegisterActivity extends Activity {
 
+    public static final String BASE_URL = "http://168.61.54.234/api/v1/";
     EditText registerEmailEditText;
     EditText registerPasswordEditText;
     EditText confirmPasswordEditText;
@@ -67,9 +79,9 @@ public class RegisterActivity extends Activity {
         firstnameEditText.setOnFocusChangeListener(hideKeyboardListener);
         lastnameEditText.setOnFocusChangeListener(hideKeyboardListener);
 
-        registerEmailEditText.setText("CDRTest@knights.ucf.");
-        registerPasswordEditText.setText("HardPa$$word");
-        confirmPasswordEditText.setText("HardPa$$word");
+        registerEmailEditText.setText("test@knights.ucf.edu");
+        registerPasswordEditText.setText("HardPa$$word1");
+        confirmPasswordEditText.setText("HardPa$$word1");
         firstnameEditText.setText("John");
         lastnameEditText.setText("Smith");
 
@@ -165,7 +177,7 @@ public class RegisterActivity extends Activity {
             return;
         }
 
-        Response.Listener<String> responseListener = new Response.Listener<String>(){
+        /*Response.Listener<String> responseListener = new Response.Listener<String>(){
 
             @Override
             public void onResponse(String response) {
@@ -188,7 +200,33 @@ public class RegisterActivity extends Activity {
         fname.concat("" + lname);
         RegisterRequest registerRequest = new RegisterRequest(email, fname, password, responseListener);
         RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-        queue.add(registerRequest);
+        queue.add(registerRequest);*/
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        ApiEndpointInterface apiService =
+                retrofit.create(ApiEndpointInterface.class);
+        Register register = new Register(email, password, fname);
+        Call<RegisterResponse> call = apiService.register(register);
+        call.enqueue(new Callback<RegisterResponse>() {
+            @Override
+            public void onResponse(Call<RegisterResponse> call, retrofit2.Response<RegisterResponse> response) {
+                int statusCode = response.code();
+                RegisterResponse res = response.body();
+                String mes = res.getMessage().toString();
+                System.out.print(mes);
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+
+            }
+        });
     }
 
     public void hideKeyboard(View view) {

@@ -1,8 +1,13 @@
 package com.unishop.models;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Login {
+/**
+ * Created by Daniel on 2/17/17.
+ */
+
+public class Register {
 
     @SerializedName("email")
     @Expose
@@ -10,6 +15,22 @@ public class Login {
     @SerializedName("password")
     @Expose
     private String password;
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    public Register(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getEmail() {
         return email;
@@ -26,5 +47,4 @@ public class Login {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

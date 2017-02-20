@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean TEST_MODE = true;
         if(TEST_MODE) {
-            userEmail.setText("CDRTest@knights.ucf.edu");
+            userEmail.setText("test@knights.ucf.edu");
             userPassword.setText("HardPa$$word1");
         }
 
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Login> call, retrofit2.Response<Login> response) {
                 int statusCode = response.code();
                 Login login = response.body();
-                String message = login.getMessage().toString();
+
             }
 
             @Override
