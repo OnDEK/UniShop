@@ -2,7 +2,9 @@ package com.unishop;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +19,19 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.ErrorResponse;
 import com.unishop.models.Login;
+import com.unishop.models.LoginResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -112,20 +120,40 @@ public class LoginActivity extends AppCompatActivity {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        ApiEndpointInterface apiService =
+        final ApiEndpointInterface apiService =
                 retrofit.create(ApiEndpointInterface.class);
-        Login login = new Login();
-        Call<Login> call = apiService.login(login);
-        call.enqueue(new Callback<Login>() {
+        Login login = new Login(email, password);
+        Call<LoginResponse> call = apiService.login(login);
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<Login> call, retrofit2.Response<Login> response) {
+            public void onResponse(Call<LoginResponse> call, retrofit2.Response<LoginResponse> response) {
                 int statusCode = response.code();
-                Login login = response.body();
+                if(statusCode == 200) {
+                    LoginResponse res = response.body();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    LoginActivity.this.startActivity(intent);
+
+                    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.unishop.preference_file", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("session_token", res.getSessionToken());
+                    editor.commit();
+                }
+                else{
+                    Gson gson = new GsonBuilder().create();
+                    ErrorResponse error = new ErrorResponse();
+                    try {
+                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                    }catch (IOException e) {}
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
+                }
 
             }
 
             @Override
-            public void onFailure(Call<Login> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
 
             }
         });

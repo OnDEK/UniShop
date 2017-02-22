@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,12 +19,15 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.ErrorResponse;
 import com.unishop.models.Login;
 import com.unishop.models.Register;
 import com.unishop.models.RegisterResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -217,9 +221,25 @@ public class RegisterActivity extends Activity {
             @Override
             public void onResponse(Call<RegisterResponse> call, retrofit2.Response<RegisterResponse> response) {
                 int statusCode = response.code();
-                RegisterResponse res = response.body();
-                String mes = res.getMessage().toString();
-                System.out.print(mes);
+
+                if(statusCode == 200) {
+                    finish();
+                }
+                else if(statusCode == 500) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setMessage("Registration Failed.\nInternal Server Error").setNegativeButton("Okay", null).create().show();
+                }
+                else{
+                    Gson gson = new GsonBuilder().create();
+                    ErrorResponse error = new ErrorResponse();
+                    try {
+                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                    }catch (IOException e) {}
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
+                }
             }
 
             @Override
