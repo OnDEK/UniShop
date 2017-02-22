@@ -1,7 +1,9 @@
 package com.unishop.models;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -19,4 +21,10 @@ public interface ApiEndpointInterface {
 
     @POST("item/create")
     Call<CreateResponse> create(@Body Create create, @Header("Authorization") String token);
+
+    @GET("testauth")
+    Call<ResponseBody> testauth(@Body Authentication authentication);
+
+    @POST("logout")
+    Call<ResponseBody> logout(@Body Logout logout);
 }

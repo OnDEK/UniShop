@@ -16,7 +16,7 @@ public class Create {
     @SerializedName("price")
     @Expose
     private Integer price;
-    @SerializedName("category")
+    @SerializedName("category_id")
     @Expose
     private Integer category;
     @SerializedName("session_token")

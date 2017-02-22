@@ -2,6 +2,7 @@ package com.unishop;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -162,6 +163,9 @@ public class RegisterActivity extends Activity {
     }
 
     public void handleRegisterRequest(View v) {
+
+        final ProgressDialog dialog = ProgressDialog.show(RegisterActivity.this, "",
+                "Registering...", true);
         final String email = registerEmailEditText.getText().toString();
         final String password = registerPasswordEditText.getText().toString();
         final String confirmPassword = confirmPasswordEditText.getText().toString();
@@ -223,13 +227,17 @@ public class RegisterActivity extends Activity {
                 int statusCode = response.code();
 
                 if(statusCode == 200) {
+                    dialog.cancel();
                     finish();
                 }
                 else if(statusCode == 500) {
+                    dialog.cancel();
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setMessage("Registration Failed.\nInternal Server Error").setNegativeButton("Okay", null).create().show();
                 }
                 else{
+                    dialog.cancel();
                     Gson gson = new GsonBuilder().create();
                     ErrorResponse error = new ErrorResponse();
                     try {
@@ -244,7 +252,9 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
-
+                dialog.cancel();
+                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                builder.setMessage("Unable to register.\nPlease check your connection and try again").setNegativeButton("Okay", null).create().show();
             }
         });
     }
