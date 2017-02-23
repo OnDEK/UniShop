@@ -10,10 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-
-/**
- * Created by Daniel on 6/18/16.
- */
 public class SplashScreen extends Activity{
 
     protected void onCreate(Bundle savedInstanceState) {

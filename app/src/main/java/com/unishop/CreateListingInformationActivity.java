@@ -19,6 +19,7 @@ import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Create;
 import com.unishop.models.CreateResponse;
 import com.unishop.models.ErrorResponse;
+import com.unishop.utils.NetworkUtils;
 
 import java.io.IOException;
 
@@ -107,28 +108,17 @@ public class CreateListingInformationActivity extends Activity {
 
     public void onSubmitClick(View v){
 
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.unishop.preference_file", Context.MODE_PRIVATE);
-        String token = new String("Bearer");
-        String session = sharedPref.getString("session_token", "");
-        token = token.concat(" " + session);
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        ApiEndpointInterface apiService =
-                retrofit.create(ApiEndpointInterface.class);
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+
         Create create = new Create(
                 titleEditText.getText().toString(),
                 descriptionEditText.getText().toString(),
                 Integer.valueOf(priceEditText.getText().toString())*100,
                 1);
 
-
-        Call<CreateResponse> call = apiService.create(create, token);
+        Call<CreateResponse> call = apiService.create(create, sessionToken);
 
         call.enqueue(new Callback<CreateResponse>() {
             @Override
@@ -137,7 +127,8 @@ public class CreateListingInformationActivity extends Activity {
                 if(statusCode == 200) {
                     CreateResponse res = response.body();
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateListingInformationActivity.this);
-                    builder.setMessage("Created item success.\nItem ID: " + res.getItemId()).setNegativeButton("Okay", null).create().show();
+                    builder.setMessage("Created item success.\nItemContainer ID: " + res.getItemId()).setNegativeButton("Okay", null).create().show();
+                    finish();
                 }
                 else{
                     Gson gson = new GsonBuilder().create();

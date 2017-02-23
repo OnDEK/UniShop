@@ -23,8 +23,11 @@ public interface ApiEndpointInterface {
     Call<CreateResponse> create(@Body Create create, @Header("Authorization") String token);
 
     @GET("testauth")
-    Call<ResponseBody> testauth(@Body Authentication authentication);
+    Call<ResponseBody> testauth(@Header("Authorization") String token);
 
     @POST("logout")
-    Call<ResponseBody> logout(@Body Logout logout);
+    Call<ResponseBody> logout(@Header("Authorization") String token);
+
+    @GET("account/items")
+    Call<AccountItems> accountItems(@Header("Authorization") String token);
 }

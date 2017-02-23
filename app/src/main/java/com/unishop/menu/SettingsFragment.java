@@ -1,4 +1,4 @@
-package com.unishop;
+package com.unishop.menu;
 
 
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.unishop.R;
 
 /**
  * Created by Daniel on 1/13/17.

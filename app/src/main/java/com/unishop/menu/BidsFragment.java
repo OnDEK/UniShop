@@ -1,4 +1,4 @@
-package com.unishop;
+package com.unishop.menu;
 
 
 import android.content.Context;
@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.unishop.Listing;
+import com.unishop.R;
 
 import java.io.InputStream;
 

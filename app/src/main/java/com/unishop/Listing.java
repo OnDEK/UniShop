@@ -9,11 +9,11 @@ import java.lang.Double;
 
 public class Listing implements Parcelable{
 
-    String title;
-    double[] bids = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-    String[] bidderID = {"", "", "", "", "", ""};
-    String description;
-    String imageURL;
+    public String title;
+    public double[] bids = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    public String[] bidderID = {"", "", "", "", "", ""};
+    public String description;
+    public String imageURL;
 
 
     @Override
@@ -66,7 +66,7 @@ public class Listing implements Parcelable{
         imageURL = in.readString();
     }
 
-    Listing(String title, double zeroBid, double oneBid, double twoBid, double threeBid,
+    public Listing(String title, double zeroBid, double oneBid, double twoBid, double threeBid,
             double fourBid, double fiveBid, String description, String imageURL) {
 
         this.title = title;

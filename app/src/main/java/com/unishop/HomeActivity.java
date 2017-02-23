@@ -7,30 +7,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.IdRes;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+import com.unishop.menu.BidsFragment;
+import com.unishop.menu.HomeFragment;
+import com.unishop.menu.ListingsFragment;
+import com.unishop.menu.MoreFragment;
+import com.unishop.menu.SettingsFragment;
 import com.unishop.models.ApiEndpointInterface;
-import com.unishop.models.Logout;
+import com.unishop.utils.NetworkUtils;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Daniel on 10/30/16.
@@ -114,28 +107,24 @@ public class HomeActivity extends Activity {
 
     }
     public void handleLogout(View v){
-        final SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.unishop.preference_file", Context.MODE_PRIVATE);
-        String token = sharedPref.getString("session_token", "");
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        ApiEndpointInterface apiService =
-                retrofit.create(ApiEndpointInterface.class);
-        Logout logout = new Logout(token);
-        Call<ResponseBody> call = apiService.logout(logout);
+
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+
+        Call<ResponseBody> call = apiService.logout(sessionToken);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 int statusCode = response.code();
                 if(statusCode == 200) {
+                    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.unishop.preference_file", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("session_token", "");
                     editor.commit();
+                    Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
             }
 
@@ -151,4 +140,31 @@ public class HomeActivity extends Activity {
         return new String[0];
     }
 
+    @Override
+    public void onBackPressed() {
+
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+
+
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+
+        Call<ResponseBody> call = apiService.testauth(sessionToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                int statusCode = response.code();
+
+                if(statusCode == 200){
+                    Intent i = new Intent(Intent.ACTION_MAIN);
+                    i.addCategory(Intent.CATEGORY_HOME);
+                    startActivity(i);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 }

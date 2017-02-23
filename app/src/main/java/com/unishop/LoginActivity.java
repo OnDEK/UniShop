@@ -6,35 +6,25 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Authenticator;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.unishop.models.ApiEndpointInterface;
-import com.unishop.models.Authentication;
 import com.unishop.models.ErrorResponse;
 import com.unishop.models.Login;
 import com.unishop.models.LoginResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.unishop.utils.NetworkUtils;
 
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -45,39 +35,36 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.unishop.preference_file", Context.MODE_PRIVATE);
-        String token = sharedPref.getString("session_token", "");
+        String token = new String("Bearer");
+        String session = sharedPref.getString("session_token", "");
+        token = token.concat(" " + session);
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        final ApiEndpointInterface apiService =
-                retrofit.create(ApiEndpointInterface.class);
-        Authentication auth = new Authentication(token);
-        Call<ResponseBody> call = apiService.testauth(auth);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                int statusCode = response.code();
-                if(statusCode == 200) {
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    LoginActivity.this.startActivity(intent);
+        if(token.length() > 0) {
+
+            ApiEndpointInterface apiService = NetworkUtils.getApiService();
+
+            Call<ResponseBody> call = apiService.testauth(token);
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    int statusCode = response.code();
+                    if(statusCode == 200) {
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        LoginActivity.this.startActivity(intent);
+                    }
+                    else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setMessage("Session expired. Please log in again").setNegativeButton("Okay", null).create().show();
+                    }
                 }
-                else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("Session expired. Please log in again").setNegativeButton("Okay", null).create().show();
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
                 }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
+            });
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -97,48 +84,30 @@ public class LoginActivity extends AppCompatActivity {
         userEmail.setOnFocusChangeListener(hideKeyboardListener);
         userPassword.setOnFocusChangeListener(hideKeyboardListener);
 
-        boolean TEST_MODE = true;
+        String email = sharedPref.getString("email", "");
+        userEmail.setText(email);
+        userPassword.setText("HardPa$$word1");
+
+       /* boolean TEST_MODE = true;
         if(TEST_MODE) {
             userEmail.setText("test@knights.ucf.edu");
             userPassword.setText("HardPa$$word1");
-        }
+        }*/
 
     }
 
     @Override
-    protected void onRestart() {
+    protected void onStart() {
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.unishop.preference_file", Context.MODE_PRIVATE);
+        String email = sharedPref.getString("email", "");
+        userEmail.setText(email);
+        super.onStart();
+    }
 
-        String token = sharedPref.getString("session_token", "");
+    @Override
+    protected void onRestart() {
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        final ApiEndpointInterface apiService =
-                retrofit.create(ApiEndpointInterface.class);
-        Authentication auth = new Authentication(token);
-        Call<ResponseBody> call = apiService.testauth(auth);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                int statusCode = response.code();
-
-                if(statusCode == 200){
-                    Intent i = new Intent(Intent.ACTION_MAIN);
-                    i.addCategory(Intent.CATEGORY_HOME);
-                    startActivity(i);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
+        super.onRestart();
     }
 
     public void handleLogin(View v) {
@@ -148,56 +117,11 @@ public class LoginActivity extends AppCompatActivity {
         /**
          * This is where logging in will be handled
          */
-        String email = userEmail.getText().toString();
+        final String email = userEmail.getText().toString();
         String password = userPassword.getText().toString();
 
-        /*Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    String success = jsonResponse.getString("session_token");
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
 
-                    if(success.length()>0) {
-                        /**
-                         * if login succeeds you can request initial account information here
-
-                        String fname = jsonResponse.getString("firstname");
-                        String lname = jsonResponse.getString("lastname");
-                         intent.putExtra("firstname", fname);
-                         intent.putExtra("lastname", lname);
-
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-
-
-                        LoginActivity.this.startActivity(intent);
-
-
-                    }else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                        builder.setMessage("Login Failed").setNegativeButton("Retry", null).create().show();
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };*
-        LoginRequest loginRequest = new LoginRequest(email,password, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-        queue.add(loginRequest);
-        */
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        final ApiEndpointInterface apiService =
-                retrofit.create(ApiEndpointInterface.class);
         Login login = new Login(email, password);
         Call<LoginResponse> call = apiService.login(login);
         call.enqueue(new Callback<LoginResponse>() {
@@ -213,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("com.unishop.preference_file", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("session_token", res.getSessionToken());
+                    editor.putString("email", email);
                     editor.commit();
                 }
                 else{

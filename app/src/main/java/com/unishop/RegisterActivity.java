@@ -3,7 +3,6 @@ package com.unishop;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,21 +11,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.ErrorResponse;
-import com.unishop.models.Login;
 import com.unishop.models.Register;
 import com.unishop.models.RegisterResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.unishop.utils.NetworkUtils;
 
 import java.io.IOException;
 
@@ -34,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import utils.CodeUtils;
+
 /**
  * Created by Daniel on 10/30/16.
  */
@@ -185,40 +177,8 @@ public class RegisterActivity extends Activity {
             return;
         }
 
-        /*Response.Listener<String> responseListener = new Response.Listener<String>(){
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
 
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = (response.toString().contains("success"));
-
-                    if(success) {
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        RegisterActivity.this.startActivity(intent);
-                    }else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                        builder.setMessage("Registration Failed").setNegativeButton("Retry", null).create().show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        fname.concat("" + lname);
-        RegisterRequest registerRequest = new RegisterRequest(email, fname, password, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-        queue.add(registerRequest);*/
-
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        ApiEndpointInterface apiService =
-                retrofit.create(ApiEndpointInterface.class);
         Register register = new Register(email, password, fname);
         Call<RegisterResponse> call = apiService.register(register);
         call.enqueue(new Callback<RegisterResponse>() {
