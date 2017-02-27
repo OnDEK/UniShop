@@ -176,6 +176,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:background="#00000000"
-        android:onClick="onEditListingClick"/>
+        android:onClick="handleListingClick" />
+
+    <Button
+        android:background="@drawable/delete_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/listing_personal_button_delete"
+        android:visibility="invisible"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignBaseline="@+id/listing_personal_biddinginfo_edittext"
+        android:layout_alignBottom="@+id/listing_personal_biddinginfo_edittext"
+        android:layout_alignParentEnd="true"
+        android:onClick="onDeleteListingClick"/>
 
 </RelativeLayout>

@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by kaosp on 2/13/17.
@@ -30,4 +31,10 @@ public interface ApiEndpointInterface {
 
     @GET("account/items")
     Call<AccountItems> accountItems(@Header("Authorization") String token);
+
+    @POST("item/{itemid}/destroy")
+    Call<ResponseBody> itemDestroy(@Path("itemid") String itemID, @Header("Authorization") String token);
+
+    @POST("item/{itemid}")
+    Call<ResponseBody> itemUpdate(@Body ItemUpdate itemUpdate, @Path("itemid") String itemID, @Header("Authorization") String token);
 }

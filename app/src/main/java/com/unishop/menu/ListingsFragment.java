@@ -104,7 +104,7 @@ public class ListingsFragment extends Fragment {
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            return itemArray.size();//listview item count.
+            return itemsList.size();//listview item count.
         }
 
         @Override
@@ -152,7 +152,9 @@ public class ListingsFragment extends Fragment {
                 vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
 
             }
-            vh.title.setText(itemArray.get(position).getTitle());
+            convertView.findViewById(R.id.listing_personal_button).setTag(itemsList.get(position));
+            convertView.findViewById(R.id.listing_personal_button_delete).setTag(itemsList.get(position));
+            vh.title.setText(itemsList.get(position).getItem().getTitle());
 
 
             return convertView;

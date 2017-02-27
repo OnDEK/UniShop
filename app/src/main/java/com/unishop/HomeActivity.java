@@ -9,7 +9,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.unishop.menu.BidsFragment;
@@ -18,6 +23,7 @@ import com.unishop.menu.ListingsFragment;
 import com.unishop.menu.MoreFragment;
 import com.unishop.menu.SettingsFragment;
 import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.ItemContainer;
 import com.unishop.utils.NetworkUtils;
 
 import okhttp3.ResponseBody;
@@ -33,6 +39,7 @@ public class HomeActivity extends Activity {
 
     public static final String BASE_URL = "http://168.61.54.234/api/v1/";
 
+    ListingsFragment listingsFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +54,7 @@ public class HomeActivity extends Activity {
         // homeTextView.setTextColor(0xFF000000);
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.selectTabAtPosition(2);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -60,7 +68,7 @@ public class HomeActivity extends Activity {
                         fragmentTransaction.commit();
                         break;
                     case R.id.bottombaritemtwo:
-                        ListingsFragment listingsFragment = new ListingsFragment();
+                        listingsFragment = new ListingsFragment();
                         fragmentTransaction.replace(R.id.contentContainer, listingsFragment);
                         fragmentTransaction.commit();
 
@@ -94,18 +102,77 @@ public class HomeActivity extends Activity {
     }
 
     public void onEditListingClick(View v) {
-        Listing listing = (Listing)v.getTag();
+        ItemContainer item =(ItemContainer) v.getTag();
+        Gson gson = new Gson();
         Intent intent = new Intent(this, CreateListingInformationActivity.class);
-        intent.putExtra("listing", listing);
+        intent.putExtra("item", gson.toJson(item));
         startActivity(intent);
     }
     public void handleListingClick(View v){
-        Listing listing = (Listing)v.getTag();
+        ItemContainer item =(ItemContainer) v.getTag();
+        Gson gson = new Gson();
         Intent intent = new Intent(this, ListingActivity.class);
-        intent.putExtra("listing", listing);
+        intent.putExtra("item", gson.toJson(item));
         startActivity(intent);
 
     }
+
+    public void onDeleteListingClick(View v) {
+
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+
+        ItemContainer item =(ItemContainer) v.getTag();
+        Call<ResponseBody> call = apiService.itemDestroy(item.getItemId().toString(), sessionToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                int statusCode = response.code();
+
+                if(statusCode == 200) {
+                    Toast.makeText(getApplicationContext(), "Item Deleted",
+                            Toast.LENGTH_SHORT).show();
+                    listingsFragment.onResume();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void setListEditable(View v) {
+        ListView listView = (ListView)findViewById(R.id.listingList);
+
+        for (int i = 0; i < listView.getCount(); i++) {
+            View view = listView.getChildAt(i);
+            Button deleteButton = (Button)view.findViewById(R.id.listing_personal_button_delete);
+            Button editButton = (Button)view.findViewById(R.id.listing_personal_button);
+            if(deleteButton.getVisibility() == View.VISIBLE) {
+                deleteButton.setVisibility(View.INVISIBLE);
+                editButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        handleListingClick(v);
+                    }
+                });
+            }else {
+                deleteButton.setVisibility(View.VISIBLE);
+                deleteButton.bringToFront();
+                editButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onEditListingClick(v);
+                    }
+                });
+
+            }
+
+        }
+    }
+
     public void handleLogout(View v){
 
 

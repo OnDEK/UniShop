@@ -71,8 +71,8 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/logo"
         android:id="@+id/loginLogoImageView"
-        android:layout_above="@+id/emailEditText"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="36dp"
-        android:layout_marginLeft="70dp"/>
+        android:layout_marginLeft="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
 </RelativeLayout>

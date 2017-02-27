@@ -11,7 +11,9 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +21,8 @@ import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Create;
 import com.unishop.models.CreateResponse;
 import com.unishop.models.ErrorResponse;
+import com.unishop.models.ItemContainer;
+import com.unishop.models.ItemUpdate;
 import com.unishop.utils.NetworkUtils;
 
 import java.io.IOException;
@@ -26,6 +30,7 @@ import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,12 +93,45 @@ public class CreateListingInformationActivity extends Activity {
             }
         });
 
-        Intent intent = getIntent();
-        Listing listing = (Listing)intent.getParcelableExtra("listing");
-        if(listing != null) {
-            titleEditText.setText(listing.getTitle().toString());
-            descriptionEditText.setText(listing.getDescription().toString());
-            priceEditText.setText(String.valueOf(listing.getOneStarBid()));
+        Gson gson = new Gson();
+        String strObj = getIntent().getStringExtra("item");
+        ItemContainer item = gson.fromJson(strObj, ItemContainer.class);
+
+        if(item != null) {
+            final String itemID = item.getItemId().toString();
+            titleEditText.setText(item.getItem().getTitle().toString());
+            descriptionEditText.setText(item.getItem().getDescription().toString());
+            priceEditText.setText(item.getItem().getPrice().toString());
+            Button updateButton = (Button) findViewById(R.id.createlisting_publish);
+            updateButton.setText("Update");
+            updateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String title = titleEditText.getText().toString();
+                    String description = descriptionEditText.getText().toString();
+                    Integer price = Integer.valueOf(priceEditText.getText().toString());
+
+                    ItemUpdate itemUpdate = new ItemUpdate(title, description, price, 1);
+                    String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+                    ApiEndpointInterface apiService = NetworkUtils.getApiService();
+                    Call<ResponseBody> call = apiService.itemUpdate(itemUpdate, itemID, sessionToken);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            Toast.makeText(getApplicationContext(), "Item Updated",
+                                    Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
+
+                }
+            });
+            //priceEditText.setText(String.valueOf(item.getItem().getOneStarBid()));
         }
     }
 

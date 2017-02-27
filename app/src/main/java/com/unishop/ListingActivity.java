@@ -12,6 +12,9 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.unishop.models.ItemContainer;
+
 import java.io.InputStream;
 
 /**
@@ -30,8 +33,9 @@ public class ListingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
 
-        Intent intent = getIntent();
-        Listing listing = (Listing) intent.getParcelableExtra("listing");
+        Gson gson = new Gson();
+        String strObj = getIntent().getStringExtra("item");
+        ItemContainer item = gson.fromJson(strObj, ItemContainer.class);
 
         title = (TextView) findViewById(R.id.listing_title);
         description = (TextView) findViewById(R.id.listing_description);
@@ -42,9 +46,9 @@ public class ListingActivity extends Activity {
         preview4 = (ImageView)findViewById(R.id.listing_image_preview4);
         preview5 = (ImageView)findViewById(R.id.listing_image_preview5);
 
-        titleString = listing.getTitle().toString();
-        descriptionString = listing.getDescription().toString();
-        imageURL = listing.getImageURL().toString();
+        titleString = item.getItem().getTitle().toString();
+        descriptionString = item.getItem().getDescription().toString();
+        //imageURL = item.getItem().getImageURL().toString();
 
         title.setText(titleString);
         description.setText(descriptionString);
