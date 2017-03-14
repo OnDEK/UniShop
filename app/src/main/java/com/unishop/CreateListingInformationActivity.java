@@ -21,7 +21,7 @@ import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Create;
 import com.unishop.models.CreateResponse;
 import com.unishop.models.ErrorResponse;
-import com.unishop.models.ItemContainer;
+import com.unishop.models.Item;
 import com.unishop.models.ItemUpdate;
 import com.unishop.utils.NetworkUtils;
 
@@ -95,13 +95,13 @@ public class CreateListingInformationActivity extends Activity {
 
         Gson gson = new Gson();
         String strObj = getIntent().getStringExtra("item");
-        ItemContainer item = gson.fromJson(strObj, ItemContainer.class);
+        Item item = gson.fromJson(strObj, Item.class);
 
         if(item != null) {
-            final String itemID = item.getItemId().toString();
-            titleEditText.setText(item.getItem().getTitle().toString());
-            descriptionEditText.setText(item.getItem().getDescription().toString());
-            priceEditText.setText(item.getItem().getPrice().toString());
+            final String itemID = item.getId().toString();
+            titleEditText.setText(item.getTitle().toString());
+            descriptionEditText.setText(item.getDescription().toString());
+            priceEditText.setText(item.getPrice().toString());
             Button updateButton = (Button) findViewById(R.id.createlisting_publish);
             updateButton.setText("Update");
             updateButton.setOnClickListener(new View.OnClickListener() {

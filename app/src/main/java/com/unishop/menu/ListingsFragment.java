@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,10 +21,8 @@ import android.widget.TextView;
 import com.unishop.HomeActivity;
 import com.unishop.Listing;
 import com.unishop.R;
-import com.unishop.models.AccountItems;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Item;
-import com.unishop.models.ItemContainer;
 import com.unishop.utils.NetworkUtils;
 
 import java.io.InputStream;
@@ -42,7 +39,7 @@ import retrofit2.Response;
 
 public class ListingsFragment extends Fragment {
 
-    List<ItemContainer> itemsList;
+    List<Item> itemsList;
     ArrayList<Item> itemArray = new ArrayList<>();
 
     @Nullable
@@ -59,16 +56,15 @@ public class ListingsFragment extends Fragment {
                 "Loading listings", true);
         String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
-        Call<AccountItems> call = apiService.accountItems(sessionToken);
-        call.enqueue(new Callback<AccountItems>() {
+        Call<List<Item>> call = apiService.accountItems(sessionToken);
+        call.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onResponse(Call<AccountItems> call, Response<AccountItems> response) {
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 int statuscode = response.code();
-                AccountItems items = response.body();
+                List<Item> itemsList = response.body();
                 if(statuscode == 200) {
-                    itemsList = items.getItems();
-                    for(ItemContainer item: itemsList) {
-                        itemArray.add(item.getItem());
+                    for(Item item: itemsList) {
+                        itemArray.add(item);
                     }
 
                     ListView ll = (ListView) getActivity().findViewById(R.id.listingList);
@@ -79,7 +75,7 @@ public class ListingsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<AccountItems> call, Throwable t) {
+            public void onFailure(Call<List<Item>> call, Throwable t) {
                 dialog.cancel();
             }
         });
@@ -104,7 +100,7 @@ public class ListingsFragment extends Fragment {
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            return itemsList.size();//listview item count.
+            return itemArray.size();//listview item count.
         }
 
         @Override
@@ -152,9 +148,9 @@ public class ListingsFragment extends Fragment {
                 vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
 
             }
-            convertView.findViewById(R.id.listing_personal_button).setTag(itemsList.get(position));
-            convertView.findViewById(R.id.listing_personal_button_delete).setTag(itemsList.get(position));
-            vh.title.setText(itemsList.get(position).getItem().getTitle());
+            convertView.findViewById(R.id.listing_personal_button).setTag(itemArray.get(position));
+            convertView.findViewById(R.id.listing_personal_button_delete).setTag(itemArray.get(position));
+            vh.title.setText(itemArray.get(position).getTitle());
 
 
             return convertView;

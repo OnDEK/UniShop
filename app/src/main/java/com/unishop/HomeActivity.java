@@ -23,7 +23,7 @@ import com.unishop.menu.ListingsFragment;
 import com.unishop.menu.MoreFragment;
 import com.unishop.menu.SettingsFragment;
 import com.unishop.models.ApiEndpointInterface;
-import com.unishop.models.ItemContainer;
+import com.unishop.models.Item;
 import com.unishop.utils.NetworkUtils;
 
 import okhttp3.ResponseBody;
@@ -102,14 +102,14 @@ public class HomeActivity extends Activity {
     }
 
     public void onEditListingClick(View v) {
-        ItemContainer item =(ItemContainer) v.getTag();
+        Item item =(Item) v.getTag();
         Gson gson = new Gson();
         Intent intent = new Intent(this, CreateListingInformationActivity.class);
         intent.putExtra("item", gson.toJson(item));
         startActivity(intent);
     }
     public void handleListingClick(View v){
-        ItemContainer item =(ItemContainer) v.getTag();
+        Item item =(Item) v.getTag();
         Gson gson = new Gson();
         Intent intent = new Intent(this, ListingActivity.class);
         intent.putExtra("item", gson.toJson(item));
@@ -122,8 +122,8 @@ public class HomeActivity extends Activity {
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
         String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
 
-        ItemContainer item =(ItemContainer) v.getTag();
-        Call<ResponseBody> call = apiService.itemDestroy(item.getItemId().toString(), sessionToken);
+        Item item =(Item) v.getTag();
+        Call<ResponseBody> call = apiService.itemDestroy(item.getId().toString(), sessionToken);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

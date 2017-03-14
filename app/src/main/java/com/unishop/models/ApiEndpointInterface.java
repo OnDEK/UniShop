@@ -1,5 +1,7 @@
 package com.unishop.models;
 
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,11 +32,17 @@ public interface ApiEndpointInterface {
     Call<ResponseBody> logout(@Header("Authorization") String token);
 
     @GET("account/items")
-    Call<AccountItems> accountItems(@Header("Authorization") String token);
+    Call<List<Item>> accountItems(@Header("Authorization") String token);
 
     @POST("item/{itemid}/destroy")
     Call<ResponseBody> itemDestroy(@Path("itemid") String itemID, @Header("Authorization") String token);
 
     @POST("item/{itemid}")
     Call<ResponseBody> itemUpdate(@Body ItemUpdate itemUpdate, @Path("itemid") String itemID, @Header("Authorization") String token);
+
+    @GET("items")
+    Call<List<Item>> unownedItems(@Header("Authorization") String token);
+
+
+
 }

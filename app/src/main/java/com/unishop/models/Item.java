@@ -9,31 +9,37 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item {
 
-    @SerializedName("category_id")
+    @SerializedName("category")
     @Expose
-    private Integer categoryId;
+    private Category category;
     @SerializedName("created_date")
     @Expose
     private String createdDate;
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("modified_date")
+    @SerializedName("id")
     @Expose
-    private Object modifiedDate;
+    private Integer id;
     @SerializedName("price")
     @Expose
     private Integer price;
+    @SerializedName("seller_rating")
+    @Expose
+    private Integer sellerRating;
     @SerializedName("title")
     @Expose
     private String title;
+    @SerializedName("view_count")
+    @Expose
+    private Integer viewCount;
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getCreatedDate() {
@@ -52,12 +58,12 @@ public class Item {
         this.description = description;
     }
 
-    public Object getModifiedDate() {
-        return modifiedDate;
+    public Integer getId() {
+        return id;
     }
 
-    public void setModifiedDate(Object modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getPrice() {
@@ -68,12 +74,28 @@ public class Item {
         this.price = price;
     }
 
+    public Integer getSellerRating() {
+        return sellerRating;
+    }
+
+    public void setSellerRating(Integer sellerRating) {
+        this.sellerRating = sellerRating;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
 }
