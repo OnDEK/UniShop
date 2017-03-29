@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class NetworkUtils {
-    public static final String BASE_URL = "http://168.61.54.234/api/v1/";
+    public static final String BASE_URL = "https://unishop.shop/api/v1/";
 
 
 

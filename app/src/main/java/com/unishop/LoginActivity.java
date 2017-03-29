@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = sharedPref.getString("email", "");
         userEmail.setText(email);
-        userPassword.setText("HardPa$$word1");
+        userPassword.setText("unishop");
 
        /* boolean TEST_MODE = true;
         if(TEST_MODE) {

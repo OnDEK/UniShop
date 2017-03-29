@@ -1,6 +1,7 @@
 package com.unishop.menu;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,12 +19,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.unishop.Listing;
+import com.unishop.LoginActivity;
 import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.ErrorResponse;
 import com.unishop.models.Item;
 import com.unishop.utils.NetworkUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +75,17 @@ public class HomeFragment extends android.app.Fragment {
                     HomeFragment.CustomAdapter cus = new HomeFragment.CustomAdapter();
                     ll.setAdapter(cus);
                     dialog.cancel();
+                }
+                else {
+                    Gson gson = new GsonBuilder().create();
+                    ErrorResponse error = new ErrorResponse();
+                    try {
+                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                    }catch (IOException e) {}
+                    dialog.cancel();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
                 }
             }
 
@@ -153,7 +170,8 @@ public class HomeFragment extends android.app.Fragment {
                 //        .execute(data_array[position*2+1].imageURL);
                 vh.button2.setTag(itemArray.get(position*2+1));
             }
-
+            vh.button2.setTag(R.id.source, "home");
+            vh.button1.setTag(R.id.source, "home");
             return convertView;
         }
 

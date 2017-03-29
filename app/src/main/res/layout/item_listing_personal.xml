@@ -189,6 +189,7 @@
         android:layout_alignBaseline="@+id/listing_personal_biddinginfo_edittext"
         android:layout_alignBottom="@+id/listing_personal_biddinginfo_edittext"
         android:layout_alignParentEnd="true"
-        android:onClick="onDeleteListingClick"/>
+        android:onClick="onDeleteListingClick">
+    </Button>
 
 </RelativeLayout>

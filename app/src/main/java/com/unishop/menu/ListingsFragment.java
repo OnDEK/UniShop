@@ -148,7 +148,9 @@ public class ListingsFragment extends Fragment {
                 vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
 
             }
+
             convertView.findViewById(R.id.listing_personal_button).setTag(itemArray.get(position));
+            convertView.findViewById(R.id.listing_personal_button).setTag(R.id.source, "personal");
             convertView.findViewById(R.id.listing_personal_button_delete).setTag(itemArray.get(position));
             vh.title.setText(itemArray.get(position).getTitle());
 

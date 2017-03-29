@@ -9,13 +9,24 @@ import android.media.audiofx.AudioEffect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Item;
+import com.unishop.models.Offer;
+import com.unishop.utils.NetworkUtils;
 
 import java.io.InputStream;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by kaosp on 1/31/17.
@@ -23,19 +34,27 @@ import java.io.InputStream;
 
 public class ListingActivity extends Activity {
 
+    Item item;
     String titleString, descriptionString, imageURL;
     TextView title, description;
     ImageView thumbnail, preview1, preview2, preview3, preview4, preview5;
     ImageView[] images = {thumbnail, preview1, preview2, preview3, preview4, preview5};
+    EditText bid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
 
+        String source = getIntent().getStringExtra("source");
+        if(source.equals("personal")) {
+            Button bidButton = (Button) findViewById(R.id.submit_bid_button);
+            bidButton.setVisibility(View.INVISIBLE);
+            bidButton.setClickable(false);
+        }
         Gson gson = new Gson();
         String strObj = getIntent().getStringExtra("item");
-        Item item = gson.fromJson(strObj, Item.class);
+        item = gson.fromJson(strObj, Item.class);
 
         title = (TextView) findViewById(R.id.listing_title);
         description = (TextView) findViewById(R.id.listing_description);
@@ -45,39 +64,38 @@ public class ListingActivity extends Activity {
         preview3 = (ImageView)findViewById(R.id.listing_image_preview3);
         preview4 = (ImageView)findViewById(R.id.listing_image_preview4);
         preview5 = (ImageView)findViewById(R.id.listing_image_preview5);
-
+        bid = (EditText)findViewById(R.id.listing_bid_editText);
         titleString = item.getTitle().toString();
         descriptionString = item.getDescription().toString();
         //imageURL = item.getItem().getImageURL().toString();
 
         title.setText(titleString);
         description.setText(descriptionString);
-        new DownloadImageTask(thumbnail)
-                .execute(imageURL);
 
     }
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
+    public void submitBid(View v) {
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+        String bidString = bid.getText().toString();
+        bidString = bidString.replace(".","");
+        Integer bidInt = Integer.valueOf(bidString);
+        Offer offer = new Offer(bidInt);
+        Call<ResponseBody> call = apiService.offer(offer, item.getId().toString(), sessionToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                int statusCode = response.code();
+                if(statusCode == 200) {
 
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+                }
             }
-            return mIcon11;
-        }
 
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
+
 }

@@ -80,7 +80,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/listing_bid_editText"
         android:layout_alignStart="@+id/listing_bid_editText"
-        android:id="@+id/submit_bid_button" />
+        android:id="@+id/submit_bid_button"
+        android:onClick="submitBid"
+        />
 
     <TextView
         android:text="description"

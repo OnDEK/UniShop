@@ -76,9 +76,9 @@ public class RegisterActivity extends Activity {
         firstnameEditText.setOnFocusChangeListener(hideKeyboardListener);
         lastnameEditText.setOnFocusChangeListener(hideKeyboardListener);
 
-        registerEmailEditText.setText("test@knights.ucf.edu");
-        registerPasswordEditText.setText("HardPa$$word1");
-        confirmPasswordEditText.setText("HardPa$$word1");
+        registerEmailEditText.setText("dkinney@unishop.shop");
+        registerPasswordEditText.setText("unishop");
+        confirmPasswordEditText.setText("unishop");
         firstnameEditText.setText("John");
         lastnameEditText.setText("Smith");
 
@@ -165,17 +165,17 @@ public class RegisterActivity extends Activity {
         final String lname = lastnameEditText.getText().toString();
 
         if(!password.equals(confirmPassword)) {
-
+            dialog.cancel();
             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
             builder.setMessage("Passwords Do Not Match").setNegativeButton("Retry", null).create().show();
             return;
         }
-        if(!email.contains(".edu")) {
-
+        /*if(!email.contains(".edu")) {
+            dialog.cancel();
             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
             builder.setMessage("Invalid Email Address (.edu Domain Required)").setNegativeButton("Retry", null).create().show();
             return;
-        }
+        }*/
 
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
 

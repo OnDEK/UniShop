@@ -113,6 +113,8 @@ public class HomeActivity extends Activity {
         Gson gson = new Gson();
         Intent intent = new Intent(this, ListingActivity.class);
         intent.putExtra("item", gson.toJson(item));
+        String source = (String) v.getTag(R.id.source);
+        intent.putExtra("source", source);
         startActivity(intent);
 
     }
