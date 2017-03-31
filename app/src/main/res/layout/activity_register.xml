@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD6D6D6"
+    android:background="#F1F1F1"
     android:clickable="true"
     android:focusableInTouchMode="true" >
 
@@ -15,8 +15,8 @@
         android:id="@+id/registerPasswordEditText"
         android:layout_below="@+id/registerEmailEditText"
         android:layout_alignStart="@+id/registerEmailEditText"
-        android:textColor="#ff000000"
-        android:background="#6cff9900"
+        android:textColor="#00060A"
+        android:background="#6c294F6D"
         android:textColorHint="#ff555555"
         android:hint="Password"
         android:layout_marginTop="6dp"
@@ -30,9 +30,9 @@
         android:id="@+id/registerPasswordConfirmEditText"
         android:layout_below="@+id/registerPasswordEditText"
         android:layout_alignStart="@+id/registerPasswordEditText"
-        android:textColor="#ff000000"
+        android:textColor="#00060A"
         android:hint="Confirm Password"
-        android:background="#6cff9900"
+        android:background="#6c294F6D"
         android:textColorHint="#ff555555"
         android:layout_marginTop="6dp"/>
 
@@ -45,8 +45,8 @@
         android:layout_alignStart="@+id/firstnameEditText"
         android:layout_marginTop="6dp"
         android:id="@+id/lastnameEditText"
-        android:textColor="#ff000000"
-        android:background="#6cff9900"
+        android:textColor="#00060A"
+        android:background="#6c294F6D"
         android:textColorHint="#ff555555"
         android:hint="Last Name"/>
 
@@ -56,8 +56,8 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/firstnameEditText"
-        android:textColor="#ff000000"
-        android:background="#6cff9900"
+        android:textColor="#00060A"
+        android:background="#6c294F6D"
         android:textColorHint="#ff555555"
         android:hint="First Name"
         android:layout_marginTop="6dp"
@@ -67,18 +67,19 @@
     <ImageView
         android:layout_width="200dp"
         android:layout_height="90dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/ic_logosvg"
         android:id="@+id/register_logo"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="50dp"/>
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo_register"
+        android:src="@drawable/ic_register"
         android:id="@+id/register_heading_image"
         android:adjustViewBounds="true"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/register_logo"
         android:layout_alignStart="@+id/register_logo" />
 
@@ -88,10 +89,11 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/registerEmailEditText"
-        android:textColor="#ff000000"
-        android:background="#6cff9900"
+        android:textColor="#00060A"
+        android:background="#6c294F6D"
         android:textColorHint="#ff555555"
         android:hint="Email"
+        android:layout_marginTop="14dp"
         android:layout_below="@+id/register_heading_image"
         android:layout_centerHorizontal="true" />
 
@@ -101,7 +103,7 @@
         android:layout_height="30dp"
         android:id="@+id/sendRegisterButton"
         android:onClick="handleRegisterRequest"
-        android:background="#ff555555"
+        android:background="#294F6D"
         android:textColor="#ffffffff"
         android:layout_marginTop="18dp"
         android:layout_below="@+id/lastnameEditText"

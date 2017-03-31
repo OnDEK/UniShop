@@ -1,0 +1,14 @@
+<tabs>
+    <tab id="@+id/topbaritemone"
+        title="Bought"
+        icon="@drawable/ic_menu_bids"
+        activeColor="#F1F1F1"
+        barColorWhenSelected="#294F6D">
+    </tab>
+    <tab id="@+id/topbaritemtwo"
+        title="Sold"
+        icon="@drawable/ic_menu_listings"
+        activeColor="#F1F1F1"
+        barColorWhenSelected="#294F6D">
+    </tab>
+</tabs>

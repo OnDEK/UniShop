@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F1F1F1">
 
     <FrameLayout
         android:id="@+id/contentContainer"
@@ -15,6 +16,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/menus"
-        app:bb_activeTabColor="#FF9900"/>
+        app:bb_activeTabColor="#00060A"
+        app:bb_inActiveTabColor="#00060A"/>
 
 </RelativeLayout>

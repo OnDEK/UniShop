@@ -2,22 +2,32 @@
 
     <tab id="@+id/bottombaritemone"
         title="Bids"
-        icon="@drawable/ic_menu_bids">
+        icon="@drawable/ic_menu_bids"
+        activeColor="#F1F1F1"
+        barColorWhenSelected="#294F6D">
     </tab>
     <tab id="@+id/bottombaritemtwo"
         title="Listings"
-        icon="@drawable/ic_menu_listings">
+        icon="@drawable/ic_menu_listings"
+        activeColor="#294F6D"
+        barColorWhenSelected="#F1F1F1">
     </tab>
     <tab id="@+id/bottombaritemthree"
         title="Home"
-        icon="@drawable/ic_menu_home">
+        icon="@drawable/ic_menu_home"
+        activeColor="#F1F1F1"
+        barColorWhenSelected="#294F6D">
     </tab>
     <tab id="@+id/bottombaritemfour"
         title="Finished"
-        icon="@drawable/ic_menu_finished">
+        icon="@drawable/ic_menu_finished"
+        activeColor="#294F6D"
+        barColorWhenSelected="#F1F1F1">
     </tab>
     <tab id="@+id/bottombaritemfive"
         title="More"
-        icon="@drawable/ic_menu_manage">
+        icon="@drawable/ic_menu_manage"
+        activeColor="#F1F1F1"
+        barColorWhenSelected="#294F6D">
     </tab>
 </tabs>
