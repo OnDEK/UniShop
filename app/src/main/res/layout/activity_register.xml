@@ -67,7 +67,7 @@
     <ImageView
         android:layout_width="200dp"
         android:layout_height="90dp"
-        android:src="@drawable/ic_logosvg"
+        android:src="@drawable/ic_logosvg_final"
         android:id="@+id/register_logo"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

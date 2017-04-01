@@ -4,25 +4,24 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+import com.unishop.Closing.MessagingActivity;
 import com.unishop.menu.BidsFragment;
 import com.unishop.menu.HomeFragment;
 import com.unishop.menu.ListingsFragment;
 import com.unishop.menu.MoreFragment;
-import com.unishop.menu.SettingsFragment;
+import com.unishop.menu.ClosingFragment;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Item;
 import com.unishop.utils.NetworkUtils;
@@ -80,8 +79,8 @@ public class HomeActivity extends Activity {
                         fragmentTransaction.commit();
                         break;
                     case R.id.bottombaritemfour:
-                        SettingsFragment settingsFragment = new SettingsFragment();
-                        fragmentTransaction.replace(R.id.contentContainer, settingsFragment);
+                        ClosingFragment closingFragment = new ClosingFragment();
+                        fragmentTransaction.replace(R.id.contentContainer, closingFragment);
                         fragmentTransaction.commit();
                         break;
                     case R.id.bottombaritemfive:
@@ -205,9 +204,9 @@ public class HomeActivity extends Activity {
         });
 
     }
-    public String[] populateString() {
-
-        return new String[0];
+    public void handleChat(View v) {
+        Intent intent = new Intent(HomeActivity.this, MessagingActivity.class);
+        startActivity(intent);
     }
 
     @Override

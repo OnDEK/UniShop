@@ -71,7 +71,7 @@
     <ImageView
         android:layout_width="238dp"
         android:layout_height="135dp"
-        app:srcCompat="@drawable/ic_logosvg"
+        app:srcCompat="@drawable/ic_logosvg_final"
         android:id="@+id/loginLogoImageView"
         android:layout_marginLeft="70dp"
         android:layout_alignParentTop="true"

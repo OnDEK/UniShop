@@ -22,14 +22,14 @@ import com.unishop.R;
  * Created by Daniel on 1/13/17.
  */
 
-public class SettingsFragment extends Fragment {
+public class ClosingFragment extends Fragment {
 
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_closing, container, false);
 
         BottomBar bottomBar = (BottomBar) view.findViewById(R.id.topBar);
         bottomBar.selectTabAtPosition(0);
