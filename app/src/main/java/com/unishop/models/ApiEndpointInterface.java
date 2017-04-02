@@ -44,8 +44,10 @@ public interface ApiEndpointInterface {
     Call<List<Item>> unownedItems(@Header("Authorization") String token);
 
     @POST("item/{itemid}/offer")
-    Call<ResponseBody> offer(@Body Offer offer, @Path("itemid") String itemID, @Header("Authorization") String token);
+    Call<ResponseBody> offer(@Body SendOffer sendOffer, @Path("itemid") String itemID, @Header("Authorization") String token);
 
+    @GET("account/offers")
+    Call<List<Offer>> accountOffers(@Header("Authorization") String token);
 
 
 }

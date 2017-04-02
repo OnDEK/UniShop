@@ -1,6 +1,8 @@
 package com.unishop;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,13 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.ErrorResponse;
 import com.unishop.models.Item;
 import com.unishop.models.Offer;
+import com.unishop.models.SendOffer;
 import com.unishop.utils.NetworkUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import okhttp3.ResponseBody;
@@ -75,12 +82,14 @@ public class ListingActivity extends Activity {
     }
 
     public void submitBid(View v) {
+
+        final ProgressDialog dialog = ProgressDialog.show(ListingActivity.this, "",
+                "Dubmitting Bid...", true);
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
         String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
         String bidString = bid.getText().toString();
-        bidString = bidString.replace(".","");
         Integer bidInt = Integer.valueOf(bidString);
-        Offer offer = new Offer(bidInt);
+        SendOffer offer = new SendOffer(bidInt);
         Call<ResponseBody> call = apiService.offer(offer, item.getId().toString(), sessionToken);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -88,6 +97,20 @@ public class ListingActivity extends Activity {
                 int statusCode = response.code();
                 if(statusCode == 200) {
 
+                    dialog.cancel();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Bid Submitted!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else {
+                    Gson gson = new GsonBuilder().create();
+                    ErrorResponse error = new ErrorResponse();
+                    try {
+                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                    }catch (IOException e) {}
+                    dialog.cancel();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ListingActivity.this);
+                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
                 }
             }
 

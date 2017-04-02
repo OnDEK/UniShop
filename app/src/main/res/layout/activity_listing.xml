@@ -69,7 +69,7 @@
     <EditText
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:ems="10"
         android:id="@+id/listing_bid_editText"
         android:hint="bid"

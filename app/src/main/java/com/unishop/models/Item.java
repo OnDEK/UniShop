@@ -9,9 +9,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item {
 
-    @SerializedName("category")
+    @SerializedName("category_id")
     @Expose
-    private Category category;
+    private Integer categoryId;
     @SerializedName("created_date")
     @Expose
     private String createdDate;
@@ -21,6 +21,9 @@ public class Item {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("modified_date")
+    @Expose
+    private String modifiedDate;
     @SerializedName("price")
     @Expose
     private Integer price;
@@ -34,12 +37,24 @@ public class Item {
     @Expose
     private Integer viewCount;
 
-    public Category getCategory() {
-        return category;
+    public Item(Integer categoryId, String createdDate, String description, Integer id, String modifiedDate, Integer price, String title, Integer viewCount) {
+        super();
+        this.categoryId = categoryId;
+        this.createdDate = createdDate;
+        this.description = description;
+        this.id = id;
+        this.modifiedDate = modifiedDate;
+        this.price = price;
+        this.title = title;
+        this.viewCount = viewCount;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCreatedDate() {
@@ -66,20 +81,20 @@ public class Item {
         this.id = id;
     }
 
+    public String getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(String modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
     public Integer getPrice() {
         return price;
     }
 
     public void setPrice(Integer price) {
         this.price = price;
-    }
-
-    public Integer getSellerRating() {
-        return sellerRating;
-    }
-
-    public void setSellerRating(Integer sellerRating) {
-        this.sellerRating = sellerRating;
     }
 
     public String getTitle() {
@@ -97,6 +112,5 @@ public class Item {
     public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
     }
-
 }
 

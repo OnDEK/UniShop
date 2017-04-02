@@ -1,19 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD6D6D6"
+    android:background="#F1F1F1"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is the more activity"/>
-
-    <Button
-        android:text="LOGOUT"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:onClick="handleLogout"/>
-</LinearLayout>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Application Settings"
+            android:textColor="#FF00060D"
+            android:paddingLeft="15dp"
+            android:textSize="16sp"/>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:layout_margin="15dp"
+            android:background="#28294F6D">
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Allow Notifications"
+                android:textSize="13sp"
+                android:textColor="#FF00060D"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:theme="@style/SCBSwitch"/>
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Allow Location"
+                android:textColor="#FF00060D"
+                android:textSize="13sp"
+                android:shadowColor="#294F6D"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:theme="@style/SCBSwitch"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Color Theme"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account Settings"
+            android:textColor="#FF00060D"
+            android:paddingLeft="15dp"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:layout_margin="15dp"
+            android:background="#28294F6D">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Email"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Password"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Name"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Resend Verification"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact &amp; Share"
+            android:textColor="#FF00060D"
+            android:paddingLeft="15dp"
+            android:textSize="16sp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Help &amp; Support"
+            android:layout_margin="15dp"
+            android:textColor="#00060A"
+            android:background="#28294F6D"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:layout_margin="15dp"
+            android:background="#28294F6D">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share UniShop"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Review UniShp"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:layout_margin="15dp"
+            android:background="#28294F6D">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Legal"
+                android:textColor="#294F6D"
+                android:textSize="20dp"
+                android:layout_marginTop="6dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Liscenses"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"
+                />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Privacy Policy"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Terms of Service"
+                android:gravity="left|center_vertical"
+                android:background="#00FFFFFF"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:textColor="#00060A"/>
+
+        </LinearLayout>
+        <Button
+            android:text="LOGOUT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:onClick="handleLogout"
+            android:layout_margin="15dp"
+            android:textColor="#00060A"
+            android:background="#28294F6D"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_logosvg_final"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Version 1.0.0 (Android)"
+            android:layout_gravity="center"
+            android:textColor="#00060A"/>
+
+        <Button
+            android:text="Delete Account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/deleteaccount_button"
+            android:layout_margin="15dp"
+            android:textColor="#A5060A"
+            android:background="#28294F6D"/>
+    </LinearLayout>
+    
+</ScrollView>
