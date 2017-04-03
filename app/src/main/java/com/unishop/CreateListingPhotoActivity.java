@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Daniel on 1/17/17.
@@ -28,6 +30,8 @@ public class CreateListingPhotoActivity extends Activity {
 
     ImageView uploadOne, uploadTwo, uploadThree, uploadFour;
     ImageView imageArray[] = {uploadOne, uploadTwo, uploadThree, uploadFour};
+    ArrayList<String> fileArray = new ArrayList<>();
+    int i = 0;
     boolean photoFilled[]= {false,false,false,false};
 
     @Override
@@ -119,6 +123,7 @@ public class CreateListingPhotoActivity extends Activity {
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+        fileArray.add(mCurrentPhotoPath);
         return image;
     }
 
@@ -132,6 +137,7 @@ public class CreateListingPhotoActivity extends Activity {
          */
 
         Intent intent = new Intent(this, CreateListingInformationActivity.class);
+        intent.putStringArrayListExtra("photos", fileArray);
         startActivity(intent);
     }
 }

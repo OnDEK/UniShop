@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,11 +26,16 @@ import com.unishop.models.Item;
 import com.unishop.models.ItemUpdate;
 import com.unishop.utils.NetworkUtils;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +53,8 @@ public class CreateListingInformationActivity extends Activity {
     EditText titleEditText;
     EditText descriptionEditText;
     EditText priceEditText;
-
+    ArrayList<String> photos;
+File file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +68,10 @@ public class CreateListingInformationActivity extends Activity {
                 }
             }
         };
+
+        photos =  getIntent().getStringArrayListExtra("photos");
+        file = new File(photos.get(0));
+
 
         titleEditText = (EditText)findViewById(R.id.createlisting_post_title);
         descriptionEditText = (EditText)findViewById(R.id.createlisting_description);
@@ -148,7 +159,7 @@ public class CreateListingInformationActivity extends Activity {
 
         String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
 
-        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        ApiEndpointInterface apiService = NetworkUtils.getFrontApiService();
 
         Create create = new Create(
                 titleEditText.getText().toString(),
@@ -156,7 +167,20 @@ public class CreateListingInformationActivity extends Activity {
                 Integer.valueOf(priceEditText.getText().toString())*100,
                 1);
 
-        Call<CreateResponse> call = apiService.create(create, sessionToken);
+        Uri fileUri = (android.net.Uri.parse(file.toURI().toString()));
+
+        RequestBody requestFile =
+                RequestBody.create(MediaType.parse("image/jpg"), file);
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("image[0]", file.getName(), requestFile);
+
+        RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titleEditText.getText().toString());
+        RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priceEditText.getText().toString());
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), descriptionEditText.getText().toString());
+        RequestBody catID = RequestBody.create(MediaType.parse("text/plain"), "1");
+
+        Call<CreateResponse> call = apiService.createWImage(title, price, description, catID, sessionToken);
 
         call.enqueue(new Callback<CreateResponse>() {
             @Override
@@ -186,6 +210,8 @@ public class CreateListingInformationActivity extends Activity {
             @Override
             public void onFailure(Call<CreateResponse> call, Throwable t) {
 
+               String error =  t.getMessage();
+                       error.toCharArray();
             }
         });
 

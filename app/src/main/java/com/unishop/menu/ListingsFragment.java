@@ -150,7 +150,7 @@ public class ListingsFragment extends Fragment {
                 vh.fourStarBid = (TextView)convertView.findViewById(R.id.four_star_edittext);
                 vh.fiveStarBid = (TextView)convertView.findViewById(R.id.five_star_edittext);
                 vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
-
+                vh.thumbnail = (ImageView)convertView.findViewById(R.id.listing_personal_thumbnail);
                 //inflate custom layour
 
             } else {
@@ -163,6 +163,8 @@ public class ListingsFragment extends Fragment {
                 vh.fourStarBid = (TextView)convertView.findViewById(R.id.four_star_edittext);
                 vh.fiveStarBid = (TextView)convertView.findViewById(R.id.five_star_edittext);
                 vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
+                vh.thumbnail = (ImageView)convertView.findViewById(R.id.listing_personal_thumbnail);
+
 
             }
             //getHighestBids(itemArray.get(position).getId());
@@ -210,7 +212,6 @@ public class ListingsFragment extends Fragment {
 
                 }
             });
-
 
 
             vh.noStarBid.setText("$" + String.valueOf(topBid[0]));
@@ -277,5 +278,30 @@ public class ListingsFragment extends Fragment {
             }
         });
         return topBid;
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

@@ -45,7 +45,6 @@ public class ListingActivity extends Activity {
     String titleString, descriptionString, imageURL;
     TextView title, description;
     ImageView thumbnail, preview1, preview2, preview3, preview4, preview5;
-    ImageView[] images = {thumbnail, preview1, preview2, preview3, preview4, preview5};
     EditText bid;
 
     @Override

@@ -15,9 +15,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class NetworkUtils {
+
     public static final String BASE_URL = "https://unishop.shop/api/v1/";
 
+    public static final String BASE_URL_FRONTEND = " https://unishop.shop/";
 
+    public static ApiEndpointInterface getFrontApiService() {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL_FRONTEND)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        ApiEndpointInterface apiService =
+                retrofit.create(ApiEndpointInterface.class);
+
+        return apiService;
+    }
 
     public static ApiEndpointInterface getApiService() {
         Gson gson = new GsonBuilder()

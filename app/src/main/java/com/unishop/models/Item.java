@@ -36,6 +36,9 @@ public class Item {
     @SerializedName("view_count")
     @Expose
     private Integer viewCount;
+    @SerializedName("image_paths")
+    @Expose
+    private String imagePaths;
 
     public Item(Integer categoryId, String createdDate, String description, Integer id, String modifiedDate, Integer price, String title, Integer viewCount) {
         super();
@@ -49,6 +52,13 @@ public class Item {
         this.viewCount = viewCount;
     }
 
+    public String getImagePaths() {
+        return imagePaths;
+    }
+
+    public void setImagePaths(String imagePaths) {
+        this.imagePaths = imagePaths;
+    }
     public Integer getCategoryId() {
         return categoryId;
     }
