@@ -1,5 +1,6 @@
 package com.unishop.menu;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,16 +19,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.unishop.HomeActivity;
 import com.unishop.Listing;
+import com.unishop.LoginActivity;
 import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.ErrorResponse;
 import com.unishop.models.Item;
+import com.unishop.models.Offer;
 import com.unishop.utils.NetworkUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.SynchronousQueue;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +47,6 @@ import retrofit2.Response;
 
 public class ListingsFragment extends Fragment {
 
-    List<Item> itemsList;
     ArrayList<Item> itemArray = new ArrayList<>();
 
     @Nullable
@@ -71,6 +78,16 @@ public class ListingsFragment extends Fragment {
                     CustomAdapter cus = new CustomAdapter();
                     ll.setAdapter(cus);
                     dialog.cancel();
+                }
+                else {
+                    Gson gson = new GsonBuilder().create();
+                    ErrorResponse error = new ErrorResponse();
+                    try {
+                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                    }catch (IOException e) {}
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
                 }
             }
 
@@ -148,6 +165,60 @@ public class ListingsFragment extends Fragment {
                 vh.button = (Button)convertView.findViewById(R.id.listing_personal_button);
 
             }
+            //getHighestBids(itemArray.get(position).getId());
+            String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
+            ApiEndpointInterface apiService = NetworkUtils.getApiService();
+            Call<List<Offer>> call = apiService.getItemOffers(String.valueOf(itemArray.get(position).getId()).toString(), sessionToken);
+            call.enqueue(new Callback<List<Offer>>() {
+
+                @Override
+                public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
+                    int statuscode = response.code();
+
+                    if(statuscode == 200) {
+                        List<Offer> offerList = response.body();
+                        for (Offer offer : offerList) {
+                            int rating = offer.getBuyerRating();
+                            int amount = offer.getAmount();
+                            if(amount > topBid[rating]) {
+                                topBid[rating] = amount;
+                            }
+                        }
+
+                        vh.noStarBid.setText("$" + String.valueOf(topBid[0]));
+                        vh.oneStarBid.setText("$" + String.valueOf(topBid[1]));
+                        vh.twoStarBid.setText("$" + String.valueOf(topBid[2]));
+                        vh.threeStarBid.setText("$" + String.valueOf(topBid[3]));
+                        vh.fourStarBid.setText("$" + String.valueOf(topBid[4]));
+                        vh.fiveStarBid.setText("$" + String.valueOf(topBid[5]));
+                    }
+                    else {
+                        Gson gson = new GsonBuilder().create();
+                        ErrorResponse error = new ErrorResponse();
+                        try {
+                            error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                        }catch (IOException e) {}
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<Offer>> call, Throwable t) {
+
+                }
+            });
+
+
+
+            vh.noStarBid.setText("$" + String.valueOf(topBid[0]));
+            vh.oneStarBid.setText("$" + String.valueOf(topBid[1]));
+            vh.twoStarBid.setText("$" + String.valueOf(topBid[2]));
+            vh.threeStarBid.setText("$" + String.valueOf(topBid[3]));
+            vh.fourStarBid.setText("$" + String.valueOf(topBid[4]));
+            vh.fiveStarBid.setText("$" + String.valueOf(topBid[5]));
 
             convertView.findViewById(R.id.listing_personal_button).setTag(itemArray.get(position));
             convertView.findViewById(R.id.listing_personal_button).setTag(R.id.source, "personal");
@@ -164,29 +235,47 @@ public class ListingsFragment extends Fragment {
             ImageView thumbnail;
         }
     }
+    int[] topBid = {0, 0, 0, 0, 0, 0};
+    private int[] getHighestBids (int itemID) {
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+        String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        Call<List<Offer>> call = apiService.getItemOffers(String.valueOf(itemID).toString(), sessionToken);
+        call.enqueue(new Callback<List<Offer>>() {
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
+            @Override
+            public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
+                int statuscode = response.code();
 
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
+                if(statuscode == 200) {
+                    List<Offer> offerList = response.body();
+                    for (Offer offer : offerList) {
+                        int rating = offer.getBuyerRating();
+                        int amount = offer.getAmount();
+                        if(amount > topBid[rating]) {
+                            topBid[rating] = amount;
+                        }
+                    }
+
+                }
+                else {
+                    Gson gson = new GsonBuilder().create();
+                    ErrorResponse error = new ErrorResponse();
+                    try {
+                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                    }catch (IOException e) {}
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
+                }
+
             }
-            return mIcon11;
-        }
 
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
+            @Override
+            public void onFailure(Call<List<Offer>> call, Throwable t) {
+
+            }
+        });
+        return topBid;
     }
 }

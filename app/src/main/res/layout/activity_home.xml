@@ -17,6 +17,6 @@
         android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/menus"
         app:bb_activeTabColor="#00060A"
-        app:bb_inActiveTabColor="#00060A"/>
+        app:bb_inActiveTabColor="#3399ff"/>
 
 </RelativeLayout>

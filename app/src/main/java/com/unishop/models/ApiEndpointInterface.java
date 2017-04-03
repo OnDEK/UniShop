@@ -46,6 +46,9 @@ public interface ApiEndpointInterface {
     @POST("item/{itemid}/offer")
     Call<ResponseBody> offer(@Body SendOffer sendOffer, @Path("itemid") String itemID, @Header("Authorization") String token);
 
+    @GET("item/{itemid}/offers")
+    Call<List<Offer>> getItemOffers(@Path("itemid") String itemID, @Header("Authorization") String token);
+
     @GET("account/offers")
     Call<List<Offer>> accountOffers(@Header("Authorization") String token);
 

@@ -5,21 +5,30 @@ import com.google.gson.annotations.SerializedName;
 
 public class Offer {
 
+
     @SerializedName("amount")
     @Expose
     private Integer amount;
-    @SerializedName("buyer_rating")
-    @Expose
-    private Integer buyerRating;
     @SerializedName("highest_competing_bid")
     @Expose
     private Integer highestCompetingBid;
+    @SerializedName("id")
+    @Expose
+    private  Integer id;
     @SerializedName("item")
     @Expose
     private Item item;
     @SerializedName("seller_rating")
     @Expose
     private Integer sellerRating;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+    @SerializedName("buyer_rating")
+    @Expose
+    private Integer buyerRating;
+
+
 
     /**
      * No args constructor for use in serialization
@@ -45,6 +54,19 @@ public class Offer {
         this.sellerRating = sellerRating;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public Integer getStatus() {
+        return status;
+    }
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
     public Integer getAmount() {
         return amount;
     }
