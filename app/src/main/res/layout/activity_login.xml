@@ -47,13 +47,14 @@
         android:text="Login"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
+        android:textColor="#F1F1F1"
+        android:background="#294F6D"
         android:layout_below="@+id/passwordEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="7dp"
         android:id="@+id/loginButton"
         android:onClick="handleLogin"
-        android:textColor="#F1F1F1"
-        android:background="#294F6D"/>
+        />
 
     <Button
         android:text="Need an account?\nClick here to register."

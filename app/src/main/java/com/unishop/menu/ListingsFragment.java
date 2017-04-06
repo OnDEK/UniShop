@@ -21,9 +21,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.unishop.HomeActivity;
-import com.unishop.Listing;
-import com.unishop.LoginActivity;
+import com.squareup.picasso.Picasso;
 import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.ErrorResponse;
@@ -35,7 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.SynchronousQueue;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,10 +47,12 @@ public class ListingsFragment extends Fragment {
 
     ArrayList<Item> itemArray = new ArrayList<>();
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listings, container, false);
+
         return view;
     }
 
@@ -171,28 +171,36 @@ public class ListingsFragment extends Fragment {
             String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
             ApiEndpointInterface apiService = NetworkUtils.getApiService();
             Call<List<Offer>> call = apiService.getItemOffers(String.valueOf(itemArray.get(position).getId()).toString(), sessionToken);
+
             call.enqueue(new Callback<List<Offer>>() {
 
                 @Override
                 public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
                     int statuscode = response.code();
+                    List<Integer> topBid = new ArrayList<>();
+                    topBid.add(0, 0);
+                    topBid.add(1, 0);
+                    topBid.add(2, 0);
+                    topBid.add(3, 0);
+                    topBid.add(4, 0);
+                    topBid.add(5, 0);
 
                     if(statuscode == 200) {
                         List<Offer> offerList = response.body();
                         for (Offer offer : offerList) {
                             int rating = offer.getBuyerRating();
                             int amount = offer.getAmount();
-                            if(amount > topBid[rating]) {
-                                topBid[rating] = amount;
+                            if(amount > topBid.get(rating)) {
+                                topBid.set(rating,amount);
                             }
                         }
 
-                        vh.noStarBid.setText("$" + String.valueOf(topBid[0]));
-                        vh.oneStarBid.setText("$" + String.valueOf(topBid[1]));
-                        vh.twoStarBid.setText("$" + String.valueOf(topBid[2]));
-                        vh.threeStarBid.setText("$" + String.valueOf(topBid[3]));
-                        vh.fourStarBid.setText("$" + String.valueOf(topBid[4]));
-                        vh.fiveStarBid.setText("$" + String.valueOf(topBid[5]));
+                        vh.noStarBid.setText("$" + String.valueOf(topBid.get(0)));
+                        vh.oneStarBid.setText("$" + String.valueOf(topBid.get(1)));
+                        vh.twoStarBid.setText("$" + String.valueOf(topBid.get(2)));
+                        vh.threeStarBid.setText("$" + String.valueOf(topBid.get(3)));
+                        vh.fourStarBid.setText("$" + String.valueOf(topBid.get(4)));
+                        vh.fiveStarBid.setText("$" + String.valueOf(topBid.get(5)));
                     }
                     else {
                         Gson gson = new GsonBuilder().create();
@@ -205,6 +213,7 @@ public class ListingsFragment extends Fragment {
                         builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
                     }
 
+
                 }
 
                 @Override
@@ -214,12 +223,17 @@ public class ListingsFragment extends Fragment {
             });
 
 
-            vh.noStarBid.setText("$" + String.valueOf(topBid[0]));
-            vh.oneStarBid.setText("$" + String.valueOf(topBid[1]));
-            vh.twoStarBid.setText("$" + String.valueOf(topBid[2]));
-            vh.threeStarBid.setText("$" + String.valueOf(topBid[3]));
-            vh.fourStarBid.setText("$" + String.valueOf(topBid[4]));
-            vh.fiveStarBid.setText("$" + String.valueOf(topBid[5]));
+            String imagePaths = itemArray.get(position).getImagePaths();
+            if(imagePaths != null) {
+                String thumbnailPath = imagePaths.replaceAll(";.*", "");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_100x100.png");
+
+                Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail);
+            }
+
+
+
+
 
             convertView.findViewById(R.id.listing_personal_button).setTag(itemArray.get(position));
             convertView.findViewById(R.id.listing_personal_button).setTag(R.id.source, "personal");
@@ -235,49 +249,6 @@ public class ListingsFragment extends Fragment {
             Button button;
             ImageView thumbnail;
         }
-    }
-    int[] topBid = {0, 0, 0, 0, 0, 0};
-    private int[] getHighestBids (int itemID) {
-
-        String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
-        ApiEndpointInterface apiService = NetworkUtils.getApiService();
-        Call<List<Offer>> call = apiService.getItemOffers(String.valueOf(itemID).toString(), sessionToken);
-        call.enqueue(new Callback<List<Offer>>() {
-
-            @Override
-            public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
-                int statuscode = response.code();
-
-                if(statuscode == 200) {
-                    List<Offer> offerList = response.body();
-                    for (Offer offer : offerList) {
-                        int rating = offer.getBuyerRating();
-                        int amount = offer.getAmount();
-                        if(amount > topBid[rating]) {
-                            topBid[rating] = amount;
-                        }
-                    }
-
-                }
-                else {
-                    Gson gson = new GsonBuilder().create();
-                    ErrorResponse error = new ErrorResponse();
-                    try {
-                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
-
-                    }catch (IOException e) {}
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Offer>> call, Throwable t) {
-
-            }
-        });
-        return topBid;
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

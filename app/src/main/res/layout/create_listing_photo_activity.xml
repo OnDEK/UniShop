@@ -4,137 +4,173 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFD6D6D6"
+    android:background="#F1F1F1"
     android:clickable="true"
     android:focusableInTouchMode="true">
 
 
 
-        <HorizontalScrollView
-            android:id="@+id/createlisting_scrollview"
-            android:layout_width="match_parent"
-            android:layout_height="198dp"
-            android:layout_marginTop="45dp"
-            android:scrollbars="none">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="198dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true">
-
-                <ImageView
-                    android:layout_width="352dp"
-                    android:layout_height="198dp"
-                    android:id="@+id/createlisting_image_one"
-                    android:layout_weight="1"
-                    android:src="@drawable/no_image"
-                    android:layout_marginLeft="10dp"
-                    />
-                <ImageView
-                    android:layout_width="352dp"
-                    android:layout_height="198dp"
-                    android:id="@+id/createlisting_image_two"
-                    android:layout_weight="1"
-                    android:src="@drawable/no_image"
-                    android:layout_marginLeft="10dp"/>
-                <ImageView
-                    android:layout_width="352dp"
-                    android:layout_height="198dp"
-                    android:id="@+id/createlisting_image_three"
-                    android:layout_weight="1"
-                    android:src="@drawable/no_image"
-                    android:layout_marginLeft="10dp"/>
-                <ImageView
-                    android:layout_width="352dp"
-                    android:layout_height="198dp"
-                    android:id="@+id/createlisting_image_four"
-                    android:layout_weight="1"
-                    android:src="@drawable/no_image"
-                    android:layout_marginLeft="10dp"
-                    />
-            </LinearLayout>
-        </HorizontalScrollView>
-
-
+    <Space
+        android:id="@+id/center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
 
     <Button
-        android:text="Upload Photo"
+        android:text="File"
         android:textSize="10sp"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="58dp"
+        android:layout_height="30dp"
+        android:textColor="#F1F1F1"
+        android:background="#294F6D"
+        android:layout_marginStart="35dp"
         android:id="@+id/button_upload_photo"
-        android:background="#ff555555"
-        android:textColor="#ffffffff"/>
+        android:layout_above="@+id/createlisting_cancel_button"
+        android:layout_marginBottom="36dp"
+        android:drawableLeft="@drawable/ic_photo_library_black_30dp"
+        android:onClick="onPickPhotoClick"/>
 
     <Button
-        android:text="Take Photo"
+        android:text="Take"
         android:textSize="10sp"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:textColor="#F1F1F1"
+        android:background="#294F6D"
         android:layout_alignBottom="@+id/button_upload_photo"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="49dp"
+        android:layout_marginEnd="35dp"
         android:id="@+id/button_take_photo"
         android:onClick="onTakePhotoClick"
-        android:background="#ff555555"
-        android:textColor="#ffffffff"/>
+        android:drawableRight="@drawable/ic_photo_camera_black_30dp"/>
 
     <TextView
-        android:text="&lt;"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/createlisting_leftarrow"
-        android:gravity="center"
-        android:textSize="50dp"
-        android:layout_alignBottom="@+id/button_upload_photo" />
-
-    <TextView
-        android:text="&gt;"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/createlisting_rightarrow"
-        android:layout_alignBottom="@+id/button_take_photo"
-        android:textSize="50sp"
-        android:gravity="center"/>
-
-    <TextView
-        android:text="Photo Preview"
+        android:text="Image Previews"
         android:textSize="20sp"
         android:layout_marginTop="4dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textColor="#FF000000"
         android:id="@+id/createlisting_heading_edittext" />
 
     <Button
-        android:text="Next"
+        android:text="Continue"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:textColor="#F1F1F1"
+        android:background="#294F6D"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/button_take_photo"
         android:id="@+id/createlisting_next_button"
         android:onClick="uploadPhotos"
-        android:background="#ff555555"
-        android:textColor="#ffffffff"/>
+        android:layout_marginBottom="10dp"
+        android:layout_alignStart="@+id/button_take_photo" />
 
     <Button
         android:text="Cancel"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:textColor="#F1F1F1"
+        android:background="#294F6D"
         android:layout_alignTop="@+id/createlisting_next_button"
         android:layout_alignEnd="@+id/button_upload_photo"
         android:id="@+id/createlisting_cancel_button"
         android:onClick="cancelCreateListing"
-        android:background="#ff555555"
-        android:textColor="#ffffffff"/>
+        android:layout_alignStart="@+id/button_upload_photo" />
+
+    <ImageButton
+        android:id="@+id/create_image1"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@id/center"
+        android:layout_below="@+id/createlisting_heading_edittext"
+        android:onClick="setAsThumbnail"
+        android:background="#00000000"
+        android:tag="0"/>
+
+    <ImageButton
+        android:id="@+id/create_image2"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:layout_alignBottom="@+id/create_image1"
+        android:layout_alignEnd="@+id/button_take_photo"
+        android:layout_alignStart="@id/center"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/createlisting_heading_edittext"
+        android:onClick="setAsThumbnail"
+        android:background="#00000000"
+        android:tag="1"/>
+
+    <ImageButton
+        android:id="@+id/create_image3"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:onClick="setAsThumbnail"
+        android:background="#00000000"
+        android:tag="2"
+        android:layout_below="@+id/create_image1"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/center" />
+
+    <ImageButton
+        android:id="@+id/create_image4"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:layout_alignEnd="@+id/create_image2"
+        android:layout_alignTop="@+id/create_image3"
+        android:layout_alignStart="@id/center"
+        android:onClick="setAsThumbnail"
+        android:background="#00000000"
+        android:tag="3"/>
+
+    <ImageView
+        android:id="@+id/image1Cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/create_image3"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/createlisting_heading_edittext"
+        android:layout_alignEnd="@+id/center" />
+
+    <ImageView
+        android:id="@+id/image2Cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/create_image1"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/createlisting_heading_edittext"
+        android:layout_toEndOf="@+id/center" />
+
+    <ImageView
+        android:id="@+id/image4Cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/create_image3"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/create_image4"
+        android:layout_toEndOf="@+id/center" />
+
+    <ImageView
+        android:id="@+id/image3Cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/create_image3"
+        android:layout_alignEnd="@+id/center"
+        android:layout_alignTop="@+id/create_image3"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/create_image3"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FF000000"
+        android:textSize="10sp"
+        android:text="Tap to change default image" />
 </RelativeLayout>

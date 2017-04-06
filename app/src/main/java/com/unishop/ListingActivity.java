@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.ErrorResponse;
 import com.unishop.models.Item;
@@ -29,6 +30,9 @@ import com.unishop.utils.NetworkUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -68,8 +72,6 @@ public class ListingActivity extends Activity {
         preview1 = (ImageView)findViewById(R.id.listing_image_preview1);
         preview2 = (ImageView)findViewById(R.id.listing_image_preview2);
         preview3 = (ImageView)findViewById(R.id.listing_image_preview3);
-        preview4 = (ImageView)findViewById(R.id.listing_image_preview4);
-        preview5 = (ImageView)findViewById(R.id.listing_image_preview5);
         bid = (EditText)findViewById(R.id.listing_bid_editText);
         titleString = item.getTitle().toString();
         descriptionString = item.getDescription().toString();
@@ -78,12 +80,28 @@ public class ListingActivity extends Activity {
         title.setText(titleString);
         description.setText(descriptionString);
 
+        String imagePaths = item.getImagePaths();
+        List<String> pathList = Arrays.asList(imagePaths.split(";"));
+        List<ImageView> imageViewList = new ArrayList<>();
+        imageViewList.add(thumbnail);
+        imageViewList.add(preview1);
+        imageViewList.add(preview2);
+        imageViewList.add(preview3);
+
+        if(imagePaths != null) {
+            int i = 0;
+            for (String path : pathList) {
+                String thumbnailPath = new String("https://unishop.shop").concat(path).concat("_300x300.png");
+                Picasso.with(this).load(thumbnailPath).into(imageViewList.get(i++));
+            }
+
+        }
     }
 
     public void submitBid(View v) {
 
         final ProgressDialog dialog = ProgressDialog.show(ListingActivity.this, "",
-                "Dubmitting Bid...", true);
+                "Submitting Bid...", true);
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
         String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
         String bidString = bid.getText().toString();

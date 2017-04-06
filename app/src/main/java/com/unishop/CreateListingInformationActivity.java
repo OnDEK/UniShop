@@ -2,9 +2,12 @@ package com.unishop;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Create;
 import com.unishop.models.CreateResponse;
@@ -26,9 +30,15 @@ import com.unishop.models.Item;
 import com.unishop.models.ItemUpdate;
 import com.unishop.utils.NetworkUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -53,8 +63,9 @@ public class CreateListingInformationActivity extends Activity {
     EditText titleEditText;
     EditText descriptionEditText;
     EditText priceEditText;
-    ArrayList<String> photos;
-File file;
+    ArrayList<String> filePathList;
+    File file, file2, file3;
+    Map<String, RequestBody> map = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +80,7 @@ File file;
             }
         };
 
-        photos =  getIntent().getStringArrayListExtra("photos");
-        file = new File(photos.get(0));
+        filePathList =  getIntent().getStringArrayListExtra("photos");
 
 
         titleEditText = (EditText)findViewById(R.id.createlisting_post_title);
@@ -157,14 +167,16 @@ File file;
 
     public void onSubmitClick(View v){
 
+        final ProgressDialog dialog = ProgressDialog.show(CreateListingInformationActivity.this, "",
+                "Uploading Listing", true);
         String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
-
+        sessionToken = sessionToken.replaceAll("Bearer ", "");
         ApiEndpointInterface apiService = NetworkUtils.getFrontApiService();
 
-        Create create = new Create(
+        /*Create create = new Create(
                 titleEditText.getText().toString(),
                 descriptionEditText.getText().toString(),
-                Integer.valueOf(priceEditText.getText().toString())*100,
+                Integer.valueOf(priceEditText.getText().toString()),
                 1);
 
         Uri fileUri = (android.net.Uri.parse(file.toURI().toString()));
@@ -173,14 +185,70 @@ File file;
                 RequestBody.create(MediaType.parse("image/jpg"), file);
 
         MultipartBody.Part body =
-                MultipartBody.Part.createFormData("image[0]", file.getName(), requestFile);
+                MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+        */
 
+        List<MultipartBody.Part> fileList = new ArrayList<>();
+
+        for(String filePath : filePathList) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            //options.inJustDecodeBounds = true;
+            File file = new File(filePath);
+            Bitmap fileBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
+            int imageHeight = options.outHeight;
+            int imageWidth = options.outWidth;
+
+            if(imageHeight > imageWidth) {
+                //handle portrait resize
+                try{
+                    OutputStream fOut = new FileOutputStream(file);
+                    fileBitmap.compress(Bitmap.CompressFormat.JPEG, 50, fOut);
+                    fOut.close();
+                }
+                catch(java.io.FileNotFoundException e) {
+
+                }
+                catch(java.io.IOException e) {
+
+                }
+
+            }
+            else {
+                //landscape resize
+                try{
+                    OutputStream fOut = new FileOutputStream(file);
+                    fileBitmap.compress(Bitmap.CompressFormat.JPEG, 95, fOut);
+                    fOut.close();
+                }
+                catch(java.io.FileNotFoundException e) {
+
+                }
+                catch(java.io.IOException e) {
+
+                }
+            }
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("image[" + filePathList.indexOf(filePath) +"]", file.getName(), RequestBody.create(MediaType.parse("image/jpg"), file));
+            fileList.add(filePart);
+        }
+       /* MultipartBody.Part filePart = MultipartBody.Part.createFormData("image[0]", file.getName(), RequestBody.create(MediaType.parse("image/jpg"), file));
+        MultipartBody.Part filePart2 = MultipartBody.Part.createFormData("image[1]", file.getName(), RequestBody.create(MediaType.parse("image/jpg"), file2));
+        MultipartBody.Part filePart3 = MultipartBody.Part.createFormData("image[2]", file.getName(), RequestBody.create(MediaType.parse("image/jpg"), file3));
+        fileList.add(filePart);
+        fileList.add(filePart2);
+        fileList.add(filePart3);
+        */
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titleEditText.getText().toString());
         RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priceEditText.getText().toString());
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), descriptionEditText.getText().toString());
         RequestBody catID = RequestBody.create(MediaType.parse("text/plain"), "1");
 
-        Call<CreateResponse> call = apiService.createWImage(title, price, description, catID, sessionToken);
+        map.put("title", title);
+        map.put("price", price);
+        map.put("description", description);
+        map.put("category_id", catID);
+        Call<CreateResponse> call = apiService.createWImage(title, price, description, catID, fileList, sessionToken);
+        //Call<CreateResponse> call = apiService.create(create, sessionToken);
+
 
         call.enqueue(new Callback<CreateResponse>() {
             @Override
@@ -188,11 +256,14 @@ File file;
                 int statusCode = response.code();
                 if(statusCode == 200) {
                     CreateResponse res = response.body();
+                    dialog.cancel();
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateListingInformationActivity.this);
                     builder.setMessage("Created item success.\nItemContainer ID: " + res.getItemId()).setNegativeButton("Okay", null).create().show();
-                    finish();
+
+                   // finish();
                 }
                 else{
+                    dialog.cancel();
                     Gson gson = new GsonBuilder().create();
                     ErrorResponse error = new ErrorResponse();
                     try {
@@ -205,15 +276,25 @@ File file;
                 }
 
 
+                for(String filePath : filePathList) {
+                    File file = new File(filePath);
+                    file.delete();
+                }
             }
 
             @Override
             public void onFailure(Call<CreateResponse> call, Throwable t) {
-
-               String error =  t.getMessage();
-                       error.toCharArray();
+                dialog.cancel();
+                for(String filePath : filePathList) {
+                    File file = new File(filePath);
+                    file.delete();
+                }
+                String error =  t.getMessage();
+                t.printStackTrace();
             }
         });
+
+
 
         //Intent intent = new Intent(this, HomeActivity.class );
         //startActivity(intent);

@@ -11,9 +11,6 @@ public class CreateResponse {
     @SerializedName("item_id")
     @Expose
     private Integer itemId;
-    @SerializedName("session_token")
-    @Expose
-    private String sessionToken;
 
     public Integer getItemId() {
         return itemId;
@@ -23,11 +20,4 @@ public class CreateResponse {
         this.itemId = itemId;
     }
 
-    public String getSessionToken() {
-        return sessionToken;
-    }
-
-    public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
-    }
 }

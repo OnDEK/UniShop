@@ -12,7 +12,7 @@ public class Item {
     @SerializedName("category_id")
     @Expose
     private Integer categoryId;
-    @SerializedName("created_date")
+    @SerializedName("created")
     @Expose
     private String createdDate;
     @SerializedName("description")
@@ -21,7 +21,7 @@ public class Item {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("modified_date")
+    @SerializedName("modified")
     @Expose
     private String modifiedDate;
     @SerializedName("price")

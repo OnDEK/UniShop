@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.unishop.Listing;
 import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
@@ -126,7 +127,7 @@ public class BidsFragment extends android.app.Fragment {
                 vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.otherBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
-
+                vh.thumbnail = (ImageView)convertView.findViewById(R.id.bidding_personal_thumbnail);
                 vh.button = (Button)convertView.findViewById(R.id.bidding_personal_button);
 
                 //inflate custom layour
@@ -137,10 +138,19 @@ public class BidsFragment extends android.app.Fragment {
                 vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.otherBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
-
+                vh.thumbnail = (ImageView)convertView.findViewById(R.id.bidding_personal_thumbnail);
                 vh.button = (Button)convertView.findViewById(R.id.bidding_personal_button);
 
             }
+
+            String imagePaths = offerArray.get(position).getItem().getImagePaths();
+            if(imagePaths != null) {
+                String thumbnailPath = imagePaths.replaceAll(";.*", "");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_50x50.png");
+
+                Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail);
+            }
+
             vh.title.setText("$" + offerArray.get(position).getItem().getTitle());
             vh.yourBid.setText(offerArray.get(position).getAmount().toString());
             if(offerArray.get(position).getHighestCompetingBid() != null) {
