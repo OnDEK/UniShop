@@ -3,12 +3,8 @@ package com.unishop.menu;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,7 +142,7 @@ public class BidsFragment extends android.app.Fragment {
             String imagePaths = offerArray.get(position).getItem().getImagePaths();
             if(imagePaths != null) {
                 String thumbnailPath = imagePaths.replaceAll(";.*", "");
-                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_50x50.png");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_100x100.png");
 
                 Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail);
             }
@@ -162,8 +158,6 @@ public class BidsFragment extends android.app.Fragment {
             }
             convertView.findViewById(R.id.bidding_personal_button).setTag(offerArray.get(position).getItem());
             convertView.findViewById(R.id.bidding_personal_button).setTag(R.id.source, "others");
-
-
 
 
             return convertView;

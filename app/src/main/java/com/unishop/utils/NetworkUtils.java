@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.unishop.models.ApiEndpointInterface;
 
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.CipherSuite;
 import okhttp3.ConnectionSpec;
@@ -47,6 +48,8 @@ public class NetworkUtils {
                 .build();
 
         OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .connectionSpecs(Collections.singletonList(spec)).followRedirects(false).followSslRedirects(false)
                 .addInterceptor(logging)
                 .build();

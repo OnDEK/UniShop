@@ -51,6 +51,12 @@ public class MessagingActivity extends Activity {
         }
         return textMessage;
     }
+    Timer timer;
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        super.onBackPressed();
+    }
 
     SlyceMessagingFragment slyceMessagingFragment;
     @Override
@@ -83,7 +89,7 @@ public class MessagingActivity extends Activity {
             }
         });
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new SimulateConvo(), 0, 5000);
 
         slyceMessagingFragment.setMoreMessagesExist(false);

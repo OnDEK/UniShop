@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:bb_tabXmlResource="@xml/top_menu"
-        app:bb_inActiveTabColor="#00060A"
+        app:bb_inActiveTabColor="#3399ff"
         android:layout_alignParentStart="true"
         />
 
