@@ -22,8 +22,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
-import com.unishop.Listing;
-import com.unishop.LoginActivity;
 import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.ErrorResponse;
@@ -142,39 +140,43 @@ public class HomeFragment extends android.app.Fragment {
 
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.item_listing_home, parent, false);
-                vh.title1= (TextView)convertView.findViewById(R.id.listing_home_title);
-                vh.title2 = (TextView)convertView.findViewById(R.id.listing_home_titles);
+                vh.title1= (TextView)convertView.findViewById(R.id.listing_home_title_left);
+                vh.title2 = (TextView)convertView.findViewById(R.id.listing_home_title_right);
                 vh.button1 = (Button)convertView.findViewById(R.id.button_home_left);
                 vh.button2 = (Button)convertView.findViewById(R.id.button_home_right);
                 vh.thumbnail1 = (ImageView) convertView.findViewById(R.id.listing_home_thumbnail_left);
                 vh.thumbnail2 = (ImageView) convertView.findViewById(R.id.listing_home_thumbnail_right);
+                vh.price1 = (TextView) convertView.findViewById(R.id.listing_home_price_left);
+                vh.price2 = (TextView) convertView.findViewById(R.id.listing_home_price_right);
 
                 //inflate custom layour
 
             } else {
                 convertView.setTag(vh);
-                vh.title1= (TextView)convertView.findViewById(R.id.listing_home_title);
-                vh.title2 = (TextView)convertView.findViewById(R.id.listing_home_titles);
+                vh.title1= (TextView)convertView.findViewById(R.id.listing_home_title_left);
+                vh.title2 = (TextView)convertView.findViewById(R.id.listing_home_title_right);
                 vh.button1 = (Button)convertView.findViewById(R.id.button_home_left);
                 vh.button2 = (Button)convertView.findViewById(R.id.button_home_right);
                 vh.thumbnail1 = (ImageView) convertView.findViewById(R.id.listing_home_thumbnail_left);
                 vh.thumbnail2 = (ImageView) convertView.findViewById(R.id.listing_home_thumbnail_right);
+                vh.price1 = (TextView) convertView.findViewById(R.id.listing_home_price_left);
+                vh.price2 = (TextView) convertView.findViewById(R.id.listing_home_price_right);
             }
 
 
             vh.title1.setText(itemArray.get(position*2).getTitle());
             // new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnail))
             //         .execute(data_array[position*2].imageURL);
-
+            vh.price1.setText(String.valueOf(itemArray.get(position*2).getPrice()));
 
             vh.button1.setTag(itemArray.get(position*2));
 
             String imagePaths = itemArray.get(position*2).getImagePaths();
             if(imagePaths != null) {
                 String thumbnailPath = imagePaths.replaceAll(";.*", "");
-                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_300x300.png");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_500x500.png");
 
-                Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail1);
+                Picasso.with(getContext()).load(thumbnailPath).resize(180,200).centerCrop().into(vh.thumbnail1);
             }
 
             if(position*2+1 < itemArray.size()) {
@@ -182,12 +184,13 @@ public class HomeFragment extends android.app.Fragment {
                 //new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnails))
                 //        .execute(data_array[position*2+1].imageURL);
                 vh.button2.setTag(itemArray.get(position*2+1));
+                vh.price2.setText(String.valueOf(itemArray.get(position*2+1).getPrice()));
                 imagePaths = itemArray.get(position*2+1).getImagePaths();
                 if(imagePaths != null) {
                     String thumbnailPath = imagePaths.replaceAll(";.*", "");
-                    thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_300x300.png");
+                    thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_500x500.png");
 
-                    Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail2);
+                    Picasso.with(getContext()).load(thumbnailPath).resize(180,200).centerCrop().into(vh.thumbnail2);
                 }
             }
             vh.button2.setTag(R.id.source, "home");
@@ -196,7 +199,7 @@ public class HomeFragment extends android.app.Fragment {
         }
 
         class ViewHolder {
-            TextView title1, title2;
+            TextView title1, title2, price1, price2;
             Button button1, button2;
             ImageView thumbnail1, thumbnail2;
         }

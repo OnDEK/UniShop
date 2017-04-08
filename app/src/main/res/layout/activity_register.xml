@@ -7,6 +7,14 @@
     android:clickable="true"
     android:focusableInTouchMode="true" >
 
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="235dp"
+        android:background="@drawable/login_input_background"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/register_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="67dp" />
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +24,7 @@
         android:layout_below="@+id/registerEmailEditText"
         android:layout_alignStart="@+id/registerEmailEditText"
         android:textColor="#00060A"
-        android:background="#6c294F6D"
+        android:background="@drawable/login_inputfield_background"
         android:textColorHint="#ff555555"
         android:hint="Password"
         android:layout_marginTop="6dp"
@@ -32,7 +40,7 @@
         android:layout_alignStart="@+id/registerPasswordEditText"
         android:textColor="#00060A"
         android:hint="Confirm Password"
-        android:background="#6c294F6D"
+        android:background="@drawable/login_inputfield_background"
         android:textColorHint="#ff555555"
         android:layout_marginTop="6dp"/>
 
@@ -46,7 +54,7 @@
         android:layout_marginTop="6dp"
         android:id="@+id/lastnameEditText"
         android:textColor="#00060A"
-        android:background="#6c294F6D"
+        android:background="@drawable/login_inputfield_background"
         android:textColorHint="#ff555555"
         android:hint="Last Name"/>
 
@@ -57,7 +65,7 @@
         android:ems="10"
         android:id="@+id/firstnameEditText"
         android:textColor="#00060A"
-        android:background="#6c294F6D"
+        android:background="@drawable/login_inputfield_background"
         android:textColorHint="#ff555555"
         android:hint="First Name"
         android:layout_marginTop="6dp"
@@ -73,16 +81,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"/>
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_register"
-        android:id="@+id/register_heading_image"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/register_logo"
-        android:layout_alignStart="@+id/register_logo" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,11 +88,11 @@
         android:ems="10"
         android:id="@+id/registerEmailEditText"
         android:textColor="#00060A"
-        android:background="#6c294F6D"
+        android:background="@drawable/login_inputfield_background"
         android:textColorHint="#ff555555"
         android:hint="Email"
-        android:layout_marginTop="14dp"
-        android:layout_below="@+id/register_heading_image"
+        android:layout_marginTop="48dp"
+        android:layout_alignTop="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -103,7 +101,7 @@
         android:layout_height="30dp"
         android:id="@+id/sendRegisterButton"
         android:onClick="handleRegisterRequest"
-        android:background="#294F6D"
+        android:background="@drawable/rounded_button"
         android:textColor="#ffffffff"
         android:layout_marginTop="18dp"
         android:layout_below="@+id/lastnameEditText"
@@ -146,4 +144,16 @@
         android:src="@drawable/exclamation_red"
         android:layout_marginLeft="2dp"
         android:id="@+id/registerConfirmPasswordImage"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+
+        android:textColor="#294F6D"
+        android:textSize="24dp"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
 </RelativeLayout>

@@ -2,50 +2,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="230dp"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <Space
+        android:id="@+id/center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/listing_home_thumbnail_left"
-        android:layout_above="@+id/listing_home_title"
-        android:layout_toStartOf="@+id/listing_home_title"
-        android:layout_alignEnd="@+id/listing_home_title" />
+        android:layout_above="@+id/listing_home_title_left"
+        android:layout_toStartOf="@+id/listing_home_title_left"
+        android:layout_alignEnd="@+id/listing_home_title_left" />
 
     <TextView
-        android:id="@+id/listing_home_title"
+        android:id="@+id/listing_home_title_left"
         android:layout_width="180dp"
         android:layout_height="30dp"
         android:textColor="#ff000000"
         android:inputType="text"
         android:ems="10"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:paddingLeft="10dp"
+        android:layout_alignEnd="@+id/center"
+        android:layout_above="@+id/listing_home_price_left"
+        android:layout_alignParentStart="true"
+        android:text="palceholder"/>
 
-    <ImageView
+    <TextView
+        android:id="@+id/listing_home_price_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@id/listing_home_title"
-        android:id="@+id/listing_home_thumbnail_right"
-        android:layout_alignStart="@+id/listing_home_titles" />
-
-    <TextView
-        android:id="@+id/listing_home_titles"
-        android:layout_width="180dp"
-        android:layout_height="30dp"
-        android:textColor="#ff000000"
-        android:inputType="text"
-        android:ems="10"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
-
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/center"
+        android:text="$140.00"
+        android:paddingLeft="10dp"
+        android:textColor="#71A830"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,15 +55,66 @@
         android:onClick="handleListingClick"
         android:layout_alignEnd="@+id/listing_home_thumbnail_left" />
 
-    <Button
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/listing_home_title_left"
+        android:id="@+id/listing_home_thumbnail_right"
+        android:layout_alignStart="@+id/listing_home_title_right" />
 
+    <TextView
+        android:id="@+id/listing_home_title_right"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:textColor="#ff000000"
+        android:inputType="text"
+        android:ems="10"
+        android:text="palceholder"
+        android:paddingLeft="10dp"
+        android:layout_above="@+id/listing_home_price_right"
+        android:layout_alignStart="@+id/center"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/listing_home_price_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/center"
+        android:text="$140.00"
+        android:paddingLeft="10dp"
+        android:textColor="#71A830"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
         android:background="#00000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:id="@+id/button_home_right"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/listing_home_titles"
+        android:layout_alignStart="@+id/listing_home_title_right"
         android:layout_alignParentEnd="true"
         android:onClick="handleListingClick"/>
+
+    <ImageView
+        android:id="@+id/listing_home_background_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/center"
+        android:layout_alignTop="@+id/listing_home_title_left"
+        android:src="@drawable/listing_home_background" />
+    <ImageView
+        android:id="@+id/listing_home_background_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/center"
+        android:layout_alignTop="@+id/listing_home_title_right"
+        android:src="@drawable/listing_home_background" />
 </RelativeLayout>
