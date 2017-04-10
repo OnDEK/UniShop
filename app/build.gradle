@@ -28,9 +28,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.github.Slyce-Inc:SlyceMessaging:1.1.2'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
 }
