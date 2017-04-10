@@ -176,7 +176,7 @@ public class HomeFragment extends android.app.Fragment {
                 String thumbnailPath = imagePaths.replaceAll(";.*", "");
                 thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_500x500.png");
 
-                Picasso.with(getContext()).load(thumbnailPath).resize(180,200).centerCrop().into(vh.thumbnail1);
+                Picasso.with(getContext()).load(thumbnailPath).resize(200,200).centerCrop().into(vh.thumbnail1);
             }
 
             if(position*2+1 < itemArray.size()) {
@@ -190,7 +190,7 @@ public class HomeFragment extends android.app.Fragment {
                     String thumbnailPath = imagePaths.replaceAll(";.*", "");
                     thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_500x500.png");
 
-                    Picasso.with(getContext()).load(thumbnailPath).resize(180,200).centerCrop().into(vh.thumbnail2);
+                    Picasso.with(getContext()).load(thumbnailPath).resize(200,200).centerCrop().into(vh.thumbnail2);
                 }
             }
             vh.button2.setTag(R.id.source, "home");

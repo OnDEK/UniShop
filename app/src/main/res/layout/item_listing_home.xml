@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="230dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="3dp">
 
     <Space
         android:id="@+id/center"
@@ -11,6 +12,24 @@
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
+    <ImageView
+        android:id="@+id/listing_home_background_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/center"
+        android:layout_alignTop="@+id/listing_home_title_left"
+        android:src="@drawable/listing_home_background" />
+    <ImageView
+        android:id="@+id/listing_home_background_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/center"
+        android:layout_alignTop="@+id/listing_home_title_right"
+        android:src="@drawable/listing_home_background" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,22 +118,5 @@
         android:layout_alignParentEnd="true"
         android:onClick="handleListingClick"/>
 
-    <ImageView
-        android:id="@+id/listing_home_background_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/center"
-        android:layout_alignTop="@+id/listing_home_title_left"
-        android:src="@drawable/listing_home_background" />
-    <ImageView
-        android:id="@+id/listing_home_background_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/center"
-        android:layout_alignTop="@+id/listing_home_title_right"
-        android:src="@drawable/listing_home_background" />
+
 </RelativeLayout>
