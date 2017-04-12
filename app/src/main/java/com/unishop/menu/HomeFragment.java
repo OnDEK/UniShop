@@ -6,15 +6,18 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,11 +47,14 @@ import retrofit2.Response;
 public class HomeFragment extends android.app.Fragment {
 
     ArrayList<Item> itemArray = new ArrayList<>();
-
+    SearchView searchView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        searchView = (SearchView)view.findViewById(R.id.searchView);
+        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.BLACK);
+
         return view;
     }
 
@@ -167,7 +173,7 @@ public class HomeFragment extends android.app.Fragment {
             vh.title1.setText(itemArray.get(position*2).getTitle());
             // new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnail))
             //         .execute(data_array[position*2].imageURL);
-            vh.price1.setText(String.valueOf(itemArray.get(position*2).getPrice()));
+            vh.price1.setText(String.valueOf("$"+itemArray.get(position*2).getPrice()));
 
             vh.button1.setTag(itemArray.get(position*2));
 
@@ -184,7 +190,7 @@ public class HomeFragment extends android.app.Fragment {
                 //new DownloadImageTask((ImageView) convertView.findViewById(R.id.listing_home_thumbnails))
                 //        .execute(data_array[position*2+1].imageURL);
                 vh.button2.setTag(itemArray.get(position*2+1));
-                vh.price2.setText(String.valueOf(itemArray.get(position*2+1).getPrice()));
+                vh.price2.setText("$"+String.valueOf(itemArray.get(position*2+1).getPrice()));
                 imagePaths = itemArray.get(position*2+1).getImagePaths();
                 if(imagePaths != null) {
                     String thumbnailPath = imagePaths.replaceAll(";.*", "");

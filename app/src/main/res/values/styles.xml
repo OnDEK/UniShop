@@ -14,4 +14,25 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="SearchView">
+        <item name="searchViewStyle">@style/YourActionBarSearch</item>
+
+    </style>
+
+    <style name="YourActionBarSearch" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search_50dp</item>
+        <item name="queryBackground">@null</item>
+        <item name="submitBackground">@null</item>
+    </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Gets rid of the search icon -->
+        <item name="searchIcon">@drawable/ic_search_50dp</item>
+        <!-- Gets rid of the "underline" in the text -->
+        <!-- Gets rid of the search icon when the SearchView is expanded -->
+        <item name="searchHintIcon">@null</item>
+        <!-- The hint text that appears when the user has not typed anything -->
+        <item name="queryHint">"TYPE HERE</item>
+        <item name="android:textColorPrimary">@color/text_black</item>
+        <item name="android:textColorHint">@color/background_gray_light</item>
+    </style>
 </resources>
