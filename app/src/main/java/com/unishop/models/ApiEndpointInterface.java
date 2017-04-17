@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -40,7 +41,10 @@ public interface ApiEndpointInterface {
     Call<ResponseBody> logout(@Header("Authorization") String token);
 
     @GET("account/items")
-    Call<List<Item>> accountItems(@Header("Authorization") String token);
+    Call<ItemsResponse> accountItems(@Header("Authorization") String token);
+
+    @GET("account/follows")
+    Call<List<Item>> getFollows(@Header("Authorization") String token);
 
     @POST("item/{itemid}/destroy")
     Call<ResponseBody> itemDestroy(@Path("itemid") String itemID, @Header("Authorization") String token);
@@ -48,8 +52,8 @@ public interface ApiEndpointInterface {
     @POST("item/{itemid}")
     Call<ResponseBody> itemUpdate(@Body ItemUpdate itemUpdate, @Path("itemid") String itemID, @Header("Authorization") String token);
 
-    @GET("items")
-    Call<List<Item>> unownedItems(@Header("Authorization") String token);
+    @GET("items?sort=newest?limit=100")
+    Call<ItemsResponse> unownedItems(@Header("Authorization") String token);
 
     @POST("item/{itemid}/offer")
     Call<ResponseBody> offer(@Body SendOffer sendOffer, @Path("itemid") String itemID, @Header("Authorization") String token);
@@ -60,6 +64,29 @@ public interface ApiEndpointInterface {
     @GET("account/offers")
     Call<List<Offer>> accountOffers(@Header("Authorization") String token);
 
+    @GET("categories")
+    Call<List<Category>> getCategories(@Header("Authorization") String token);
+
+    /**
+     * initiated: Transaction has been created
+     * completed: Transaction has been completed (item was exchanged)
+     * cancelled: One or both parties cancelled the transaction
+     * all: Show all transactions (default)
+     */
+    @GET("account/buying?status={status}")
+    Call<List<Transaction>> getBuying(@Header("Authorization") String token, @Path("status") String status);
+
+    @GET("account/selling?status={status}")
+    Call<List<Transaction>> getSelling(@Header("Authorization") String token, @Path("status") String status);
+
+    @POST("offer/{offer_id}/accept")
+    Call<OfferAcceptResponse> acceptOffer(@Header("Authorization") String token, @Path("offer_id")String offerID);
+
+    @POST("/item/{item_id}/follow")
+    Call<ResponseBody> followItem(@Path("itemid") String itemID, @Header("Authorization") String token);
+
+    @POST("item/{item_id}/unfollow")
+    Call<ResponseBody> unfollowItem(@Path("itemid") String itemID, @Header("Authorization") String token);
     @Multipart
     @POST("item/create")
     Call<CreateResponse> createWImage(@Part("title") RequestBody title,

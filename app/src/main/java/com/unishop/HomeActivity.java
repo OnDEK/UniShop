@@ -105,7 +105,7 @@ public class HomeActivity extends Activity {
     public void onEditListingClick(View v) {
         Item item =(Item) v.getTag();
         Gson gson = new Gson();
-        Intent intent = new Intent(this, CreateListingInformationActivity.class);
+        Intent intent = new Intent(this, EditListingActivity.class);
         intent.putExtra("item", gson.toJson(item));
         startActivity(intent);
     }

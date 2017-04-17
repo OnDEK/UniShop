@@ -83,6 +83,8 @@ public class NetworkUtils {
                 .build();
 
         OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
                 .connectionSpecs(Collections.singletonList(spec))
                 .addInterceptor(logging).followRedirects(false).followSslRedirects(false)
                 .build();

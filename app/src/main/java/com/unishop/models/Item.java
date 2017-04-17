@@ -9,6 +9,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item {
 
+    @SerializedName("can_edit")
+    @Expose
+    private Boolean can_edit;
     @SerializedName("category_id")
     @Expose
     private Integer categoryId;

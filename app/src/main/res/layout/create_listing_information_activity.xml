@@ -6,12 +6,17 @@
     android:clickable="true"
     android:focusableInTouchMode="true">
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/create_pager"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        />
     <Button
         android:text="Publish"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:textColor="#F1F1F1"
-        android:background="#294F6D"
+        android:background="@drawable/rounded_button"
         android:id="@+id/createlisting_publish"
         android:onClick="onSubmitClick"
         android:layout_alignParentBottom="true"
@@ -24,7 +29,7 @@
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:textColor="#F1F1F1"
-        android:background="#294F6D"
+        android:background="@drawable/rounded_button"
         android:id="@+id/createlisting_back"
         android:onClick="onBackClick"
         android:layout_alignParentBottom="true"
@@ -37,7 +42,7 @@
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:textColor="#F1F1F1"
-        android:background="#294F6D"
+        android:background="@drawable/rounded_button"
         android:id="@+id/createlisting_cancel_two"
         android:onClick="onCancelClick"
         android:layout_alignParentBottom="true"
@@ -50,14 +55,13 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/createlisting_startingbid"
-        android:background="#6c294F6D"
+        android:background="@drawable/create_inputfield_background"
         android:hint="Starting bid"
         android:textAlignment="center"
         android:textColorHint="#ff555555"
         android:textColor="@android:color/black"
-        android:layout_marginBottom="88dp"
-        android:layout_above="@+id/createlisting_description"
-        android:layout_alignEnd="@+id/createlisting_publish" />
+        android:layout_alignTop="@+id/createlisting_spinner"
+        android:layout_alignEnd="@+id/createlisting_description" />
 
     <Spinner
         android:layout_width="150dp"
@@ -65,9 +69,9 @@
         android:id="@+id/createlisting_spinner"
         android:entries="@array/categories"
         android:prompt="@string/categorySpinner"
-        android:background="#6c294F6D"
-        android:layout_alignTop="@+id/createlisting_startingbid"
-        android:layout_alignStart="@+id/createlisting_back" />
+        android:background="@drawable/create_inputfield_background"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/createlisting_description" />
 
     <EditText
         android:layout_width="300dp"
@@ -76,12 +80,12 @@
         android:ems="10"
         android:id="@+id/createlisting_post_title"
         android:hint="Post Title"
-        android:background="#6c294F6D"
+        android:background="@drawable/create_inputfield_background"
         android:textAlignment="center"
         android:textColorHint="#ff555555"
         android:textColor="@android:color/black"
-        android:layout_marginTop="32dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/create_pager"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -92,7 +96,7 @@
         android:ems="10"
         android:gravity="center"
         android:id="@+id/createlisting_description"
-        android:background="#6c294F6D"
+        android:background="@drawable/create_inputfield_background"
         android:textColorHint="#ff555555"
         android:textColor="@android:color/black"
         android:layout_marginBottom="29dp"

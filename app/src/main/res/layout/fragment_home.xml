@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#243399ff"
-    >
+    android:background="#243399ff">
 
 
     <RelativeLayout
@@ -13,23 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/home_header_bar">
-
-
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="35dp"
-            android:hint="Search"
-            android:gravity="center_vertical"
-            android:paddingLeft="10sp"
-            android:background="@drawable/search_background"
-            android:layout_marginLeft="2dp"
-            android:drawableRight="@drawable/ic_search_50dp"
-            android:textColorHint="#FF606060"
-            android:id="@+id/textView5"
-            android:visibility="invisible"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/imageView4" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -59,10 +42,15 @@
             android:layout_alignParentEnd="true"
             android:id="@+id/imageView4" />
 
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/imageView4"
+                android:layout_toEndOf="@id/imageView2"
+                >
+            </android.support.v7.widget.SearchView>
 
     </RelativeLayout>
 

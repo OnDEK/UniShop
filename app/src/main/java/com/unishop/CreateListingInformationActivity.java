@@ -8,21 +8,33 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.Category;
 import com.unishop.models.Create;
 import com.unishop.models.CreateResponse;
 import com.unishop.models.ErrorResponse;
@@ -36,6 +48,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,17 +72,21 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateListingInformationActivity extends Activity {
 
-    public static final String BASE_URL = "http://168.61.54.234/api/v1/";
     EditText titleEditText;
     EditText descriptionEditText;
     EditText priceEditText;
     ArrayList<String> filePathList;
-    File file, file2, file3;
     Map<String, RequestBody> map = new HashMap<>();
+    Spinner categorySpinner;
+    CustomPagerAdapter customPagerAdapter;
+    ViewPager pager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_listing_information_activity);
+
+        categorySpinner = (Spinner)findViewById(R.id.createlisting_spinner);
 
         View.OnFocusChangeListener hideKeyboardListener = new View.OnFocusChangeListener() {
             @Override
@@ -80,8 +97,36 @@ public class CreateListingInformationActivity extends Activity {
             }
         };
 
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        Call<List<Category>> call = apiService.getCategories(sessionToken);
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                int statusCode = response.code();
+
+                if(statusCode == 200) {
+                    ArrayList<String> catNames = new ArrayList<>(Collections.nCopies(response.body().size(), ""));
+                    for(Category category : response.body()) {
+                        catNames.set(category.getId()-1, category.getName());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(CreateListingInformationActivity.this, android.R.layout.simple_spinner_item, catNames.toArray(new String[0]));
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    categorySpinner.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+
+            }
+        });
+
         filePathList =  getIntent().getStringArrayListExtra("photos");
 
+        customPagerAdapter = new CustomPagerAdapter(this);
+        pager = (ViewPager) findViewById(R.id.create_pager);
+        pager.setAdapter(customPagerAdapter);
 
         titleEditText = (EditText)findViewById(R.id.createlisting_post_title);
         descriptionEditText = (EditText)findViewById(R.id.createlisting_description);
@@ -154,6 +199,18 @@ public class CreateListingInformationActivity extends Activity {
             });
             //priceEditText.setText(String.valueOf(item.getItem().getOneStarBid()));
         }
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void onBackClick(View v){
@@ -240,7 +297,7 @@ public class CreateListingInformationActivity extends Activity {
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titleEditText.getText().toString());
         RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priceEditText.getText().toString());
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), descriptionEditText.getText().toString());
-        RequestBody catID = RequestBody.create(MediaType.parse("text/plain"), "1");
+        RequestBody catID = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categorySpinner.getSelectedItemPosition()));
 
         map.put("title", title);
         map.put("price", price);
@@ -304,4 +361,43 @@ public class CreateListingInformationActivity extends Activity {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    class CustomPagerAdapter extends PagerAdapter {
+
+        Context mContext;
+        LayoutInflater mLayoutInflater;
+
+        public CustomPagerAdapter(Context context) {
+            mContext = context;
+            mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return filePathList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == ((LinearLayout) object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.pagerImage);
+            Picasso.with(mContext).load(new File(filePathList.get(position))).resize(1200,900).centerCrop().into(imageView);
+
+            container.addView(itemView);
+
+            return itemView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((LinearLayout) object);
+        }
+    }
+
 }

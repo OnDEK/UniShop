@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,6 +30,7 @@ import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.ErrorResponse;
 import com.unishop.models.Item;
+import com.unishop.models.ItemsResponse;
 import com.unishop.utils.NetworkUtils;
 
 import java.io.IOException;
@@ -53,8 +55,29 @@ public class HomeFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         searchView = (SearchView)view.findViewById(R.id.searchView);
-        ((EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text)).setTextColor(Color.BLACK);
+        EditText searchET = (EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchET.setTextColor(Color.BLACK);
+        searchET.setBackgroundResource(R.drawable.search_background);
+        searchET.setHint("What are you looking for...?");
+        searchET.setHintTextColor(Color.GRAY);
 
+        ImageView v = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
+        v.setImageResource(R.drawable.ic_search_50dp);
+        v = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        v.setImageResource(R.drawable.ic_close_black_24dp);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getActivity(),"text searched", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return view;
     }
 
@@ -65,12 +88,12 @@ public class HomeFragment extends android.app.Fragment {
                 "Loading listings", true);
         String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
-        Call<List<Item>> call = apiService.unownedItems(sessionToken);
-        call.enqueue(new Callback<List<Item>>() {
+        Call<ItemsResponse> call = apiService.unownedItems(sessionToken);
+        call.enqueue(new Callback<ItemsResponse>() {
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+            public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
                 int statuscode = response.code();
-                List<Item> itemsList = response.body();
+                List<Item> itemsList = response.body().getItems();
                 if(statuscode == 200) {
                     for(Item item: itemsList) {
                         itemArray.add(item);
@@ -95,7 +118,7 @@ public class HomeFragment extends android.app.Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<ItemsResponse> call, Throwable t) {
                 dialog.cancel();
             }
         });

@@ -126,7 +126,7 @@ public class CreateListingPhotoActivity extends Activity {
         if(mCurrentPhotoPath != null) {
             int photoPosition = fileArray.size()-1;
 
-            Picasso.with(this).load(new File(mCurrentPhotoPath)).into(imageViewList.get(photoPosition));
+            Picasso.with(this).load(new File(mCurrentPhotoPath)).resize(800,800).centerCrop().into(imageViewList.get(photoPosition));
         }
     }
 

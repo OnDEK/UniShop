@@ -26,6 +26,7 @@ import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.ErrorResponse;
 import com.unishop.models.Item;
+import com.unishop.models.ItemsResponse;
 import com.unishop.models.Offer;
 import com.unishop.utils.NetworkUtils;
 
@@ -63,12 +64,12 @@ public class ListingsFragment extends Fragment {
                 "Loading listings", true);
         String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
-        Call<List<Item>> call = apiService.accountItems(sessionToken);
-        call.enqueue(new Callback<List<Item>>() {
+        Call<ItemsResponse> call = apiService.accountItems(sessionToken);
+        call.enqueue(new Callback<ItemsResponse>() {
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+            public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
                 int statuscode = response.code();
-                List<Item> itemsList = response.body();
+                List<Item> itemsList = response.body().getItems();
                 if(statuscode == 200) {
                     for(Item item: itemsList) {
                         itemArray.add(item);
@@ -92,7 +93,7 @@ public class ListingsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<ItemsResponse> call, Throwable t) {
                 dialog.cancel();
             }
         });
