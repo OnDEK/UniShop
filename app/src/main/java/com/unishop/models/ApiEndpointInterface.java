@@ -46,6 +46,9 @@ public interface ApiEndpointInterface {
     @GET("account/follows")
     Call<List<Item>> getFollows(@Header("Authorization") String token);
 
+    @GET("item/{item_id}")
+    Call<Item> getItem(@Header("Authorization") String token, @Path("item_id") String itemid);
+
     @POST("item/{itemid}/destroy")
     Call<ResponseBody> itemDestroy(@Path("itemid") String itemID, @Header("Authorization") String token);
 
@@ -73,11 +76,11 @@ public interface ApiEndpointInterface {
      * cancelled: One or both parties cancelled the transaction
      * all: Show all transactions (default)
      */
-    @GET("account/buying?status={status}")
-    Call<List<Transaction>> getBuying(@Header("Authorization") String token, @Path("status") String status);
+    @GET("account/buying?status=all")
+    Call<List<Transaction>> getBuying(@Header("Authorization") String token);
 
-    @GET("account/selling?status={status}")
-    Call<List<Transaction>> getSelling(@Header("Authorization") String token, @Path("status") String status);
+    @GET("account/selling?status=all")
+    Call<List<Transaction>> getSelling(@Header("Authorization") String token);
 
     @POST("offer/{offer_id}/accept")
     Call<OfferAcceptResponse> acceptOffer(@Header("Authorization") String token, @Path("offer_id")String offerID, @Body Offer offer);

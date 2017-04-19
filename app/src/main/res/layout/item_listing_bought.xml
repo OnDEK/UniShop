@@ -13,10 +13,17 @@
         android:onClick="handleChat"/>
 
     <TextView
-        android:id="@+id/bought_textview"
+        android:id="@+id/bought_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:gravity="center"
-        android:textColor="#00060A"
-        android:text="This is a placeholder for bought/sold items\nTapping here will initiate a chat"/>
+        android:textColor="#00060A" />
+    <TextView
+        android:id="@+id/bought_price"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:textColor="#00060A"/>
 </RelativeLayout>

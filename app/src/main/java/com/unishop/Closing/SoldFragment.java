@@ -13,6 +13,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.unishop.R;
+import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.Item;
+import com.unishop.models.Transaction;
+import com.unishop.utils.NetworkUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Daniel on 3/30/17.
@@ -20,13 +31,37 @@ import com.unishop.R;
 
 public class SoldFragment extends Fragment {
 
+    ArrayList<Transaction> transactionArray = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sold, container, false);
-        ListView ll = (ListView) view.findViewById(R.id.sold_listview);
-        SoldAdapter cus = new SoldAdapter();
-        ll.setAdapter(cus);
+
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        String sessionToken = NetworkUtils.getSessionToken(getContext());
+        Call<List<Transaction>> call = apiService.getSelling(sessionToken);
+        call.enqueue(new Callback<List<Transaction>>() {
+            @Override
+            public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
+                int statusCode = response.code();
+                List<Transaction> transactionList = response.body();
+
+                if(statusCode == 200) {
+                    for(Transaction transaction :transactionList) {
+                        transactionArray.add(transaction);
+                    }
+                    ListView ll = (ListView) getActivity().findViewById(R.id.sold_listview);
+                    SoldAdapter cus = new SoldAdapter();
+                    ll.setAdapter(cus);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Transaction>> call, Throwable t) {
+
+            }
+        });
         return view;
     }
 
@@ -41,7 +76,7 @@ public class SoldFragment extends Fragment {
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            return 7;//listview item count.
+            return transactionArray.size();//listview item count.
         }
 
         @Override
@@ -66,23 +101,45 @@ public class SoldFragment extends Fragment {
 
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.item_listing_sold, parent, false);
-                vh.title= (TextView)convertView.findViewById(R.id.sold_textview);
+                vh.title= (TextView)convertView.findViewById(R.id.sold_title);
+                vh.price= (TextView)convertView.findViewById(R.id.sold_price);
                 vh.button = (Button)convertView.findViewById(R.id.sold_button);
                 //inflate custom layour
 
             } else {
                 convertView.setTag(vh);
-                vh.title= (TextView)convertView.findViewById(R.id.sold_textview);
+                vh.title= (TextView)convertView.findViewById(R.id.sold_title);
+                vh.price= (TextView)convertView.findViewById(R.id.sold_price);
                 vh.button = (Button)convertView.findViewById(R.id.sold_button);
 
             }
 
-            vh.title.setText("This is a placeholder for bought/sold items\\nTapping here will initiate a chat");
+            ApiEndpointInterface apiService = NetworkUtils.getApiService();
+            String sessionToken = NetworkUtils.getSessionToken(getContext());
+            Call<Item> call = apiService.getItem(sessionToken, String.valueOf(transactionArray.get(position).getItemId()));
+            call.enqueue(new Callback<Item>() {
+                @Override
+                public void onResponse(Call<Item> call, Response<Item> response) {
+                    int statusCode = response.code();
+
+                    if(statusCode == 200) {
+                        Item item = response.body();
+                        vh.title.setText(item.getTitle());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Item> call, Throwable t) {
+
+                }
+            });
+
+            vh.price.setText("$" + String.valueOf(transactionArray.get(position).getAmount()));
             return convertView;
         }
 
         class ViewHolder {
-            TextView title;
+            TextView title, price;
             Button button;
         }
 

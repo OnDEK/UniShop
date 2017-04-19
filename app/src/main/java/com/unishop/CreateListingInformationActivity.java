@@ -297,7 +297,7 @@ public class CreateListingInformationActivity extends Activity {
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titleEditText.getText().toString());
         RequestBody price = RequestBody.create(MediaType.parse("text/plain"), priceEditText.getText().toString());
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), descriptionEditText.getText().toString());
-        RequestBody catID = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categorySpinner.getSelectedItemPosition()));
+        RequestBody catID = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categorySpinner.getSelectedItemPosition()+1));
 
         map.put("title", title);
         map.put("price", price);

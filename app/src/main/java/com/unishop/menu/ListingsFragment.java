@@ -227,9 +227,9 @@ public class ListingsFragment extends Fragment {
             String imagePaths = itemArray.get(position).getImagePaths();
             if(imagePaths != null) {
                 String thumbnailPath = imagePaths.replaceAll(";.*", "");
-                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_100x100.png");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_500x500.png");
 
-                Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail);
+                Picasso.with(getContext()).load(thumbnailPath).resize(500,500).centerCrop().into(vh.thumbnail);
             }
 
 

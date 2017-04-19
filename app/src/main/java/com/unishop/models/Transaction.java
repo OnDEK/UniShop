@@ -18,6 +18,9 @@ public class Transaction {
     @SerializedName("status")
     @Expose
     private Integer status;
+    @SerializedName("item_id")
+    @Expose
+    private Integer itemId;
 
     public Integer getId() {
         return id;
@@ -42,4 +45,13 @@ public class Transaction {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
 }

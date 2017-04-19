@@ -47,6 +47,7 @@ public class BidsFragment extends android.app.Fragment {
     @Override
     public void onResume() {
         offerArray.clear();
+        itemArray.clear();
         final ProgressDialog dialog = ProgressDialog.show(getActivity(), "",
                 "Loading listings", true);
         String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
