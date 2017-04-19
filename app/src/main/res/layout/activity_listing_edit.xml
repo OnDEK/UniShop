@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F1F1F1">
 
     <ScrollView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        >
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="500dp"
             android:background="#F1F1F1">
 
+            <ListView
+                android:id="@+id/offers_list"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_alignParentBottom="true">
+            </ListView>
+
             <android.support.v4.view.ViewPager
-                android:id="@+id/pager"
+                android:id="@+id/edit_pager"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 />
 
 
             <TextView
-                android:id="@+id/listing_title"
+                android:id="@+id/edit_listing_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Title"
                 android:textColor="#294F6D"
                 android:textSize="20sp"
-                android:layout_below="@+id/pager"
-                android:layout_centerHorizontal="true" />
+                android:layout_below="@+id/edit_pager"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"/>
 
             <TextView
                 android:text="description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/listing_description"
+                android:id="@+id/edit_listing_description"
                 android:textColor="#294F6D"
                 android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:maxLines = "1"
+                android:scrollbars = "vertical"
+                />
 
 
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/listing_description">
 
-            </ListView>
 
         </RelativeLayout>
     </ScrollView>
@@ -66,7 +75,8 @@
         android:layout_height="wrap_content"
         android:text="update"
         android:src="@drawable/ic_close_black_24dp"
-        android:layout_alignTop="@+id/update_button"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="#00FFFFFF"
+        android:onClick="onDeleteListingClick"/>
 </RelativeLayout>

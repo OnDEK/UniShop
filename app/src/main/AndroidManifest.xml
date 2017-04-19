@@ -53,6 +53,10 @@
         <activity android:name=".Closing.MessagingActivity"
             android:screenOrientation="portrait"
             ></activity>
+        <activity android:name=".EditListingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="portrait"
+            ></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.android.fileprovider"

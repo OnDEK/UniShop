@@ -52,7 +52,7 @@ public interface ApiEndpointInterface {
     @POST("item/{itemid}")
     Call<ResponseBody> itemUpdate(@Body ItemUpdate itemUpdate, @Path("itemid") String itemID, @Header("Authorization") String token);
 
-    @GET("items?sort=newest?limit=100")
+    @GET("items?sort=newest&limit=100")
     Call<ItemsResponse> unownedItems(@Header("Authorization") String token);
 
     @POST("item/{itemid}/offer")
@@ -80,13 +80,14 @@ public interface ApiEndpointInterface {
     Call<List<Transaction>> getSelling(@Header("Authorization") String token, @Path("status") String status);
 
     @POST("offer/{offer_id}/accept")
-    Call<OfferAcceptResponse> acceptOffer(@Header("Authorization") String token, @Path("offer_id")String offerID);
+    Call<OfferAcceptResponse> acceptOffer(@Header("Authorization") String token, @Path("offer_id")String offerID, @Body Offer offer);
 
-    @POST("/item/{item_id}/follow")
-    Call<ResponseBody> followItem(@Path("itemid") String itemID, @Header("Authorization") String token);
+    @POST("item/{item_id}/follow")
+    Call<ResponseBody> followItem(@Path("item_id") String itemID, @Header("Authorization") String token);
 
     @POST("item/{item_id}/unfollow")
-    Call<ResponseBody> unfollowItem(@Path("itemid") String itemID, @Header("Authorization") String token);
+    Call<ResponseBody> unfollowItem(@Path("item_id") String itemID, @Header("Authorization") String token);
+
     @Multipart
     @POST("item/create")
     Call<CreateResponse> createWImage(@Part("title") RequestBody title,

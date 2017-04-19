@@ -37,6 +37,9 @@ public class Offer {
     public Offer() {
     }
 
+    public Offer(Integer amount) {
+        this.amount = amount;
+    }
     /**
      *
      * @param sellerRating

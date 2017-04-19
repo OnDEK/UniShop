@@ -120,31 +120,6 @@ public class HomeActivity extends Activity {
 
     }
 
-    public void onDeleteListingClick(View v) {
-
-        ApiEndpointInterface apiService = NetworkUtils.getApiService();
-        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
-
-        Item item =(Item) v.getTag();
-        Call<ResponseBody> call = apiService.itemDestroy(item.getId().toString(), sessionToken);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                int statusCode = response.code();
-
-                if(statusCode == 200) {
-                    Toast.makeText(getApplicationContext(), "Item Deleted",
-                            Toast.LENGTH_SHORT).show();
-                    listingsFragment.onResume();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-    }
 
     public void setListEditable(View v) {
         ListView listView = (ListView)findViewById(R.id.listingList);
@@ -170,9 +145,7 @@ public class HomeActivity extends Activity {
                         onEditListingClick(v);
                     }
                 });
-
             }
-
         }
     }
 

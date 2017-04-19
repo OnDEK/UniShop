@@ -15,14 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.unishop.Listing;
 import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Item;
 import com.unishop.models.Offer;
 import com.unishop.utils.NetworkUtils;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +35,7 @@ import retrofit2.Response;
 public class BidsFragment extends android.app.Fragment {
 
     ArrayList<Offer> offerArray = new ArrayList<>();
+    ArrayList<Item> itemArray = new ArrayList<>();
 
     @Nullable
     @Override
@@ -75,6 +74,30 @@ public class BidsFragment extends android.app.Fragment {
                 dialog.cancel();
             }
         });
+
+        Call<List<Item>> followCall = apiService.getFollows(sessionToken);
+        followCall.enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                int statuscode = response.code();
+                List<Item> itemList = response.body();
+                if(statuscode == 200) {
+                    for(Item item: itemList) {
+                        itemArray.add(item);
+                    }
+
+                    ListView ll = (ListView) getActivity().findViewById(R.id.followingList);
+                    FollowAdapter cus = new FollowAdapter();
+                    ll.setAdapter(cus);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+
+            }
+        });
+
         super.onResume();
     }
 
@@ -120,7 +143,7 @@ public class BidsFragment extends android.app.Fragment {
 
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.item_bid_personal, parent, false);
-                vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
+                vh.title= (TextView)convertView.findViewById(R.id.following_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.otherBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
                 vh.thumbnail = (ImageView)convertView.findViewById(R.id.bidding_personal_thumbnail);
@@ -131,7 +154,7 @@ public class BidsFragment extends android.app.Fragment {
             } else {
                 convertView.setTag(vh);
                 vh.title= (TextView)convertView.findViewById(R.id.listing_personal_item_title);
-                vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
+                vh.title= (TextView)convertView.findViewById(R.id.following_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.otherBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
                 vh.thumbnail = (ImageView)convertView.findViewById(R.id.bidding_personal_thumbnail);
@@ -165,6 +188,78 @@ public class BidsFragment extends android.app.Fragment {
 
         class ViewHolder {
             TextView title, yourBid, otherBid;
+            Button button;
+            ImageView thumbnail;
+        }
+    }
+
+    public class FollowAdapter extends BaseAdapter {
+        LayoutInflater mInflater;
+
+
+        public FollowAdapter() {
+            mInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return itemArray.size();//listview item count.
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            final ViewHolder vh;
+            vh = new ViewHolder();
+
+
+
+            if (convertView == null) {
+                convertView = mInflater.inflate(R.layout.item_following_personal, parent, false);
+                vh.title= (TextView)convertView.findViewById(R.id.following_personal_title);
+                vh.thumbnail = (ImageView)convertView.findViewById(R.id.following_personal_thumbnail);
+                vh.button = (Button)convertView.findViewById(R.id.following_personal_button);
+
+                //inflate custom layour
+
+            } else {
+                convertView.setTag(vh);
+                vh.title= (TextView)convertView.findViewById(R.id.following_personal_title);
+                vh.thumbnail = (ImageView)convertView.findViewById(R.id.following_personal_thumbnail);
+                vh.button = (Button)convertView.findViewById(R.id.following_personal_button);
+
+            }
+
+            String imagePaths = itemArray.get(position).getImagePaths();
+            if(imagePaths != null) {
+                String thumbnailPath = imagePaths.replaceAll(";.*", "");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_100x100.png");
+
+                Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail);
+            }
+
+            vh.button.setTag(itemArray.get(position));
+            vh.title.setText(itemArray.get(position).getTitle());
+
+
+            return convertView;
+        }
+
+        class ViewHolder {
+            TextView title;
             Button button;
             ImageView thumbnail;
         }

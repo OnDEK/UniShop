@@ -1,13 +1,13 @@
 <tabs>
 
     <tab id="@+id/bottombaritemone"
-        title="Bids"
+        title="Buying"
         icon="@drawable/ic_menu_bids"
         activeColor="#F1F1F1"
         barColorWhenSelected="#294F6D">
     </tab>
     <tab id="@+id/bottombaritemtwo"
-        title="Listings"
+        title="Selling"
         icon="@drawable/ic_menu_listings"
         activeColor="#294F6D"
         barColorWhenSelected="#F1F1F1">
