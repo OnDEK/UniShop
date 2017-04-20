@@ -56,12 +56,6 @@ public class ListingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing);
 
-        String source = getIntent().getStringExtra("source");
-        if(source.equals("personal")) {
-            Button bidButton = (Button) findViewById(R.id.submit_bid_button);
-            bidButton.setVisibility(View.INVISIBLE);
-            bidButton.setClickable(false);
-        }
         Gson gson = new Gson();
         String strObj = getIntent().getStringExtra("item");
         item = gson.fromJson(strObj, Item.class);

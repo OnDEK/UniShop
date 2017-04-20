@@ -50,6 +50,14 @@ public class CreateListingPhotoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_listing_photo_activity);
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    1);
+        }
         imageView1 = (ImageView)findViewById(R.id.create_image1);
         imageView2 = (ImageView)findViewById(R.id.create_image2);
         imageView3 = (ImageView)findViewById(R.id.create_image3);
@@ -76,15 +84,6 @@ public class CreateListingPhotoActivity extends Activity {
     }
 
     public void onTakePhotoClick(View v){
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA},
-                    1);
-        }
         dispatchTakePictureIntent();
     }
 

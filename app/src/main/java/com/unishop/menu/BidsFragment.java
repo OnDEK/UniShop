@@ -166,12 +166,12 @@ public class BidsFragment extends android.app.Fragment {
             String imagePaths = offerArray.get(position).getItem().getImagePaths();
             if(imagePaths != null) {
                 String thumbnailPath = imagePaths.replaceAll(";.*", "");
-                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_100x100.png");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_300x300.png");
 
-                Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail);
+                Picasso.with(getContext()).load(thumbnailPath).resize(300,300).centerCrop().into(vh.thumbnail);
             }
 
-            vh.title.setText("$" + offerArray.get(position).getItem().getTitle());
+            vh.title.setText(offerArray.get(position).getItem().getTitle());
             vh.yourBid.setText(offerArray.get(position).getAmount().toString());
             if(offerArray.get(position).getHighestCompetingBid() != null) {
                 vh.otherBid.setText("$" + offerArray.get(position).getHighestCompetingBid().toString());
@@ -247,9 +247,9 @@ public class BidsFragment extends android.app.Fragment {
             String imagePaths = itemArray.get(position).getImagePaths();
             if(imagePaths != null) {
                 String thumbnailPath = imagePaths.replaceAll(";.*", "");
-                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_100x100.png");
+                thumbnailPath = new String("https://unishop.shop").concat(thumbnailPath).concat("_300x300.png");
 
-                Picasso.with(getContext()).load(thumbnailPath).into(vh.thumbnail);
+                Picasso.with(getContext()).load(thumbnailPath).resize(300,300).centerCrop().into(vh.thumbnail);
             }
 
             vh.button.setTag(itemArray.get(position));

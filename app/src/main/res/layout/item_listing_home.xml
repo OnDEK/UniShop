@@ -13,6 +13,7 @@
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
     <ImageView
+        android:paddingRight="1dp"
         android:id="@+id/listing_home_background_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
         android:layout_alignTop="@+id/listing_home_title_left"
         android:src="@drawable/listing_home_background" />
     <ImageView
+        android:paddingLeft="1dp"
         android:id="@+id/listing_home_background_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,8 +44,8 @@
 
     <TextView
         android:id="@+id/listing_home_title_left"
-        android:layout_width="180dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="#ff000000"
         android:inputType="text"
         android:ems="10"
@@ -51,7 +53,8 @@
         android:layout_alignEnd="@+id/center"
         android:layout_above="@+id/listing_home_price_left"
         android:layout_alignParentStart="true"
-        android:text="palceholder"/>
+        android:text="palceholder"
+        android:layout_alignTop="@+id/listing_home_background_right" />
 
     <TextView
         android:id="@+id/listing_home_price_left"

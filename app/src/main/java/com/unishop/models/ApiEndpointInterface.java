@@ -19,6 +19,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by kaosp on 2/13/17.
@@ -55,8 +56,8 @@ public interface ApiEndpointInterface {
     @POST("item/{itemid}")
     Call<ResponseBody> itemUpdate(@Body ItemUpdate itemUpdate, @Path("itemid") String itemID, @Header("Authorization") String token);
 
-    @GET("items?sort=newest&limit=100")
-    Call<ItemsResponse> unownedItems(@Header("Authorization") String token);
+    @GET("items?sort=newest")
+    Call<ItemsResponse> unownedItems(@Header("Authorization") String token, @Query("limit") Integer limit, @Query("search") String search);
 
     @POST("item/{itemid}/offer")
     Call<ResponseBody> offer(@Body SendOffer sendOffer, @Path("itemid") String itemID, @Header("Authorization") String token);

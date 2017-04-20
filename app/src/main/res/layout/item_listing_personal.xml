@@ -30,7 +30,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/listing_personal_thumbnail"
-        android:background="@drawable/black_line_bottom"/>
+        android:background="@drawable/black_line_bottom"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="3dp"/>
 
     <Space
         android:id="@+id/listing_personal_biddinginfo_edittext"
@@ -123,6 +125,7 @@
         android:layout_toEndOf="@+id/imageView15" />
 
     <ImageView
+        android:background="@drawable/black_line_bottom_thin"
         android:layout_width="23dp"
         android:layout_height="23dp"
         android:src="@drawable/ic_star_empty"
@@ -132,6 +135,7 @@
 
 
     <ImageView
+        android:background="@drawable/black_line_bottom_thin"
         android:layout_width="23dp"
         android:layout_height="23dp"
         android:src="@drawable/ic_star_one"
@@ -151,6 +155,7 @@
 
 
     <ImageView
+        android:background="@drawable/black_line_bottom_thin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_star_three"
@@ -160,6 +165,7 @@
         android:layout_above="@+id/one_star_edittext" />
 
     <ImageView
+        android:background="@drawable/black_line_bottom_thin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_star_four"

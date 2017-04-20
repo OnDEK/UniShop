@@ -1,6 +1,7 @@
 package com.unishop.menu;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,7 +55,7 @@ public class HomeFragment extends android.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
         searchView = (SearchView)view.findViewById(R.id.searchView);
         EditText searchET = (EditText)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         searchET.setTextColor(Color.BLACK);
@@ -65,11 +67,58 @@ public class HomeFragment extends android.app.Fragment {
         v.setImageResource(R.drawable.ic_search_50dp);
         v = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         v.setImageResource(R.drawable.ic_close_black_24dp);
-
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                onResume();
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getActivity(),"text searched", Toast.LENGTH_SHORT).show();
+                itemArray.clear();
+                ListView ll = (ListView) getActivity().findViewById(R.id.homelist);
+                String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
+                ApiEndpointInterface apiService = NetworkUtils.getApiService();
+                Call<ItemsResponse> call = apiService.unownedItems(sessionToken, 100, query);
+                final ProgressDialog dialog = ProgressDialog.show(getActivity(), "",
+                        "Searching", true);
+                call.enqueue(new Callback<ItemsResponse>() {
+                    @Override
+                    public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
+                        int statuscode = response.code();
+                        List<Item> itemsList = response.body().getItems();
+                        if(statuscode == 200) {
+                            for(Item item: itemsList) {
+                                itemArray.add(item);
+                            }
+
+                            ListView ll = (ListView) getActivity().findViewById(R.id.homelist);
+                            CustomAdapter cus = new CustomAdapter();
+                            cus.notifyDataSetChanged();
+                            ll.setAdapter(cus);
+                            dialog.cancel();
+                        }
+                        else {
+                            Gson gson = new GsonBuilder().create();
+                            ErrorResponse error = new ErrorResponse();
+                            try {
+                                error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                            }catch (IOException e) {}
+                            dialog.cancel();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ItemsResponse> call, Throwable t) {
+
+                    }
+                });
+                hideKeyboard(view);
                 return false;
             }
 
@@ -88,7 +137,7 @@ public class HomeFragment extends android.app.Fragment {
                 "Loading listings", true);
         String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
-        Call<ItemsResponse> call = apiService.unownedItems(sessionToken);
+        Call<ItemsResponse> call = apiService.unownedItems(sessionToken, 100, null);
         call.enqueue(new Callback<ItemsResponse>() {
             @Override
             public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
@@ -234,29 +283,9 @@ public class HomeFragment extends android.app.Fragment {
         }
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

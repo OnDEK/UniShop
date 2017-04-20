@@ -60,7 +60,8 @@ android:gravity="center"
         android:id="@+id/bidding_personal_topbid"
         android:textColor="#FF000000"
         android:gravity="center"
-        android:layout_below="@+id/following_personal_title" />
+        android:layout_below="@+id/following_personal_title"
+        android:layout_marginRight="15dp"/>
 
     <TextView
         android:text="Top Bid:"
