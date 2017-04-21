@@ -7,5 +7,5 @@
         android:name="it.slyce.messaging.SlyceMessagingFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/messaging_fragment"/>
+        android:id="@+id/messaging_fragment" />
 </FrameLayout>

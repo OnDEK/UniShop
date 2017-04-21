@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#243399ff">
+    android:background="#FFE1E1E1">
 
 
     <RelativeLayout
@@ -33,14 +33,16 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_funnel"
             android:layout_marginEnd="25dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:id="@+id/imageView4" />
+            android:id="@+id/imageView4"
+            android:onClick="initiatePopupWindow"
+            android:background="#FFF1F1F1"/>
 
             <android.support.v7.widget.SearchView
                 android:id="@+id/searchView"
@@ -54,10 +56,17 @@
 
     </RelativeLayout>
 
-
+    <TextView
+        android:id="@+id/empty"
+        android:text="No results, please modify your\n search and try again"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:textColor="#FF000000"
+        />
     <LinearLayout
         android:layout_below="@id/header_background"
-        android:background="#FFF1F1F1"
+        android:background="#00FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
@@ -66,10 +75,11 @@
             android:layout_height="match_parent"
             android:focusableInTouchMode="false"
             android:listSelector="@android:color/transparent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:cacheColorHint="#000000"
             android:drawSelectorOnTop="false"
             />
+
     </LinearLayout>
 
 

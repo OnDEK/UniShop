@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFE1E1E1"
+    android:background="#FFF1F1F1"
     >
 
+
+    <Space
+        android:id="@+id/center_bids"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerVertical="true"/>
     <TextView
+        android:id="@+id/bid_list_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Bids"
         android:gravity="center"
         android:textColor="#FF000000"
-        android:textSize="22sp"/>
+        android:textSize="22sp"
+        android:layout_alignParentStart="true" />
     <ListView
         android:id="@+id/biddinglist"
         android:layout_width="match_parent"
@@ -23,14 +31,20 @@
         android:drawSelectorOnTop="false"
         android:headerDividersEnabled="true"
         android:divider="#FF000000"
-        android:dividerHeight="2dp"/>
+        android:dividerHeight="1dp"
+        android:background="@drawable/create_inputfield_background"
+        android:padding="2dp"
+        android:layout_below="@id/bid_list_header"
+        android:layout_alignBottom="@id/center_bids"/>
     <TextView
+        android:id="@+id/follow_list_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Follows"
         android:gravity="center"
         android:textColor="#FF000000"
-        android:textSize="22sp"/>
+        android:textSize="22sp"
+        android:layout_alignTop="@id/center_bids"/>
     <ListView
         android:id="@+id/followingList"
         android:layout_width="match_parent"
@@ -42,6 +56,34 @@
         android:drawSelectorOnTop="false"
         android:headerDividersEnabled="true"
         android:divider="#FF000000"
-        android:dividerHeight="2dp"/>
+        android:dividerHeight="1dp"
+        android:background="@drawable/create_inputfield_background"
+        android:padding="2dp"
+        android:layout_below="@id/follow_list_header"
+        android:layout_alignParentBottom="true"/>
+    <TextView
+        android:id="@+id/follow_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You are not following any items"
+        android:layout_below="@id/follow_list_header"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="#FF000000"
+        android:background="@drawable/create_inputfield_background"
 
-</LinearLayout>
+        />
+    <TextView
+        android:id="@+id/bid_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You have not placed any bids yet"
+        android:layout_below="@id/bid_list_header"
+        android:layout_alignBottom="@id/center_bids"
+        android:gravity="center"
+        android:textColor="#FF000000"
+        android:background="@drawable/create_inputfield_background"
+android:visibility="invisible"
+        />
+
+</RelativeLayout>

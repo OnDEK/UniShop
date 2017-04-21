@@ -8,10 +8,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -179,7 +184,9 @@ public class HomeActivity extends Activity {
 
     }
     public void handleChat(View v) {
+        String id = (String)v.getTag();
         Intent intent = new Intent(HomeActivity.this, MessagingActivity.class);
+        intent.putExtra("id", id);
         startActivity(intent);
     }
 
@@ -215,4 +222,33 @@ public class HomeActivity extends Activity {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    private PopupWindow pw;
+    public void initiatePopupWindow(View v) {
+        try {
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) HomeActivity.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.sorting_popup,
+                    (ViewGroup) findViewById(R.id.popup_element));
+            layout.setAnimation(AnimationUtils.loadAnimation(this, R.anim.sort_anim));
+            // create a 300px width and 470px height PopupWindow
+            pw = new PopupWindow(layout, 800, 1300, true);
+            pw.setAnimationStyle(R.anim.sort_anim);
+            // display the popup in the center
+            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            Button cancelPopuop = (Button) findViewById(R.id.cancelpopup);
+            cancelPopuop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    pw.dismiss();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

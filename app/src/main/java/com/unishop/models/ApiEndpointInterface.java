@@ -101,6 +101,12 @@ public interface ApiEndpointInterface {
                                     @Part List<MultipartBody.Part> file,
                                     @Header("Authorization") String token);
 
+    @POST("chat/{transaction_id}/send")
+    Call<USMessage> sendChat(@Header("Authorization") String token, @Path("transaction_id") String transactionId, @Body SendMessage message);
+
+    @GET("chat/{transaction_id}")
+    Call<ChatResponse> getChat(@Header("Authorization") String token, @Path("transaction_id") String transactionId);
+
 
 
 }

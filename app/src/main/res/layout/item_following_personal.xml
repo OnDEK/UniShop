@@ -28,29 +28,9 @@
         android:layout_alignParentEnd="true"
         android:textColor="#FF000000"
         android:gravity="center"
-        android:layout_toEndOf="@+id/following_personal_thumbnail" />
-
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/following_personal_topbid"
-        android:textColor="#FF000000"
-        android:gravity="center"
+        android:layout_toEndOf="@+id/following_personal_thumbnail"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/textView6"
-        android:layout_below="@+id/following_personal_title" />
+        android:textSize="18dp"/>
 
-    <TextView
-        android:text="Top Bid:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView6"
-        android:textColor="#FF000000"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/following_personal_title" />
 
 </RelativeLayout>

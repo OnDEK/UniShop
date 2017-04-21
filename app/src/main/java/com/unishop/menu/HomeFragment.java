@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +54,8 @@ public class HomeFragment extends android.app.Fragment {
 
     ArrayList<Item> itemArray = new ArrayList<>();
     SearchView searchView;
+    TextView emptyText;
+    ListView list;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +67,9 @@ public class HomeFragment extends android.app.Fragment {
         searchET.setHint("What are you looking for...?");
         searchET.setHintTextColor(Color.GRAY);
 
+        list = (ListView) view.findViewById(R.id.homelist);
+        emptyText = (TextView) view.findViewById(R.id.empty);
+        list.setEmptyView(emptyText);
         ImageView v = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
         v.setImageResource(R.drawable.ic_search_50dp);
         v = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
@@ -142,8 +149,8 @@ public class HomeFragment extends android.app.Fragment {
             @Override
             public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
                 int statuscode = response.code();
-                List<Item> itemsList = response.body().getItems();
                 if(statuscode == 200) {
+                    List<Item> itemsList = response.body().getItems();
                     for(Item item: itemsList) {
                         itemArray.add(item);
                     }
@@ -286,6 +293,10 @@ public class HomeFragment extends android.app.Fragment {
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void applySort(View v) {
+
     }
 
 }

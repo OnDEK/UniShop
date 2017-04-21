@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="#F1F1F1"
+    android:focusableInTouchMode="true"
     >
 
     <ScrollView
@@ -23,6 +24,7 @@
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:background="#FF202020"
                 />
 
 
@@ -35,19 +37,23 @@
                 android:textSize="20sp"
                 android:layout_below="@+id/pager"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="15dp"/>
 
             <EditText
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/listing_bid_editText"
                 android:hint="bid"
+                android:paddingLeft="6sp"
                 android:layout_marginLeft="25dp"
-                android:background="#6c294F6D"
+                android:background="@drawable/create_inputfield_background"
                 android:layout_below="@+id/edit_listing_title"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp"
+                android:textColor="#FF000000"
+                android:textColorHint="#FF555555"/>
 
             <Button
                 android:text="Submit Bid"
@@ -58,7 +64,9 @@
                 android:id="@+id/submit_bid_button"
                 android:onClick="submitBid"
                 android:background="@drawable/rounded_button"
-                android:textColor="#FFF1F1F1"/>
+                android:textColor="#FFF1F1F1"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"/>
 
             <TextView
                 android:text="description"
@@ -66,9 +74,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/edit_listing_description"
                 android:textColor="#294F6D"
-                android:layout_marginTop="28dp"
                 android:layout_below="@+id/submit_bid_button"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginTop="30dp"/>
 
             <Button
                 android:id="@+id/follow_button"
@@ -77,10 +87,11 @@
                 android:text="Follow"
                 android:background="@drawable/rounded_button"
                 android:textColor="#FFF1F1F1"
-                android:layout_below="@+id/pager"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="3dp"
-                android:onClick="onFollowClick"/>
+                android:onClick="onFollowClick"
+                android:layout_marginLeft="15dp"
+                android:layout_above="@+id/edit_listing_description"
+                android:layout_alignStart="@+id/edit_listing_description"
+                android:layout_marginStart="30dp" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

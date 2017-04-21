@@ -33,7 +33,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends Activity {
 
-    public static final String BASE_URL = "http://168.61.54.234/api/v1/";
     EditText registerEmailEditText;
     EditText registerPasswordEditText;
     EditText confirmPasswordEditText;
@@ -75,13 +74,14 @@ public class RegisterActivity extends Activity {
         confirmPasswordEditText.setOnFocusChangeListener(hideKeyboardListener);
         firstnameEditText.setOnFocusChangeListener(hideKeyboardListener);
         lastnameEditText.setOnFocusChangeListener(hideKeyboardListener);
-
+/*
+#DEBUG
         registerEmailEditText.setText("dkinney@unishop.shop");
         registerPasswordEditText.setText("unishop");
         confirmPasswordEditText.setText("unishop");
         firstnameEditText.setText("John");
         lastnameEditText.setText("Smith");
-
+*/
         registerEmailEditText.addTextChangedListener(new TextWatcher() {
             String currentString;
             @Override
@@ -96,7 +96,7 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(currentString.contains("@knights.ucf.edu")) {
+                if(currentString.contains("@unishop.shop")) {
                     registerEmailImage.setImageResource(R.drawable.checkmark);
                 }else {
                     registerEmailImage.setImageResource(R.drawable.exclamation_red);
@@ -140,12 +140,14 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+/*
+#DEBUG
+ */
                 boolean hasUppercase = !currentString.equals(currentString.toLowerCase());
                 boolean hasLowercase = !currentString.equals(currentString.toUpperCase());
                 boolean isAtLeast8   = currentString.length() >= 7;
                 boolean hasNumber   = currentString.matches(".*\\d+.*");
-                if(hasUppercase && hasLowercase && isAtLeast8 && hasNumber) {
+                if(isAtLeast8) {
                     registerPasswordImage.setImageResource(R.drawable.checkmark);
                 }else {
                     registerPasswordImage.setImageResource(R.drawable.exclamation_red);

@@ -17,6 +17,7 @@
             android:background="#F1F1F1">
 
             <ListView
+                android:layout_margin="40dp"
                 android:id="@+id/offers_list"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -27,6 +28,7 @@
                 android:id="@+id/edit_pager"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:background="#FF202020"
                 />
 
 
@@ -38,8 +40,10 @@
                 android:textColor="#294F6D"
                 android:textSize="20sp"
                 android:layout_below="@+id/edit_pager"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="3dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"/>
 
             <TextView
                 android:text="description"
@@ -51,6 +55,7 @@
                 android:layout_alignParentStart="true"
                 android:maxLines = "1"
                 android:scrollbars = "vertical"
+                android:layout_margin="10dp"
                 />
 
 
@@ -78,5 +83,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:background="#00FFFFFF"
-        android:onClick="onDeleteListingClick"/>
+        android:onClick="onDeleteListingClick"
+        android:layout_margin="15dp"/>
 </RelativeLayout>

@@ -8,8 +8,19 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.unishop.R;
+import com.unishop.models.ApiEndpointInterface;
+import com.unishop.models.ChatResponse;
+import com.unishop.models.ItemsResponse;
+import com.unishop.models.SendMessage;
+import com.unishop.models.USMessage;
+import com.unishop.utils.NetworkUtils;
 
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -21,6 +32,10 @@ import it.slyce.messaging.listeners.UserSendsMessageListener;
 import it.slyce.messaging.message.Message;
 import it.slyce.messaging.message.MessageSource;
 import it.slyce.messaging.message.TextMessage;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Daniel on 3/31/17.
@@ -28,36 +43,8 @@ import it.slyce.messaging.message.TextMessage;
 
 public class MessagingActivity extends Activity {
 
-    private static int n = 0;
-    private static String[] conversationSim = {
-            "Hello", "Are you selling the item still", "Yes", "It looks nice", "Thanks", "Meet me in the woods at night", "Where do you live?", "Wrong number pal",
-            "Hi there :)", "What is the items condition?", "Why don't you have a seat over there?", "I Refuse to sell to white cis males, sorry look elseware for your goods", "Sorry to hear that",
-            "Is everything okay?", "I don't know...", "Who would ask a question like that", "What is your name, share your personal details with me please.", "That’s a cool looking [phone]. Is it easy to use?",
-            "I really like your [shoes]. Did you get them near here?", "That is a really nice [hat]. Can I ask where you got it?", "Is that store near here?", "Was it good value? (Try to avoid asking for specific monetary amounts of items like “How much did it cost?” as that can be considered rude)",
-            "Do they have other colours available?", "Thanks for the suggestion.", "I appreciate the information.", "Thank you. That was really helpful."
-    };
-
-    private static Message getRandomMessage() {
-        n++;
-        TextMessage textMessage = new TextMessage();
-        textMessage.setText(n + "" +  ": " + conversationSim[(int) (Math.random() * conversationSim.length)]);
-        textMessage.setDate(new Date().getTime());
-        if (Math.random() > 0.5) {
-
-            textMessage.setSource(MessageSource.EXTERNAL_USER);
-        } else {
-
-            textMessage.setSource(MessageSource.LOCAL_USER);
-        }
-        return textMessage;
-    }
-    Timer timer;
-    @Override
-    public void onBackPressed() {
-        timer.cancel();
-        super.onBackPressed();
-    }
-
+    ArrayList<USMessage> messageList = new ArrayList<>();
+    String transactionId;
     SlyceMessagingFragment slyceMessagingFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,12 +52,37 @@ public class MessagingActivity extends Activity {
         setContentView(R.layout.activity_messaging);
 
 
+        transactionId = getIntent().getStringExtra("id");
+
         slyceMessagingFragment = (SlyceMessagingFragment) getFragmentManager().findFragmentById(R.id.messaging_fragment);
         slyceMessagingFragment.setDefaultUserId("uhtnaeohnuoenhaeuonthhntouaetnheuontheuo");
+        slyceMessagingFragment.setPictureButtonVisible(false);
         slyceMessagingFragment.setOnSendMessageListener(new UserSendsMessageListener() {
             @Override
             public void onUserSendsTextMessage(String text) {
-                Log.d("inf", "******************************** " + text);
+                timer.cancel();
+                SendMessage message = new SendMessage(text);
+
+                String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+                ApiEndpointInterface apiService = NetworkUtils.getApiService();
+                Call<USMessage> call = apiService.sendChat(sessionToken,transactionId, message);
+                call.enqueue(new Callback<USMessage>() {
+                    @Override
+                    public void onResponse(Call<USMessage> call, Response<USMessage> response) {
+                        int statusCode = response.code();
+
+                        if(statusCode == 200) {
+                            messageList.add(response.body());
+                            timer = new Timer();
+                            timer.schedule(new refreshConvo(), 0, 5000);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<USMessage> call, Throwable t) {
+
+                    }
+                });
             }
 
             @Override
@@ -83,34 +95,76 @@ public class MessagingActivity extends Activity {
             @Override
             public List<Message> loadMoreMessages() {
                 ArrayList<Message> messages = new ArrayList<>();
-                for (int i = 0; i < 0; i++)
-                    messages.add(getRandomMessage());
                 return messages;
             }
         });
-
         timer = new Timer();
-        timer.schedule(new SimulateConvo(), 0, 5000);
+        timer.schedule(new refreshConvo(), 0, 5000);
 
         slyceMessagingFragment.setMoreMessagesExist(false);
     }
 
-    class SimulateConvo extends TimerTask {
+    static Timer timer;
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        super.onBackPressed();
+    }
+
+    class refreshConvo extends TimerTask {
         public void run() {
-            TextMessage textMessage = new TextMessage();
-            textMessage.setText(conversationSim[(int) (Math.random() * conversationSim.length)]);
-            textMessage.setDate(new Date().getTime());
-            if (Math.random() > 0.5) {
 
-                textMessage.setSource(MessageSource.EXTERNAL_USER);
-            } else {
+            String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+            ApiEndpointInterface apiService = NetworkUtils.getApiService();
+            Call<ChatResponse> call = apiService.getChat(sessionToken,transactionId);
+            call.enqueue(new Callback<ChatResponse>() {
+                @Override
+                public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
+                    int statusCode = response.code();
 
-                textMessage.setSource(MessageSource.LOCAL_USER);
-            }
-            slyceMessagingFragment.addNewMessage(textMessage);
+                    if(statusCode == 200) {
+
+                        List<USMessage> tempList = response.body().getMessages();
+                        Collections.reverse(tempList);
+                        for(USMessage message : tempList) {
+                            if(!messageList.contains(message)) {
+                                messageList.add(message);
+                                TextMessage textMessage = new TextMessage();
+                                textMessage.setText(message.getText());
+                                String date = message.getSentAt();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS");
+                                Date d = new Date();
+                                try {
+                                    d = sdf.parse(date);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                textMessage.setDate(d.getTime());
+
+                                if(!message.getFromYou()){
+                                    textMessage.setSource(MessageSource.EXTERNAL_USER);
+                                }
+                                else {
+                                    textMessage.setSource(MessageSource.LOCAL_USER);
+                                }
+                                slyceMessagingFragment.addNewMessage(textMessage);
+                            }
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ChatResponse> call, Throwable t) {
+
+                }
+            });
+
         }
     }
+
 }
+
 /**
  * The MIT License (MIT)
 

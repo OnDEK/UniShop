@@ -249,7 +249,7 @@ public class ListingActivity extends Activity {
             View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
             ImageView imageView = (ImageView) itemView.findViewById(R.id.pagerImage);
-            Picasso.with(mContext).load(url_list.get(position)).resize(1200,900).centerCrop().into(imageView);
+            Picasso.with(mContext).load(url_list.get(position)).placeholder(R.drawable.progress_animation).resize(1200,900).centerCrop().into(imageView);
 
             container.addView(itemView);
 

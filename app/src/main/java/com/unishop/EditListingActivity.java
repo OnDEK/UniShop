@@ -3,6 +3,7 @@ package com.unishop;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -139,28 +140,40 @@ public class EditListingActivity extends Activity {
 
     public void onDeleteListingClick(View v) {
 
-        ApiEndpointInterface apiService = NetworkUtils.getApiService();
-        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete this post")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+                        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
 
-        Item item =(Item) v.getTag();
-        Call<ResponseBody> call = apiService.itemDestroy(item.getId().toString(), sessionToken);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                int statusCode = response.code();
+                        Call<ResponseBody> call = apiService.itemDestroy(item.getId().toString(), sessionToken);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                int statusCode = response.code();
 
-                if(statusCode == 200) {
-                    Toast.makeText(getApplicationContext(), "Item Deleted",
-                            Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
+                                if(statusCode == 200) {
+                                    Toast.makeText(getApplicationContext(), "Item Deleted",
+                                            Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-            }
-        });
+                            }
+                        });
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     public class CustomAdapter extends BaseAdapter {

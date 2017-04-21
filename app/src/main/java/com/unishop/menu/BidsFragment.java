@@ -41,6 +41,12 @@ public class BidsFragment extends android.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bids, container, false);
+        ListView bidList = (ListView) view.findViewById(R.id.biddinglist);
+        TextView bidEmptyText = (TextView) view.findViewById(R.id.bid_empty);
+        bidList.setEmptyView(bidEmptyText);
+        ListView followList = (ListView) view.findViewById(R.id.followingList);
+        TextView followEmptyList = (TextView) view.findViewById(R.id.follow_empty);
+        followList.setEmptyView(followEmptyList);
         return view;
     }
 

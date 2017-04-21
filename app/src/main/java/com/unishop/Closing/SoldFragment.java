@@ -133,7 +133,7 @@ public class SoldFragment extends Fragment {
 
                 }
             });
-
+            vh.button.setTag(String.valueOf(transactionArray.get(position).getId()));
             vh.price.setText("$" + String.valueOf(transactionArray.get(position).getAmount()));
             return convertView;
         }

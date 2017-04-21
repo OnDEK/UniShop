@@ -314,10 +314,10 @@ public class CreateListingInformationActivity extends Activity {
                 if(statusCode == 200) {
                     CreateResponse res = response.body();
                     dialog.cancel();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CreateListingInformationActivity.this);
-                    builder.setMessage("Created item success.\nItemContainer ID: " + res.getItemId()).setNegativeButton("Okay", null).create().show();
 
-                   // finish();
+                    Toast.makeText(CreateListingInformationActivity.this, "Listing Created", Toast.LENGTH_SHORT).show();
+
+                    finish();
                 }
                 else{
                     dialog.cancel();

@@ -55,7 +55,9 @@ public class BoughtFragment extends Fragment {
                     }
                     ListView ll = (ListView) getActivity().findViewById(R.id.bought_listview);
                     BoughtAdapter cus = new BoughtAdapter();
-                    ll.setAdapter(cus);
+                    if(ll != null) {
+                        ll.setAdapter(cus);
+                    }
                 }
             }
 
@@ -136,7 +138,7 @@ public class BoughtFragment extends Fragment {
 
                 }
             });
-
+            vh.button.setTag(String.valueOf(transactionArray.get(position).getId()));
             vh.price.setText("$" + String.valueOf(transactionArray.get(position).getAmount()));
             return convertView;
         }

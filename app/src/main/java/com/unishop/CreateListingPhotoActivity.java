@@ -37,6 +37,7 @@ public class CreateListingPhotoActivity extends Activity {
 
     static final int REQUEST_IMAGE_PICK = 2;
     static final int REQUEST_TAKE_PHOTO = 1;
+    static final int FINISH_CREATE = 3;
     String mCurrentPhotoPath;
     int currentDefaultPosition = 5;
     ImageView imageView1, imageView2, imageView3, imageView4;
@@ -114,6 +115,10 @@ public class CreateListingPhotoActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
+        if(requestCode == FINISH_CREATE) {
+            finish();
+        }
+
         if(requestCode == REQUEST_IMAGE_PICK) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImageUri = data.getData();
@@ -161,7 +166,7 @@ public class CreateListingPhotoActivity extends Activity {
         }
         Intent intent = new Intent(this, CreateListingInformationActivity.class);
         intent.putStringArrayListExtra("photos", fileArray);
-        startActivity(intent);
+        startActivityForResult(intent, FINISH_CREATE);
     }
 
     public void setAsThumbnail(View v) {
