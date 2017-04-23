@@ -107,6 +107,17 @@ public interface ApiEndpointInterface {
     @GET("chat/{transaction_id}")
     Call<ChatResponse> getChat(@Header("Authorization") String token, @Path("transaction_id") String transactionId);
 
+    @GET("transaction/{transaction_id}")
+    Call <Transaction> getTransaction(@Header("Authorization") String token, @Path("transaction_id") String transactionId);
+
+    @POST("transactin/{transaction_id}/cancel")
+    Call<ResponseBody> cancelTransaction(@Header("Authorixation") String token, @Path("transaction_id") String transactionId);
+
+    @POST("transaction/complete")
+    Call<ResponseBody> completeTransaction(@Header("Authorization")String token, @Path("transaction_id")String transactionId);
+
+    @POST("transaction/{transaction_id}/rate")
+    Call<ResponseBody> rateTransaction(@Header("Authorization") String token, @Body TransactionRating rating);
 
 
 }

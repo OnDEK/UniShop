@@ -27,6 +27,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -55,6 +56,7 @@ public class HomeFragment extends android.app.Fragment {
     ArrayList<Item> itemArray = new ArrayList<>();
     SearchView searchView;
     TextView emptyText;
+    PullRefreshLayout layout;
     ListView list;
     @Nullable
     @Override
@@ -81,6 +83,58 @@ public class HomeFragment extends android.app.Fragment {
                 return false;
             }
         });
+
+        layout = (PullRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        layout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+// listen refresh event
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                itemArray.clear();
+                String sessionToken = NetworkUtils.getSessionToken(getActivity().getApplicationContext());
+                ApiEndpointInterface apiService = NetworkUtils.getApiService();
+                Call<ItemsResponse> call = apiService.unownedItems(sessionToken, 100, null);
+                call.enqueue(new Callback<ItemsResponse>() {
+                    @Override
+                    public void onResponse(Call<ItemsResponse> call, Response<ItemsResponse> response) {
+                        int statuscode = response.code();
+
+                        if(statuscode == 200) {
+                            List<Item> itemsList = response.body().getItems();
+                            for(Item item: itemsList) {
+                                itemArray.add(item);
+                            }
+
+                            ListView ll = (ListView) getActivity().findViewById(R.id.homelist);
+                            HomeFragment.CustomAdapter cus = new HomeFragment.CustomAdapter();
+                            ll.setAdapter(cus);
+                            layout.setRefreshing(false);
+
+                        }
+                        else {
+                            layout.setRefreshing(false);
+                            Gson gson = new GsonBuilder().create();
+                            ErrorResponse error = new ErrorResponse();
+                            try {
+                                error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+
+                            }catch (IOException e) {}
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ItemsResponse> call, Throwable t) {
+                        layout.setRefreshing(false);
+                    }
+                });
+            }
+        });
+
+// refresh complete
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -298,5 +352,6 @@ public class HomeFragment extends android.app.Fragment {
     public void applySort(View v) {
 
     }
+
 
 }

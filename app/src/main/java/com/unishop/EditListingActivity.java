@@ -27,6 +27,7 @@ import com.unishop.menu.ListingsFragment;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.ErrorResponse;
 import com.unishop.models.Item;
+import com.unishop.models.ItemUpdate;
 import com.unishop.models.Offer;
 import com.unishop.models.OfferAcceptResponse;
 import com.unishop.utils.NetworkUtils;
@@ -68,6 +69,8 @@ public class EditListingActivity extends Activity {
         String strObj = getIntent().getStringExtra("item");
         item = gson.fromJson(strObj, Item.class);
 
+        ListView ll = (ListView) findViewById(R.id.offers_list);
+        ll.setEmptyView(findViewById(R.id.offer_list_empty));
         title.setText(item.getTitle());
         description.setText(item.getDescription());
         description.setMovementMethod(new ScrollingMovementMethod());
@@ -101,8 +104,14 @@ public class EditListingActivity extends Activity {
                         offerArray.add(offer);
                     }
                     ListView ll = (ListView) findViewById(R.id.offers_list);
-                    CustomAdapter cus = new CustomAdapter();
-                    ll.setAdapter(cus);
+                    if(ll!= null && offerArray.size() > 0) {
+                        CustomAdapter cus = new CustomAdapter();
+                        ll.setAdapter(cus);
+                    }
+                    else {
+                        ll.getEmptyView().setVisibility(View.VISIBLE);
+                    }
+
 
                 }
             }
@@ -134,6 +143,31 @@ public class EditListingActivity extends Activity {
             @Override
             public void onFailure(Call<OfferAcceptResponse> call, Throwable t) {
 
+            }
+        });
+    }
+
+    public void onUpdateListingClick(View v) {
+        final Button button = (Button) v;
+        button.setEnabled(false);
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        ItemUpdate itemUpdate = new ItemUpdate(title.getText().toString(), description.getText().toString(), null, null);
+        Call<ResponseBody> call = apiService.itemUpdate(itemUpdate, String.valueOf(item.getId()), sessionToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                int statusCode = response.code();
+
+                if(statusCode == 200) {
+                    Toast.makeText(EditListingActivity.this, "Listing Updated", Toast.LENGTH_SHORT).show();
+                    button.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                button.setEnabled(true);
             }
         });
     }

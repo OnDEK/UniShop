@@ -69,18 +69,24 @@
         android:background="#00FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/homelist"
+        <com.baoyz.widget.PullRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusableInTouchMode="false"
-            android:listSelector="@android:color/transparent"
-            android:layout_weight="1"
-            android:cacheColorHint="#000000"
-            android:drawSelectorOnTop="false"
-            />
+            android:layout_height="match_parent">
+
+            <!-- ListView、ScrollView、RecyclerView、Other -->
+            <ListView
+                android:id="@+id/homelist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="false"
+                android:listSelector="@android:color/transparent"
+                android:layout_weight="1"
+                android:cacheColorHint="#000000"
+                android:drawSelectorOnTop="false"
+                />
+        </com.baoyz.widget.PullRefreshLayout>
+
 
     </LinearLayout>
-
-
 </RelativeLayout>

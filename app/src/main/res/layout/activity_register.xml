@@ -28,6 +28,7 @@
         android:textColorHint="#ff555555"
         android:hint="Password"
         android:layout_marginTop="6dp"
+        android:paddingLeft="3sp"
         />
 
     <EditText
@@ -42,7 +43,8 @@
         android:hint="Confirm Password"
         android:background="@drawable/login_inputfield_background"
         android:textColorHint="#ff555555"
-        android:layout_marginTop="6dp"/>
+        android:layout_marginTop="6dp"
+        android:paddingLeft="3sp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -56,7 +58,8 @@
         android:textColor="#00060A"
         android:background="@drawable/login_inputfield_background"
         android:textColorHint="#ff555555"
-        android:hint="Last Name"/>
+        android:hint="Last Name"
+        android:paddingLeft="3sp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -70,7 +73,8 @@
         android:hint="First Name"
         android:layout_marginTop="6dp"
         android:layout_below="@+id/registerPasswordConfirmEditText"
-        android:layout_alignStart="@+id/registerPasswordConfirmEditText" />
+        android:layout_alignStart="@+id/registerPasswordConfirmEditText"
+        android:paddingLeft="3sp"/>
 
     <ImageView
         android:layout_width="200dp"
@@ -93,7 +97,8 @@
         android:hint="Email"
         android:layout_marginTop="48dp"
         android:layout_alignTop="@+id/imageView"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="3sp"/>
 
     <Button
         android:text="Register"
