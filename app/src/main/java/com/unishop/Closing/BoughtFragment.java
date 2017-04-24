@@ -42,7 +42,7 @@ public class BoughtFragment extends Fragment {
 
         ApiEndpointInterface apiService = NetworkUtils.getApiService();
         String sessionToken = NetworkUtils.getSessionToken(getContext());
-        Call<List<Transaction>> call = apiService.getBuying(sessionToken);
+        Call<List<Transaction>> call = apiService.getBuying(sessionToken, "initiated");
         call.enqueue(new Callback<List<Transaction>>() {
             @Override
             public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
@@ -109,6 +109,9 @@ public class BoughtFragment extends Fragment {
                 vh.title= (TextView)convertView.findViewById(R.id.bought_title);
                 vh.price= (TextView)convertView.findViewById(R.id.bought_price);
                 vh.button = (Button)convertView.findViewById(R.id.bought_button);
+                vh.cancel = (Button)convertView.findViewById(R.id.bought_cancel);
+                vh.chat = (Button)convertView.findViewById(R.id.bought_chat);
+                vh.finish = (Button)convertView.findViewById(R.id.bought_finish);
                 //inflate custom layour
 
             } else {
@@ -116,6 +119,9 @@ public class BoughtFragment extends Fragment {
                 vh.title= (TextView)convertView.findViewById(R.id.bought_title);
                 vh.price= (TextView)convertView.findViewById(R.id.bought_price);
                 vh.button = (Button)convertView.findViewById(R.id.bought_button);
+                vh.cancel = (Button)convertView.findViewById(R.id.bought_cancel);
+                vh.chat = (Button)convertView.findViewById(R.id.bought_chat);
+                vh.finish = (Button)convertView.findViewById(R.id.bought_finish);
 
             }
 
@@ -138,6 +144,9 @@ public class BoughtFragment extends Fragment {
 
                 }
             });
+            vh.cancel.setTag(String.valueOf(transactionArray.get(position).getId()));
+            vh.chat.setTag(String.valueOf(transactionArray.get(position).getId()));
+            vh.finish.setTag(String.valueOf(transactionArray.get(position).getId()));
             vh.button.setTag(String.valueOf(transactionArray.get(position).getId()));
             vh.price.setText("$" + String.valueOf(transactionArray.get(position).getAmount()));
             return convertView;
@@ -145,7 +154,7 @@ public class BoughtFragment extends Fragment {
 
         class ViewHolder {
             TextView title, price;
-            Button button;
+            Button button, cancel, chat, finish;
         }
 
     }

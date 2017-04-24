@@ -77,11 +77,11 @@ public interface ApiEndpointInterface {
      * cancelled: One or both parties cancelled the transaction
      * all: Show all transactions (default)
      */
-    @GET("account/buying?status=all")
-    Call<List<Transaction>> getBuying(@Header("Authorization") String token);
+    @GET("account/buying")
+    Call<List<Transaction>> getBuying(@Header("Authorization") String token, @Query("status") String status);
 
-    @GET("account/selling?status=all")
-    Call<List<Transaction>> getSelling(@Header("Authorization") String token);
+    @GET("account/selling")
+    Call<List<Transaction>> getSelling(@Header("Authorization") String token, @Query("status") String status);
 
     @POST("offer/{offer_id}/accept")
     Call<OfferAcceptResponse> acceptOffer(@Header("Authorization") String token, @Path("offer_id")String offerID, @Body Offer offer);
@@ -110,14 +110,17 @@ public interface ApiEndpointInterface {
     @GET("transaction/{transaction_id}")
     Call <Transaction> getTransaction(@Header("Authorization") String token, @Path("transaction_id") String transactionId);
 
-    @POST("transactin/{transaction_id}/cancel")
+    @POST("transaction/{transaction_id}/cancel")
     Call<ResponseBody> cancelTransaction(@Header("Authorixation") String token, @Path("transaction_id") String transactionId);
 
-    @POST("transaction/complete")
+    @POST("transaction/{transaction_id}/complete")
     Call<ResponseBody> completeTransaction(@Header("Authorization")String token, @Path("transaction_id")String transactionId);
 
     @POST("transaction/{transaction_id}/rate")
-    Call<ResponseBody> rateTransaction(@Header("Authorization") String token, @Body TransactionRating rating);
+    Call<ResponseBody> rateTransaction(@Header("Authorization") String token, @Body TransactionRating rating, @Path("transaction_id")String transactionId);
+
+    @GET("transaction/{transaction_id)/rating")
+    Call<TransactionRating> getRating(@Header("Authorization") String token, @Path("transaction_id") String transactionId);
 
 
 }

@@ -82,8 +82,6 @@
         android:layout_alignBottom="@id/center_bids"
         android:gravity="center"
         android:textColor="#FF000000"
-        android:background="@drawable/create_inputfield_background"
-android:visibility="invisible"
-        />
+        android:background="@drawable/create_inputfield_background" />
 
 </RelativeLayout>

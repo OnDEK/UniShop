@@ -150,7 +150,7 @@ public class BidsFragment extends android.app.Fragment {
 
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.item_bid_personal, parent, false);
-                vh.title= (TextView)convertView.findViewById(R.id.following_personal_title);
+                vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.otherBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
                 vh.thumbnail = (ImageView)convertView.findViewById(R.id.bidding_personal_thumbnail);
@@ -160,8 +160,7 @@ public class BidsFragment extends android.app.Fragment {
 
             } else {
                 convertView.setTag(vh);
-                vh.title= (TextView)convertView.findViewById(R.id.listing_personal_item_title);
-                vh.title= (TextView)convertView.findViewById(R.id.following_personal_title);
+                vh.title= (TextView)convertView.findViewById(R.id.bidding_personal_title);
                 vh.yourBid = (TextView)convertView.findViewById(R.id.bidding_personal_yourbid);
                 vh.otherBid = (TextView)convertView.findViewById(R.id.bidding_personal_topbid);
                 vh.thumbnail = (ImageView)convertView.findViewById(R.id.bidding_personal_thumbnail);
@@ -178,13 +177,13 @@ public class BidsFragment extends android.app.Fragment {
             }
 
             vh.title.setText(offerArray.get(position).getItem().getTitle());
-            vh.yourBid.setText(offerArray.get(position).getAmount().toString());
+            vh.yourBid.setText(" $" + offerArray.get(position).getAmount().toString());
             if(offerArray.get(position).getHighestCompetingBid() != null) {
-                vh.otherBid.setText("$" + offerArray.get(position).getHighestCompetingBid().toString());
+                vh.otherBid.setText(" $" + offerArray.get(position).getHighestCompetingBid().toString());
 
             }
             else {
-                vh.otherBid.setText("$0");
+                vh.otherBid.setText("  $0");
             }
             convertView.findViewById(R.id.bidding_personal_button).setTag(offerArray.get(position).getItem());
             convertView.findViewById(R.id.bidding_personal_button).setTag(R.id.source, "others");

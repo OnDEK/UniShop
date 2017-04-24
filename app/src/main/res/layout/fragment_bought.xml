@@ -16,7 +16,7 @@
             android:layout_weight="2"
             android:headerDividersEnabled="true"
             android:divider="#FF000000"
-            android:dividerHeight="5dp">
+            android:dividerHeight="1dp">
         </ListView>
 
     </LinearLayout>

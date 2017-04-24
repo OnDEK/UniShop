@@ -1,5 +1,7 @@
 package com.unishop.models;
 
+import android.content.Intent;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -21,6 +23,9 @@ public class Transaction {
     @SerializedName("item_id")
     @Expose
     private Integer itemId;
+    @SerializedName("rating")
+    @Expose
+    private Intent rating;
 
     public Integer getId() {
         return id;
@@ -52,6 +57,14 @@ public class Transaction {
 
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
+    }
+
+    public Intent getRating() {
+        return rating;
+    }
+
+    public void setRating(Intent rating) {
+        this.rating = rating;
     }
 
 }

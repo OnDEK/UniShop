@@ -2,5 +2,5 @@
 <resources>
     <item name="button_tag" type="id"/>
     <item name="source" type="id"/>
-
+    <item name="transaction" type="id"/>
 </resources>

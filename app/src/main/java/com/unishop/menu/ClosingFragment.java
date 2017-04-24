@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import com.unishop.Closing.BoughtFragment;
+import com.unishop.Closing.RateFragment;
 import com.unishop.Closing.SoldFragment;
 import com.unishop.R;
 
@@ -48,6 +49,11 @@ public class ClosingFragment extends Fragment {
                     case R.id.topbaritemtwo:
                         SoldFragment soldFragment = new SoldFragment();
                         fragmentTransaction.replace(R.id.buysellContainer, soldFragment);
+                        fragmentTransaction.commit();
+                        break;
+                    case R.id.topbaritemthree:
+                        RateFragment rateFragment = new RateFragment();
+                        fragmentTransaction.replace(R.id.buysellContainer, rateFragment);
                         fragmentTransaction.commit();
                         break;
                     default:

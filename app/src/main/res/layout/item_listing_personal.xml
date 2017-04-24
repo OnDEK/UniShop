@@ -52,10 +52,10 @@
         android:layout_below="@+id/listing_personal_item_title"
         android:layout_toEndOf="@+id/imageView8"
         android:textColor="#71A830"
-        android:paddingRight="17sp"
+        android:paddingRight="25sp"
         android:layout_alignBottom="@+id/imageView8"
         android:gravity="right|center_vertical"
-        android:layout_alignStart="@+id/one_star_edittext" />
+        android:background="@drawable/black_line_bottom_thin"/>
 
     <TextView
         android:id="@+id/one_star_edittext"
@@ -65,11 +65,12 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:textColor="#71A830"
-        android:layout_toEndOf="@+id/imageView12"
+        android:layout_toEndOf="@+id/imageView8"
         android:layout_alignBottom="@+id/imageView10"
         android:layout_below="@+id/imageView8"
-        android:paddingRight="17sp"
-        android:gravity="right|center_vertical"/>
+        android:paddingRight="25sp"
+        android:gravity="right|center_vertical"
+        android:background="@drawable/black_line_bottom_thin"/>
 
     <TextView
         android:id="@+id/two_star_edittext"
@@ -81,7 +82,7 @@
         android:layout_alignBottom="@+id/imageView12"
         android:layout_alignEnd="@+id/one_star_edittext"
         android:layout_toEndOf="@+id/imageView12"
-        android:paddingRight="17sp"
+        android:paddingRight="25sp"
         android:gravity="right|center_vertical"/>
 
     <TextView
@@ -93,10 +94,11 @@
         android:text="$0"
         android:layout_above="@+id/imageView14"
         android:layout_alignParentEnd="true"
-        android:paddingRight="17sp"
+        android:paddingRight="40sp"
         android:layout_toEndOf="@+id/imageView13"
         android:gravity="right|center_vertical"
-        android:layout_alignStart="@+id/four_star_edittext" />
+        android:layout_marginRight="5dp"
+        android:background="@drawable/black_line_bottom_thin"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,9 +109,11 @@
         android:id="@+id/four_star_edittext"
         android:layout_below="@+id/three_star_edittext"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/imageView15"
-        android:paddingRight="17sp"
-        android:gravity="right|center_vertical"/>
+        android:layout_toEndOf="@+id/imageView14"
+        android:paddingRight="40sp"
+        android:background="@drawable/black_line_bottom_thin"
+        android:gravity="right|center_vertical"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -121,7 +125,7 @@
         android:layout_below="@+id/four_star_edittext"
         android:layout_alignParentEnd="true"
         android:text="$0"
-        android:paddingRight="17sp"
+        android:paddingRight="45sp"
         android:layout_toEndOf="@+id/imageView15" />
 
     <ImageView

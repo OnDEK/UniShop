@@ -1,9 +1,11 @@
 package com.unishop;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,6 +32,8 @@ import com.unishop.menu.MoreFragment;
 import com.unishop.menu.ClosingFragment;
 import com.unishop.models.ApiEndpointInterface;
 import com.unishop.models.Item;
+import com.unishop.models.Transaction;
+import com.unishop.models.TransactionRating;
 import com.unishop.utils.NetworkUtils;
 
 import okhttp3.ResponseBody;
@@ -251,4 +255,126 @@ public class HomeActivity extends Activity {
         }
     }
 
+    public void onCancelTransactionClick(View v) {
+
+        final String transactionid = (String) v.getTag();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Cancel")
+                .setMessage("Are you sure you want to cancel this transaction")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+                        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+
+                        Call<ResponseBody> call = apiService.cancelTransaction(sessionToken, transactionid);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                int statusCode = response.code();
+
+                                if(statusCode == 200) {
+                                    Toast.makeText(getApplicationContext(), "Transaction Canceled",
+                                            Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void onCompleteTransactionClick(View v) {
+
+        final String transactionid = (String) v.getTag();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle("Complete")
+                .setMessage("Are you sure you want to complete this transaction.\nIf you have sold/bought the item")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+                        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+
+                        Call<ResponseBody> call = apiService.completeTransaction(sessionToken, transactionid);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                int statusCode = response.code();
+
+                                if(statusCode == 200) {
+                                    Toast.makeText(getApplicationContext(), "Transaction Complete",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void rateTransaction(View v) {
+
+        final String rating = (String) v.getTag();
+        final String transactionid = (String) v.getTag(R.id.transaction);
+
+        TransactionRating transactionRating = null;
+
+        switch(rating) {
+            case "1":
+                transactionRating = new TransactionRating(1);
+                break;
+            case "2":
+                transactionRating = new TransactionRating(2);
+                break;
+            case "3":
+                transactionRating = new TransactionRating(3);
+                break;
+            case "4":
+                transactionRating = new TransactionRating(4);
+                break;
+            case "5":
+                transactionRating = new TransactionRating(5);
+                break;
+            default:
+                break;
+
+        }
+        ApiEndpointInterface apiService = NetworkUtils.getApiService();
+        String sessionToken = NetworkUtils.getSessionToken(getApplicationContext());
+        Call<ResponseBody> call = apiService.rateTransaction(sessionToken, transactionRating, transactionid);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                int statusCode = response.code();
+                if(statusCode == 200) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 }

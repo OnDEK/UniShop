@@ -11,4 +11,10 @@
         activeColor="#F1F1F1"
         barColorWhenSelected="#294F6D">
     </tab>
+    <tab id="@+id/topbaritemthree"
+        title="Rate"
+        icon="@drawable/ic_star_black_24dp"
+        activeColor="#F1F1F1"
+        barColorWhenSelected="#294F6D">
+    </tab>
 </tabs>

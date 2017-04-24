@@ -8,7 +8,7 @@
         android:layout_height="match_parent">
 
         <ListView
-            android:id="@+id/sold_listview"
+            android:id="@+id/rate_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusableInTouchMode="false"

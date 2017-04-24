@@ -13,6 +13,10 @@ public class TransactionRating {
     @SerializedName("rating")
     private Integer rating;
 
+    @Expose
+    @SerializedName("transaction_id")
+    private String transactionId;
+
     public TransactionRating(Integer rating) {
         this.rating = rating;
     }
@@ -23,5 +27,13 @@ public class TransactionRating {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }
