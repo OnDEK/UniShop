@@ -1,0 +1,19 @@
+package com.unishop;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+
+/**
+ * Created by Daniel on 4/24/17.
+ */
+
+public class RecoverActivity extends Activity {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_recover);
+    }
+}

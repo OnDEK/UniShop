@@ -82,6 +82,18 @@
         android:textAllCaps="false"
         android:textColor="#294F6D"
         android:onClick="handleRegisterButton"/>
+    <Button
+        android:text="Forgot Password?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forgotPassButton"
+        android:background="#00FFFFFF"
+        android:textSize="11dp"
+        android:textAllCaps="false"
+        android:textColor="#294F6D"
+        android:onClick="handelForgotPassButton"
+        android:layout_below="@+id/imageView"
+        android:layout_alignStart="@+id/loginButton" />
 
     <ImageView
         android:layout_width="238dp"

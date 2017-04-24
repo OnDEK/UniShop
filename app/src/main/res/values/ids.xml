@@ -3,4 +3,5 @@
     <item name="button_tag" type="id"/>
     <item name="source" type="id"/>
     <item name="transaction" type="id"/>
+    <item name="title_extra" type="id"/>
 </resources>

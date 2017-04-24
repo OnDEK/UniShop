@@ -189,8 +189,10 @@ public class HomeActivity extends Activity {
     }
     public void handleChat(View v) {
         String id = (String)v.getTag();
+        String title = (String)v.getTag(R.id.title_extra);
         Intent intent = new Intent(HomeActivity.this, MessagingActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("title", title);
         startActivity(intent);
     }
 

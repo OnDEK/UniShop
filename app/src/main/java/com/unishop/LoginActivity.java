@@ -174,6 +174,13 @@ public class LoginActivity extends AppCompatActivity {
         return;
     }
 
+    public void handelForgotPassButton(View v) {
+
+        Intent intent = new Intent(this, RecoverActivity.class);
+        startActivity(intent);
+        return;
+    }
+
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);

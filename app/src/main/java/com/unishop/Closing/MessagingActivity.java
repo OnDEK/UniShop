@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.unishop.R;
 import com.unishop.models.ApiEndpointInterface;
@@ -14,6 +15,8 @@ import com.unishop.models.ItemsResponse;
 import com.unishop.models.SendMessage;
 import com.unishop.models.USMessage;
 import com.unishop.utils.NetworkUtils;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
@@ -44,8 +47,9 @@ import retrofit2.Response;
 public class MessagingActivity extends Activity {
 
     ArrayList<USMessage> messageList = new ArrayList<>();
-    String transactionId;
+    String transactionId, title;
     SlyceMessagingFragment slyceMessagingFragment;
+    TextView titleTV;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,10 @@ public class MessagingActivity extends Activity {
 
 
         transactionId = getIntent().getStringExtra("id");
+        title = getIntent().getStringExtra("title");
+
+        titleTV = (TextView) findViewById(R.id.chat_header);
+        titleTV.setText(title);
 
         slyceMessagingFragment = (SlyceMessagingFragment) getFragmentManager().findFragmentById(R.id.messaging_fragment);
         slyceMessagingFragment.setDefaultUserId("uhtnaeohnuoenhaeuonthhntouaetnheuontheuo");

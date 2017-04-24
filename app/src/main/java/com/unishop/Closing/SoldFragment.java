@@ -132,6 +132,8 @@ public class SoldFragment extends Fragment {
                     if(statusCode == 200) {
                         Item item = response.body();
                         vh.title.setText(item.getTitle());
+                        vh.button.setTag(R.id.title_extra, item.getTitle());
+                        vh.chat.setTag(R.id.title_extra, item.getTitle());
                     }
                 }
 
