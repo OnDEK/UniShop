@@ -50,6 +50,7 @@ public class MessagingActivity extends Activity {
     String transactionId, title;
     SlyceMessagingFragment slyceMessagingFragment;
     TextView titleTV;
+    ArrayList<Integer> idList = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,7 @@ public class MessagingActivity extends Activity {
                         int statusCode = response.code();
 
                         if(statusCode == 200) {
+                            idList.add(response.body().getId());
                             messageList.add(response.body());
                             timer = new Timer();
                             timer.schedule(new refreshConvo(), 0, 5000);
@@ -135,7 +137,8 @@ public class MessagingActivity extends Activity {
                         List<USMessage> tempList = response.body().getMessages();
                         Collections.reverse(tempList);
                         for(USMessage message : tempList) {
-                            if(!messageList.contains(message)) {
+                            if(!idList.contains(message.getId())) {
+                                idList.add(message.getId());
                                 messageList.add(message);
                                 TextMessage textMessage = new TextMessage();
                                 textMessage.setText(message.getText());

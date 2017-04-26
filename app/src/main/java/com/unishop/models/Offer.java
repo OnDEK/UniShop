@@ -26,7 +26,7 @@ public class Offer {
     private Integer status;
     @SerializedName("buyer_rating")
     @Expose
-    private Integer buyerRating;
+    private Float buyerRating;
 
 
 
@@ -48,7 +48,7 @@ public class Offer {
      * @param buyerRating
      * @param item
      */
-    public Offer(Integer amount, Integer buyerRating, Integer highestCompetingBid, Item item, Float sellerRating) {
+    public Offer(Integer amount, Float buyerRating, Integer highestCompetingBid, Item item, Float sellerRating) {
         super();
         this.amount = amount;
         this.buyerRating = buyerRating;
@@ -78,11 +78,11 @@ public class Offer {
         this.amount = amount;
     }
 
-    public Integer getBuyerRating() {
+    public Float getBuyerRating() {
         return buyerRating;
     }
 
-    public void setBuyerRating(Integer buyerRating) {
+    public void setBuyerRating(Float buyerRating) {
         this.buyerRating = buyerRating;
     }
 

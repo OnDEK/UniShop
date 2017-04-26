@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = sharedPref.getString("email", "");
         userEmail.setText(email);
-        userPassword.setText("unishop");
+        userPassword.setText("password");
 
        /* boolean TEST_MODE = true;
         if(TEST_MODE) {
@@ -141,15 +141,15 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                 }
                 else{
-                    Gson gson = new GsonBuilder().create();
+                    /*Gson gson = new GsonBuilder().create();
                     ErrorResponse error = new ErrorResponse();
                     try {
-                        error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
+                        //error = gson.fromJson(response.errorBody().string(), ErrorResponse.class);
 
                     }catch (IOException e) {}
                     dialog.cancel();
                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();
+                    builder.setMessage("error " + error.getCode() + ": " + error.getMessage()).setNegativeButton("Okay", null).create().show();*/
                 }
 
             }

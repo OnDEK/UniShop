@@ -50,8 +50,9 @@ public class NetworkUtils {
         OkHttpClient client = new OkHttpClient.Builder()
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
-                .connectionSpecs(Collections.singletonList(spec)).followRedirects(false).followSslRedirects(false)
-                .addInterceptor(logging)
+                .connectionSpecs(Collections.singletonList(spec))
+                .followRedirects(false)
+                .followSslRedirects(false)
                 .build();
 
         Gson gson = new GsonBuilder()
@@ -86,7 +87,8 @@ public class NetworkUtils {
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .connectionSpecs(Collections.singletonList(spec))
-                .addInterceptor(logging).followRedirects(false).followSslRedirects(false)
+                .followRedirects(false)
+                .followSslRedirects(false)
                 .build();
         // add logging as last interceptor
          // <-- this is the important line!

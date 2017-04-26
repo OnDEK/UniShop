@@ -189,7 +189,8 @@ public class ListingsFragment extends Fragment {
                     if(statuscode == 200) {
                         List<Offer> offerList = response.body();
                         for (Offer offer : offerList) {
-                            int rating = offer.getBuyerRating();
+                            Float fRating = offer.getBuyerRating();
+                            int rating = Math.round(fRating);
                             int amount = offer.getAmount();
                             if(amount > topBid.get(rating)) {
                                 topBid.set(rating,amount);
